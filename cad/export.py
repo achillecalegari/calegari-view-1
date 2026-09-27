@@ -131,6 +131,9 @@ def write_plate(path, groups):
 if __name__ == "__main__":
     for d in ("step", "stl", "inlays", "plates", "test"):
         (ROOT / d).mkdir(parents=True, exist_ok=True)
+        for f in (ROOT / d).iterdir():          # start clean: no stale parts from older versions
+            if f.is_file():
+                f.unlink()
     report = ["part                 copies  material  overhang_area_mm2  largest_downward_span_mm"]
     plate_items = {"black": [], "red": []}
     for name, shape, T, copies, mat, inlays in catalogue():
