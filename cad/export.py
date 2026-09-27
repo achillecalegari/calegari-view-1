@@ -61,7 +61,7 @@ def catalogue():
         ("board_holder", P.holder_part(), EYE, 1, "black", []),
         ("holder_latch", P.holder_latch(), EYE, 1, "red", []),
         ("knob", kn, EYE, 2, "black", [("red", kidx)]),
-        ("top_handle", P.top_handle(), EYE, 1, "black", []),
+        ("top_handle", P.top_handle(), EYE, 1, "black", [("red", P.brand_dot(lift=0))]),
     ]
 
 

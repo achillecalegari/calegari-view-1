@@ -73,7 +73,10 @@ MATS = {
     "cap": mat("cap", (0.62, 0.62, 0.6), 0.7),
     "ink": mat("ink", (0.85, 0.85, 0.82), 0.5),
     "accent": mat("accent", (0.95, 0.30, 0.02), 0.45),
+    "grey": mat("grey", (0.36, 0.355, 0.335), 0.55, spec=0.45, bump=0.12),
 }
+# REMAT="prefix:material,prefix:material" swaps materials by object name (colour studies)
+REMAT = [kv.split(":") for kv in __import__("os").environ.get("REMAT", "").split(",") if ":" in kv]
 
 root = bpy.data.objects.new("root", None)
 sc.collection.objects.link(root)
@@ -84,7 +87,11 @@ for item in json.load(open(manifest)):
     bpy.ops.import_mesh.stl(filepath=item["file"])
     o = bpy.context.selected_objects[0]
     o.name = item["name"]
-    o.data.materials.append(MATS.get(item["mat"], MATS["plastic_body"]))
+    m_ = item["mat"]
+    for pre, mm in REMAT:
+        if item["name"].startswith(pre):
+            m_ = mm
+    o.data.materials.append(MATS.get(m_, MATS["plastic_body"]))
     o.parent = root
     if __import__("os").environ.get("FLAT"):
         bpy.ops.object.shade_flat()

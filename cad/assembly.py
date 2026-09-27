@@ -82,6 +82,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("arca_side", P.side_arca_plate(), "alu_black", "arca_s")
     add("top_handle", P.top_handle(), "body_black", "top_handle", True)
     add("vial_top", P.top_vial(), "vial", "top_handle")
+    add("inlay_handle_dot", P.brand_dot(lift=0), "red", "top_handle")
     for x in P.TOP_POSTS_X:
         add(f"screw_top_{x}", Pos(x, H + HANDLE_H - 4.5, P.HANDLE_INSERT_Z_TOP) * orient(hw.socket_cap(4, 50), "+y"),
             "black_steel", "top_handle", extra=(0, 0.5, 0))

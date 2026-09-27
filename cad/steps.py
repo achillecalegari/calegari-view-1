@@ -7,7 +7,7 @@ STEPS = [
     (2, "Graflok module, clamp blade and wheel", "w_rear",
      ["graflok_", "screw_gf", "screw_blade", "screw_wheel", "insert_blade"]),
     (3, "Arca plates, top handle and levels", "w_rear",
-     ["arca_", "top_handle", "vial_top", "screw_top", "vial_side"]),
+     ["arca_", "top_handle", "vial_top", "screw_top", "vial_side", "inlay_handle", "leather_"]),
     (4, "Y plate: horizontal ways, bushings, drive nut, velvet", "w_34",
      ["y_plate", "inlay_yplate", "bush_x", "plunger_x", "insert_xway", "way_x", "screw_xway", "gib_x", "grub_gib_x",
       "inlay_xway", "nut_y_drive", "velvet_yplate"]),

@@ -153,11 +153,22 @@ def body_part():
     b -= box_at(-H - 1, -H + 7.2, 46.0, 72.0, 2.0, 9.2)
     # Y scale index (red dot) on the right side face
     b -= Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x")
-    # name and red dot on the front band of the base
-    text, _ = wordmark()
-    b -= text
-    b -= brand_dot()
+    # grip texture on the side leg, above and below the Arca plate: fine flutes along the depth.
+    # They print as walls (the body lies on its front), so they come out crisp, no extra parts.
+    flutes = []
+    for y0, y1 in GRIP_Y:
+        n = int((y1 - y0 - GRIP_W) / GRIP_PITCH) + 1
+        off = (y1 - y0 - GRIP_W - (n - 1) * GRIP_PITCH) / 2
+        for i in range(n):
+            yc = y0 + off + GRIP_W / 2 + i * GRIP_PITCH
+            flutes.append(box_at(H + SIDE_T - GRIP_D, H + SIDE_T + 1, yc - GRIP_W / 2, yc + GRIP_W / 2, *GRIP_Z))
+    b -= Compound(flutes)
     return b
+
+
+GRIP_Y = ((34.0, 71.0), (-93.0, -34.0))
+GRIP_Z = (L_Z0 + 4.0, BODY_Z1 - 4.0)
+GRIP_W, GRIP_PITCH, GRIP_D = 1.0, 2.2, 0.6
 
 
 def l_bracket():
@@ -177,7 +188,8 @@ def l_bracket():
 
 
 WORDMARK = "CALEGARI VIEW 1"
-WORDMARK_Y = -H - PLINTH / 2        # centred on the front band of the base, under the lens
+WORDMARK_X = (TOP_HANDLE_X[0] + TOP_HANDLE_X[1]) / 2
+WORDMARK_Y = H + HANDLE_H - HANDLE_BAR / 2   # engraved on the front of the handle bar, like a top plate
 BRAND_DOT_D = 3.2
 
 
@@ -195,6 +207,7 @@ def wordmark(depth=0.5, size=5.0, tracking=1.1):
         x += w + tracking
     width = x - tracking
     x0 = -width / 2 + (BRAND_DOT_D + 3.0) / 2
+    x0 += WORDMARK_X
     face = Compound([Pos(x0, WORDMARK_Y) * l for l in letters])
     text = Pos(0, 0, BODY_Z1 - depth) * extrude(face, amount=depth + 0.3)
     dot_x = x0 - 3.0 - BRAND_DOT_D / 2
@@ -212,7 +225,7 @@ def body_vial():
 
 
 def body_index_inlay():
-    return Compound([Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x", lift=0), brand_dot(lift=0)])
+    return Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x", lift=0)
 
 
 # --------------------------------------------------------------------------
@@ -448,8 +461,8 @@ def y_plate_inlays():
 # --------------------------------------------------------------------------
 # LENS PANEL (X plate): back face on the bed; metal M65 flange flush with the front
 # --------------------------------------------------------------------------
-STOP_R = FOCUS_OD / 2 + 3.0
-STOP_PIN = (-STOP_R * math.sqrt(0.5), -STOP_R * math.sqrt(0.5))   # at 225 deg, just outside the ring
+STOP_R = 52.0                         # the stop pin runs in a groove under the focus ring: nothing shows
+STOP_PIN = (-STOP_R * math.sqrt(0.5), -STOP_R * math.sqrt(0.5))   # at 225 deg
 INDEX_R = FOCUS_OD / 2 + 2.2          # focus index and depth-of-field dots
 X_SCALE_Y = -61.0                     # shift dots on the lens panel front; the index is on the bottom rail
 X_INDEX = (0.0, -68.5)
@@ -535,7 +548,7 @@ def x_turret():
 # --------------------------------------------------------------------------
 FOCUS_DIST = (("inf", 0.0), ("5", 5), ("3", 3), ("2", 2), ("1.5", 1.5), ("1", 1), ("0.7", 0.7))
 LEVER_ANG = -95.0
-STOP_TAB_ANG = 217.0          # the tab touches the stop pin (at 225 deg) at infinity
+STOP_TAB_ANG = 219.3          # the block meets the stop pin (at 225 deg) at infinity
 
 
 def focus_ring_part():
@@ -549,14 +562,16 @@ def focus_ring_part():
         if -10 < a < 175:
             continue
         ring -= Rot(0, 0, -i) * (Pos(0, r + 0.4, z0 + FOCUS_W / 2) * Box(2.0, 2.0, FOCUS_W - 3))
-    # finger lever (starts 2 mm up: clears the lens panel)
-    lever = Rot(0, 0, -LEVER_ANG) * (Pos(0, r + 4, z0 + 2 + (FOCUS_W - 2) / 2) * Box(12, 10, FOCUS_W - 2))
-    ring += sfillet(lever, lever.edges().filter_by(Axis.Z), 2.5)
-    # stop tab on the rear face with a tangential M3 stop screw (adjust infinity per lens)
-    tab = Pos(0, r + 2.0, z0 - 1.2 + (FOCUS_W + 1.2) / 2) * Box(10, 8, FOCUS_W + 1.2)
-    tab = sfillet(tab, tab.edges().filter_by(Axis.Z), 1.5)
-    ring += Rot(0, 0, -STOP_TAB_ANG) * tab
-    ring -= Rot(0, 0, -STOP_TAB_ANG) * (Pos(0, STOP_R, z0 + 0.2) * Rot(0, 90, 0) * Cylinder(1.25, 12))
+    # focusing tab, Leica style: a round nub (starts 2 mm up: clears the lens panel)
+    zt0 = z0 + 2.0
+    nub = Pos(0, r + 3.0, zt0) * Cylinder(6.0, FOCUS_W - 2.0, align=Z_UP) + Pos(0, r - 1.0, zt0 + (FOCUS_W - 2) / 2) * Box(12, 8, FOCUS_W - 2)
+    nub = sfillet(nub, [e for e in nub.edges() if e.center().Z > zt0 + FOCUS_W - 2.5], 1.5)
+    ring += Rot(0, 0, -LEVER_ANG) * nub
+    # infinity stop, hidden: a groove in the rear face with one solid block; the pin on the lens panel
+    # runs in the groove and meets the block at infinity (set by turning the ring on the helicoid)
+    groove = cyl_z(STOP_R + 3.0, z0 - 1, z0 + 2.5) - cyl_z(STOP_R - 3.0, z0 - 2, z0 + 3)
+    block = Rot(0, 0, -STOP_TAB_ANG) * (Pos(0, STOP_R, z0 + 1) * Box(5.0, 8.0, 5.0))
+    ring -= groove - block
     # 4 radial M3 nylon-tip grub screws (2.5 mm holes, tap M3)
     for a in (45, 135, 225, 315):
         ring -= Rot(0, 0, a) * (Pos(0, (r + HELI_OD / 2) / 2, z0 + FOCUS_W / 2) * Rot(90, 0, 0) * Cylinder(1.25, r))
@@ -720,7 +735,9 @@ def top_handle():
         h -= box_at(u - SHOE_W / 2, u + SHOE_W / 2, HANDLE_H - SHOE_LIP - SHOE_D, HANDLE_H - SHOE_LIP, z0 - 1, z0 + SHOE_L)
         lead = Pos(u, HANDLE_H - SHOE_LIP - SHOE_D / 2, z0) * Rot(0, 0, 0) * Box(SHOE_W + 2, SHOE_D + 1.2, 2.0)
         h -= lead
-    return Pos((x0 + x1) / 2, H, 0) * h
+    h = Pos((x0 + x1) / 2, H, 0) * h
+    text, _ = wordmark()
+    return h - text - brand_dot()
 
 
 SHOE_OPEN, SHOE_W, SHOE_D, SHOE_LIP, SHOE_L = 12.6, 18.9, 2.2, 1.6, 18.5

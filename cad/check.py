@@ -41,7 +41,7 @@ EXPECTED = [
     ("plug_yblock", "y_plate"), ("velvet_", "body"), ("velvet_", "y_plate"), ("velvet_", "x_plate"), ("velvet_", "plug_"), ("felt_board", "board_holder"), ("felt_board", "lensboard"), ("insert_arca", "arca_"), ("pad_y", "y_plate"), ("felt_", "board_holder"), ("plug_", "screw_yblock"), ("bush_y", "body"), ("bush_x", "y_plate"), ("nut_y_bottom", "body"), ("nut_x_end", "y_plate"),
     # The RB67 envelope has no lips or Graflok slots: the back-to-module fit is verified on the
     # real back with the printed module (docs/calibration.md), not here.
-    ("way_", "body"), ("inlay_xway", "way_x"), ("way_", "y_plate"), ("way_", "x_plate"), ("gib_", "way_"), ("gib_", "y_plate"), ("gib_", "x_plate"),
+    ("way_", "body"), ("leather_", "body"), ("inlay_handle", "top_handle"), ("inlay_xway", "way_x"), ("way_", "y_plate"), ("way_", "x_plate"), ("gib_", "way_"), ("gib_", "y_plate"), ("gib_", "x_plate"),
     ("grub_", "way_"), ("grub_", "gib_"), ("screw_yway", "way_"), ("screw_yway", "body"), ("screw_xway", "y_plate"),
     ("screw_xway", "way_"), ("insert_", "way_"), ("screw_yturret", "y_plate"), ("screw_yturret", "y_turret"),
     ("y_turret", "y_plate"), ("nut_y_drive", "y_turret"), ("rod_y", "y_turret"), ("insert_", "y_turret"),
