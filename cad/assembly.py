@@ -92,8 +92,8 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     for s_, gib in ((1, False), (-1, True)):
         add(f"way_y_{'gib' if gib else 'fixed'}", P.way_rail("y", s_, gib), "body_black", "y_rail", True, extra=(s_ * 0.3, 0, 0))
         for yy in Y_WAY_SCREWS[s_]:
-            add(f"insert_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1) * hw.heat_insert(3, 3.0), "brass", "y_rail", extra=(s_ * 0.3, 0, 0))
-            add(f"screw_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z0 + 3.3) * orient(hw.socket_cap(3, 20), "-z"), "black_steel", "body", extra=(0, 0, -0.5))
+            add(f"insert_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1 - 3.0) * hw.heat_insert(3, 3.0), "brass", "body")
+            add(f"screw_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1 + hy) * hw.countersunk(3, 10), "black_steel", "y_rail", extra=(s_ * 0.3, 0, 0.3))
     add("gib_y", P.gib_strip("y", -1), "body_black", "y_rail", True, extra=(-0.4, 0, 0))
     uw = WAY_UI + P.way_run(lip_y) + GIB_T + 0.1
     for a in GIB_GRUBS:
@@ -104,6 +104,10 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("bush_y_top", Pos(Y_SCREW_X, P.Y_CHAN[1], Y_SCREW_Z) * orient(hw.bushing(6, 10, BUSH_L), "+y"), "bronze", "y_drive")
     add("bush_y_bot", Pos(Y_SCREW_X, P.Y_CHAN[0] - BUSH_L, Y_SCREW_Z) * orient(hw.bushing(6, 10, BUSH_L), "+y"), "bronze", "y_drive")
     add("nut_y_drive", Pos(Y_SCREW_X, sy - NUT_T / 2, Y_SCREW_Z) * orient(Rot(0, 0, 30) * hw.hex_nut(6, h=NUT_T), "+y"), "brass", "y_plate")
+    add("y_turret", Pos(0, sy, 0) * P.y_turret(), "body_black", "y_plate", True, extra=(0, 0, -0.5))
+    for x, y in P.Y_TURRET_SCREWS:
+        add(f"insert_yturret_{y}", Pos(x, y + sy, YP_Z0 - 3.0) * hw.heat_insert(3, 3.0), "brass", "y_plate")
+        add(f"screw_yturret_{y}", Pos(x, y + sy, YP_Z1 - 3.3) * hw.socket_cap(3, 16), "black_steel", "y_plate", extra=(0, 0, 0.6))
 
     for k in range(2):
         add(f"nut_y_bottom{k}", Pos(Y_SCREW_X, -H + 1.0 + k * 5.2, Y_SCREW_Z) * orient(hw.hex_nut(6, h=NUT_T), "+y"), "steel", "y_drive", extra=(0, -0.4, 0))

@@ -56,6 +56,7 @@ def catalogue():
         ("gib_x", P.gib_strip("x", 1), ON_PLUS_Y, 1, "black", []),
         ("x_plate", P.x_plate_part(), EYE, 1, "black", [("red", xred), ("white", xwhite)]),
         ("x_turret", P.x_turret(), FLIP, 1, "black", []),
+        ("y_turret", P.y_turret(), FLIP, 1, "black", []),
         ("focus_ring", P.focus_ring_part(), FLIP, 1, "black", [("red", fm[0]), ("white", Compound(fm[1:]))]),
         ("adapter_ring", P.adapter_part(with_thread=thread), FLIP, 1, "black", []),
         ("board_holder", P.holder_part(), EYE, 1, "black", []),

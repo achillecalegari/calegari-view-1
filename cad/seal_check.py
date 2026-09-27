@@ -65,7 +65,10 @@ def seal_width(lower, lower_z, upper, upper_z, lower_c, upper_c):
 
 if __name__ == "__main__":
     body = mesh(P.body_part())
-    yp0 = P.y_plate_part()
+    # the turret is screwed tight against the plate rear, so its two screw holes are blind: filled here
+    yp0 = P.y_plate_part() + P.y_turret()
+    for x, y in P.Y_TURRET_SCREWS:
+        yp0 = yp0 + P.cyl_z(3.1, YP_Z0, YP_Z1, x, y)
     xp0 = P.x_plate_part()
     cases = [(0, 0), (SHIFT_X, RISE), (-SHIFT_X, -FALL), (SHIFT_X, -FALL), (-SHIFT_X, RISE)]
     worst = 99.0

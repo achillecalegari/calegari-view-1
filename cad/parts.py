@@ -112,11 +112,11 @@ def body_part():
         hz = opening_body(z)
         b -= box_at(-hz[0] - 1.6, hz[0] + 1.6, -hz[1] - 1.6, hz[1] + 1.6, z, z + 2.0)
 
-    # dovetail ways: two printed rails along the side edges of the front face, screwed from the rear
+    # dovetail ways: two printed rails along the side edges of the front face, countersunk screws
+    # from the front into inserts (the rails go on first, the Y plate slides in from the top like a drawer)
     for s in (-1, 1):
         for yy in Y_WAY_SCREWS[s]:
-            b -= cyl_z(1.7, BODY_Z0 - 1, BODY_Z1 + 1, s * WAY_SCREW_U, yy)
-            b -= cyl_z(3.0, BODY_Z0 - 1, BODY_Z0 + 3.3, s * WAY_SCREW_U, yy)
+            b -= insert_hole(s * WAY_SCREW_U, yy, BODY_Z1, "+z", depth=6.5)
 
     # vertical screw channel (photographer's left); its ends are the hard stops
     b -= box_at(Y_SCREW_X - CHAN_W / 2, Y_SCREW_X + CHAN_W / 2, Y_CHAN[0], Y_CHAN[1], CHAN_FLOOR_Y, BODY_Z1 + 1)
@@ -306,6 +306,7 @@ def graflok_wheel():
 # --------------------------------------------------------------------------
 X_CHAN = (-(SHIFT_X + 9.3), SHIFT_X + 9.3)   # turret travel = hard stops
 X_DETENT = (0.0, -52.0)
+Y_TURRET_SCREWS = ((Y_SCREW_X, -6.5), (Y_SCREW_X, 6.5))
 
 
 # --------------------------------------------------------------------------
@@ -356,9 +357,10 @@ def way_rail(stage, side, gib):
     lip, h, z0 = way_stage(stage)
     r = prism(way_profile(lip, h, gib), stage, side, z0, -H, H)
     su = side * WAY_SCREW_U
-    if stage == "y":                                  # inserts in the base, screws from the body rear
+    if stage == "y":                                  # countersunk from the top into the body inserts
         for yy in Y_WAY_SCREWS[side]:
-            r -= insert_hole(su, yy, z0, "-z", depth=3.8)
+            r -= cyl_z(1.7, z0 - 1, z0 + h + 1, su, yy)
+            r -= Pos(su, yy, z0 + h - 1.45) * Cone(1.65, 3.1, 1.46, align=Z_UP)
     else:                                             # inserts in the base, screws from the Y plate rear
         for xx in X_WAY_SCREWS:
             r -= insert_hole(xx, su, z0, "-z", depth=5.5)
@@ -406,8 +408,10 @@ def y_plate_part():
     for s_ in (-1, 1):
         p -= prism(lip_cut_profile(Y_LIP, Y_WAY_H + EDGE_C), "y", s_, BODY_Z1, -H - 1, H + 1)
 
-    # nut turret (rear) into the body screw channel; the nut floats 0.5 mm and cannot turn
-    p += y_turret()
+    # nut turret: a separate part in the body channel, pulled against the plate rear by two screws
+    for x, y in Y_TURRET_SCREWS:
+        p -= cyl_z(1.7, YP_Z0 - 1, YP_Z1 + 1, x, y)
+        p -= cyl_z(3.0, YP_Z1 - 3.3, YP_Z1 + 1, x, y)
     # rear relief for the rise knob (top-left corner) at full rise: the knob's own cylinder, no more
     p -= cyl_y(KNOB_D / 2 + 0.8, H - RISE - 2, H + 1, Y_SCREW_X, Y_SCREW_Z)
     # rear detent dimple
@@ -438,8 +442,8 @@ def y_plate_part():
 
 
 def y_turret():
-    """Nut turret of the rise screw, part of the Y plate: it runs in the body channel."""
-    t = box_at(Y_SCREW_X - CHAN_W / 2 + 1, Y_SCREW_X + CHAN_W / 2 - 1, -10, 10, CHAN_FLOOR_Y + 0.8, YP_Z0 + 0.5)
+    """Nut turret of the rise screw: runs in the body channel, screwed to the Y plate from the front."""
+    t = box_at(Y_SCREW_X - CHAN_W / 2 + 1, Y_SCREW_X + CHAN_W / 2 - 1, -10, 10, CHAN_FLOOR_Y + 0.8, YP_Z0)
     t = sfillet(t, t.edges().filter_by(Axis.Y), 1.0)
     t -= cyl_y(ROD_D / 2 + 0.8, -11, 11, Y_SCREW_X, Y_SCREW_Z)
     nut_r = (NUT_AF + 2 * NUT_FLOAT) / 2 / math.cos(math.pi / 6)
@@ -447,6 +451,8 @@ def y_turret():
         RegularPolygon(nut_r, 6), amount=NUT_T + 0.3)
     t -= box_at(Y_SCREW_X, Y_SCREW_X + CHAN_W, -NUT_T / 2 - 0.15, NUT_T / 2 + 0.15,
                 Y_SCREW_Z - NUT_AF / 2 - NUT_FLOAT, Y_SCREW_Z + NUT_AF / 2 + NUT_FLOAT)
+    for x, y in Y_TURRET_SCREWS:
+        t -= insert_hole(x, y, YP_Z0, "+z")
     return t
 
 
@@ -548,7 +554,7 @@ def x_turret():
 # --------------------------------------------------------------------------
 FOCUS_DIST = (("inf", 0.0), ("5", 5), ("3", 3), ("2", 2), ("1.5", 1.5), ("1", 1), ("0.7", 0.7))
 LEVER_ANG = -95.0
-STOP_TAB_ANG = 219.3          # the block meets the stop pin (at 225 deg) at infinity
+STOP_TAB_ANG = 225.0 - 5.7 * FOCUS_DIR   # the block meets the stop pin (at 225 deg) at infinity
 
 
 def focus_ring_part():
@@ -558,7 +564,7 @@ def focus_ring_part():
     ring = sfillet(ring, [e for e in ring.edges().filter_by(GeomType.CIRCLE) if e.radius > 60], EDGE)
     # grip: flutes except on the scale sector
     for i in range(0, 360, 10):
-        a = ((i + 180) % 360) - 180
+        a = (((i + 180) % 360) - 180) * FOCUS_DIR
         if -10 < a < 175:
             continue
         ring -= Rot(0, 0, -i) * (Pos(0, r + 0.4, z0 + FOCUS_W / 2) * Box(2.0, 2.0, FOCUS_W - 3))
