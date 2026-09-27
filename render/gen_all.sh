@@ -12,7 +12,7 @@ R=out/white; mkdir -p $R
   $PY render_meshes.py --tag section --section
   for n in 1 2 3 4 5 6 7 8 9 10; do $PY render_meshes.py --tag step$n --step $n; done )
 export EXPO=-2.5 DIST=3.75
-shot() { env FLAT="${FLAT:-}" $B -b -P render/white.py -- out/mesh_$1/manifest.json $R/$2.png $3 ${4:-110} ${5:-2000} >/dev/null 2>&1; echo "$2"; }
+shot() { env FLAT="${FLAT:-}" SEALGREY="${SEALGREY:-}" $B -b -P render/white.py -- out/mesh_$1/manifest.json $R/$2.png $3 ${4:-110} ${5:-2000} >/dev/null 2>&1; echo "$2"; }
 shot home  01_three_quarter w_34
 shot home  02_front         w_front
 shot home  03_side          w_side
@@ -24,6 +24,6 @@ shot rise  08_shift         w_34
 shot explode 09_exploded    explode34
 views=(w_34 w_rear w_rear w_34 w_34 w_34 w_34 w_34 w_34 w_rear)
 for n in 1 2 3 4 5 6 7 8 9 10; do
-  shot step$n step_$(printf %02d $n) ${views[$n]} 80 1600
+  SEALGREY=1 shot step$n step_$(printf %02d $n) ${views[$n]} 80 1600
 done
 $PY render/compose.py docs/img $R/*.png

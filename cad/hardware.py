@@ -45,6 +45,13 @@ def countersunk(d, length):
     return head + shank
 
 
+def grub(d, length):
+    """ISO 4027-style grub screw with a nylon tip: socket end at z=0, tip toward -z."""
+    g = Pos(0, 0, -length) * Cylinder(d / 2 * 0.95, length, align=Z_UP)
+    g -= Pos(0, 0, -0.45 * d) * extrude(RegularPolygon(0.3 * d, 6), amount=d)
+    return g
+
+
 def hex_nut(d, af=None, h=None):
     af = af or {2.5: 5.0, 3: 5.5, 4: 7.0, 5: 8.0, 6: 10.0, 8: 13.0}[d]
     h = h or 0.8 * d

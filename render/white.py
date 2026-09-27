@@ -64,8 +64,9 @@ MATS = {
     "ink_dark": mat("ink_dark", (0.08, 0.08, 0.08), 0.6),
     "ink_light": mat("ink_light", (0.85, 0.85, 0.82), 0.5),
     "rubber": mat("rubber", (0.02, 0.02, 0.02), 0.8),
-    "felt": mat("felt", (0.3, 0.3, 0.32), 1.0, spec=0.2, bump=0.6),
-    "velvet": mat("velvet", (0.3, 0.3, 0.32), 1.0, spec=0.2, bump=0.6),
+    # light seals: grey in the assembly maps (SEALGREY=1) so they show, black in product shots
+    "felt": mat("felt", (0.3, 0.3, 0.32) if __import__("os").environ.get("SEALGREY") else (0.012, 0.012, 0.013), 1.0, spec=0.2, bump=0.6),
+    "velvet": mat("velvet", (0.3, 0.3, 0.32) if __import__("os").environ.get("SEALGREY") else (0.012, 0.012, 0.013), 1.0, spec=0.2, bump=0.6),
     "vial": mat("vial", (0.55, 0.75, 0.45), 0.05, transm=0.7, coat=1.0),
     "white_ink": mat("white_ink", (0.85, 0.85, 0.83), 0.5),
     "clamp": mat("clamp", (0.3, 0.3, 0.3), 0.5),

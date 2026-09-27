@@ -63,15 +63,23 @@ OVERLAP_MOVE = 8.0                   # light seal overlap in the direction of mo
 OVERLAP_FIXED = 4.0                  # ... and across it
 GAP = 0.8                            # plate-to-plate gap: hard pads, velvet compressed in it
 
-# MGN9H linear guides (HIWIN catalogue values)
-RAIL_W, RAIL_H = 9.0, 6.5
-BLOCK_W, BLOCK_L, BLOCK_H = 20.0, 39.9, 10.0      # H: rail bottom to block top
-BLOCK_HOLES = (15.0, 16.0)                        # 4 x M3, B x C
-BLOCK_UNDER = 2.0                                 # block underside above rail bottom
-RAIL_LEN_Y, RAIL_Y_OFFSET = 134.0, 0.0              # vertical rail (same as the horizontal one)
-RAIL_LEN_X = 134.0
-RAIL_HOLE_PITCH = 20.0
-BLOCK_PITCH = 42.0                                # two blocks per rail (L 39.9)
+# Dovetail ways: printed rails screwed along the edges, 60 degree flanks. One rail of each pair is
+# fixed, the other carries a gib strip set by three nylon-tip grub screws from the outside.
+# Profile coordinates: u = outward from the axis of travel, w = height above the face the rail sits on.
+WAY_FL = GAP                         # rail flange: the moving plate bears on it (sets the 0.8 mm gap)
+WAY_UI = 64.0                        # rail inner face above the lip
+WAY_UO = 74.0                        # rail outer face, flush with the body edges (BODY / 2)
+WAY_FL_IN = WAY_UI - 1.0             # flange inner edge (bearing under the lip)
+WAY_ANG = 60.0
+Y_LIP, X_LIP = 2.6, 4.0              # lip heights of the Y plate and of the lens panel
+Y_WAY_H = WAY_FL + Y_LIP + 1.8       # Y rails stay under the Y plate front (the X knob passes over them)
+GIB_T = 1.5
+FLANK_C = 0.05                       # clearance on the flanks, as modelled (the gib takes it up)
+EDGE_C = 0.3
+WAY_SCREW_U = 70.5
+Y_WAY_SCREWS = {1: (-58.0, -20.0, 20.0, 58.0), -1: (-58.0, -43.0, 43.0)}   # from the body rear (clear of the dark slide and the vial)
+X_WAY_SCREWS = (-54.0, -18.0, 18.0, 36.0)
+GIB_GRUBS = (-50.0, 0.0, 30.0)
 
 # M6 drive screws
 ROD_D = 6.0
@@ -95,18 +103,16 @@ XP_Z0 = YP_Z1 + GAP
 XP_Z1 = HELI_Z0                      # lens panel front = helicoid shoulder
 XP_T = XP_Z1 - XP_Z0
 PLATE = 148.0
-XP_NOTCH = (47.0, 48.0)              # lens panel top corners removed for |x|>47, y>48 (shift knob clearance)
+XP_NOTCH = (47.0, 41.0)              # lens panel top corners removed for |x|>47, y>41 (shift knob clearance)
 
-Y_RAIL_X = -58.0                     # vertical guide: photographer's right
-Y_SCREW_X = 62.0                     # vertical screw: photographer's left, knob on top
-X_RAIL_Y = -57.0                     # horizontal guide: bottom of the Y plate
-X_SCREW_Y = 62.0                     # horizontal screw: top of the Y plate, knob on the right
+Y_SCREW_X = 54.0                     # vertical screw: photographer's left, knob on top
+X_SCREW_Y = 54.0                     # horizontal screw: top of the Y plate, knob on the right
 X_ROD_END = 44.0                     # the horizontal rod stops here (keeps the top-left corner free)
 
 Y_SCREW_Z = 12.6                     # nut and bushings live in the body channel (floor above the Graflok recess)
 X_SCREW_Z = YP_Z1 - 5.0              # nut in the lens-panel turret, bushings in the Y plate
 CHAN_FLOOR_Y = SEAT_Z + 1.5          # body screw channel floor
-KNOB_D, KNOB_H = 22.0, 14.0
+KNOB_D, KNOB_H = 24.0, 13.0
 ORING_T = 1.5                        # drag O-ring under each knob (constant friction, no lock wheels)
 
 # --------------------------------------------------------------------------
@@ -125,13 +131,14 @@ HANDLE_BAR = 14.0
 HANDLE_POST = 14.0
 HANDLE_H = 44.0                      # protrusion (30 mm finger room)
 HANDLE_FLARE = 5.0                   # concave fillet where the posts meet the body
-TOP_HANDLE_X = (-62.0, 42.0)         # leaves the top-left corner to the rise knob
-TOP_HANDLE_Z = (BODY_Z0, BODY_Z1 - 6.0)  # flush with the body rear, 6 mm behind the sliding plates
+TOP_HANDLE_X = (-66.0, 38.0)         # leaves the top-left corner to the rise knob
+TOP_HANDLE_Z = (BODY_Z0, BODY_Z1)    # flush with the body rear and front: deep enough for two accessory shoes
+SHOES_X = (-31.0, 7.0)               # ISO 518 accessory shoes on top of the bar, open to the rear
 
 # --------------------------------------------------------------------------
 # Focus ring
 # --------------------------------------------------------------------------
-FOCUS_OD, FOCUS_W = 124.0, 10.0
+FOCUS_OD, FOCUS_W = 116.0, 10.0
 HELI_GRIP_Z = (1.5, 11.5)            # knurled ring position on the helicoid (from the shoulder)
 COC = 0.06
 

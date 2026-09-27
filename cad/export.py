@@ -23,6 +23,11 @@ BED = 256.0
 
 FLIP = trimesh.transformations.rotation_matrix(math.pi, [1, 0, 0])
 EYE = np.eye(4)
+# rails and gib strips print lying on their outer face: the flanks are perimeters, not layers
+ON_PLUS_X = trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])
+ON_MINUS_X = trimesh.transformations.rotation_matrix(-math.pi / 2, [0, 1, 0])
+ON_PLUS_Y = trimesh.transformations.rotation_matrix(-math.pi / 2, [1, 0, 0])
+ON_MINUS_Y = trimesh.transformations.rotation_matrix(math.pi / 2, [1, 0, 0])
 
 
 def mesh(shape, tol=0.02):
@@ -43,8 +48,12 @@ def catalogue():
         ("graflok_blade", P.graflok_blade(), FLIP, 1, "red", []),
         ("graflok_wheel", P.graflok_wheel(), EYE, 1, "black", []),
         ("y_plate", P.y_plate_part(), FLIP, 1, "black", [("red", yred), ("white", ywhite)]),
-        ("y_plate_pad", Pos(-P.PADS_Y[0][0], -P.PADS_Y[0][1], 0) * P.y_plate_pads()[0], EYE, 2, "black", []),
-        ("y_plate_plug", P.y_plate_plugs()[0], EYE, 8, "black", []),
+        ("way_y_fixed", P.way_rail("y", 1, False), ON_PLUS_X, 1, "black", []),
+        ("way_y_gib", P.way_rail("y", -1, True), ON_MINUS_X, 1, "black", []),
+        ("gib_y", P.gib_strip("y", -1), ON_MINUS_X, 1, "black", []),
+        ("way_x_fixed", P.way_rail("x", -1, False), ON_MINUS_Y, 1, "black", [("red", P.way_x_index_inlay())]),
+        ("way_x_gib", P.way_rail("x", 1, True), ON_PLUS_Y, 1, "black", []),
+        ("gib_x", P.gib_strip("x", 1), ON_PLUS_Y, 1, "black", []),
         ("x_plate", P.x_plate_part(), EYE, 1, "black", [("red", xred), ("white", xwhite)]),
         ("x_turret", P.x_turret(), FLIP, 1, "black", []),
         ("focus_ring", P.focus_ring_part(), FLIP, 1, "black", [("red", fm[0]), ("white", Compound(fm[1:]))]),
@@ -210,6 +219,24 @@ if __name__ == "__main__":
             ("graflok_module", [drop([oriented(mesh(P.graflok_module()), FLIP)])[0]]),
             ("graflok_blade", [drop([oriented(mesh(P.graflok_blade()), FLIP)])[0]]),
             ("graflok_wheel", [drop([oriented(mesh(P.graflok_wheel()), EYE)])[0]])]
+    # dovetail coupons: 40 mm slices of the real rails, gib strips and plate edges (slide them by hand)
+    yp, xp_ = P.y_plate_part(), P.x_plate_part()
+    cut_y = lambda sh: sh & P.box_at(-80, 80, -20, 20, -50, 120)
+    cut_x = lambda sh: sh & P.box_at(-20, 20, -80, 80, -50, 120)
+    coupons = [
+        ("coupon_way_y_fixed", cut_y(P.way_rail("y", 1, False)), ON_PLUS_X),
+        ("coupon_way_y_gib", cut_y(P.way_rail("y", -1, True)), ON_MINUS_X),
+        ("coupon_gib_y", cut_y(P.gib_strip("y", -1)), ON_MINUS_X),
+        ("coupon_lip_y_left", yp & P.box_at(50, 75, -20, 20, YP_Z0 - 0.1, YP_Z1 + 1), FLIP),
+        ("coupon_lip_y_right", yp & P.box_at(-75, -50, -20, 20, YP_Z0 - 0.1, YP_Z1 + 1), FLIP),
+        ("coupon_way_x_fixed", cut_x(P.way_rail("x", -1, False)), ON_MINUS_Y),
+        ("coupon_way_x_gib", cut_x(P.way_rail("x", 1, True)), ON_PLUS_Y),
+        ("coupon_gib_x", cut_x(P.gib_strip("x", 1)), ON_PLUS_Y),
+        ("coupon_lip_x_bottom", xp_ & P.box_at(-20, 20, -75, -50, XP_Z0 - 0.1, XP_Z1 + 1), EYE),
+        ("coupon_lip_x_top", xp_ & P.box_at(-20, 20, 50, 75, XP_Z0 - 0.1, XP_Z1 + 1), EYE),
+    ]
+    for label, sh, T in coupons:
+        test.append((label, [drop([oriented(mesh(sh, 0.02), T)])[0]]))
     if not FAST:
         xp = P.x_plate_part()  # no threads in the plate any more: coupon = flange pocket fit
         ad = P.adapter_part(with_thread=True)

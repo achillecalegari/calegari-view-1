@@ -66,8 +66,6 @@ def seal_width(lower, lower_z, upper, upper_z, lower_c, upper_c):
 if __name__ == "__main__":
     body = mesh(P.body_part())
     yp0 = P.y_plate_part()
-    for plug in P.y_plate_plugs():
-        yp0 = yp0 + plug
     xp0 = P.x_plate_part()
     cases = [(0, 0), (SHIFT_X, RISE), (-SHIFT_X, -FALL), (SHIFT_X, -FALL), (-SHIFT_X, RISE)]
     worst = 99.0

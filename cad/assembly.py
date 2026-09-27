@@ -49,8 +49,6 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("inlay_body_index", P.body_index_inlay(), "red", "body")
     for x, y in P.GF_SCREWS:
         add(f"insert_gf_{x}_{y}", Pos(x, y, SEAT_Z) * hw.heat_insert(3, 3.0), "brass", "body")
-    for yy in P.Y_RAIL_SCREWS:
-        add(f"insert_yrail_{yy}", Pos(Y_RAIL_X, yy, YP_Z0 - BLOCK_H - 3.0) * hw.heat_insert(3, 3.0), "brass", "body")
     for x in P.TOP_POSTS_X:
         add(f"insert_top_{x}", Pos(x, H, P.HANDLE_INSERT_Z_TOP) * orient(hw.heat_insert(4), "-y"), "brass", "body")
 
@@ -88,60 +86,50 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
         add(f"screw_top_{x}", Pos(x, H + HANDLE_H - 4.5, P.HANDLE_INSERT_Z_TOP) * orient(hw.socket_cap(4, 50), "+y"),
             "black_steel", "top_handle", extra=(0, 0.5, 0))
 
-    # ---------------- vertical stage ----------------
-    rail_z = YP_Z0 - BLOCK_H
-    add("rail_y", Pos(Y_RAIL_X, RAIL_Y_OFFSET, rail_z) * Rot(0, 0, 90) * P.mgn9_rail(RAIL_LEN_Y), "steel", "y_rail")
-    for yy in P.Y_RAIL_SCREWS:
-        add(f"screw_yrail_{yy}", Pos(Y_RAIL_X, yy, rail_z + RAIL_H - 3.0) * hw.socket_cap(3, 6), "black_steel", "y_rail", extra=(0, 0, 0.3))
-    blk, seal = P.mgn9_block()
-    for i, yy in enumerate(P.Y_BLOCK_Y):
-        loc = Pos(Y_RAIL_X, yy + sy, rail_z + BLOCK_UNDER) * Rot(0, 0, 90)
-        add(f"block_y{i}", loc * blk, "steel", "y_block")
-        add(f"block_y{i}_seal", loc * seal, "red_seal", "y_block")
-        for dx in (-BLOCK_HOLES[0] / 2, BLOCK_HOLES[0] / 2):
-            for dy in (-BLOCK_HOLES[1] / 2, BLOCK_HOLES[1] / 2):
-                add(f"screw_yblock_{i}_{dx}_{dy}", Pos(Y_RAIL_X + dx, yy + sy + dy, YP_Z1 - P.Y_BLOCK_CB) * hw.socket_cap(3, 12),
-                    "black_steel", "y_plate", extra=(0, 0, 0.6))
+    # ---------------- vertical stage: dovetail ways on the body ----------------
+    lip_y, hy, _ = P.way_stage("y")
+    for s_, gib in ((1, False), (-1, True)):
+        add(f"way_y_{'gib' if gib else 'fixed'}", P.way_rail("y", s_, gib), "body_black", "y_rail", True, extra=(s_ * 0.3, 0, 0))
+        for yy in Y_WAY_SCREWS[s_]:
+            add(f"insert_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1) * hw.heat_insert(3, 3.0), "brass", "y_rail", extra=(s_ * 0.3, 0, 0))
+            add(f"screw_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z0 + 3.3) * orient(hw.socket_cap(3, 20), "-z"), "black_steel", "body", extra=(0, 0, -0.5))
+    add("gib_y", P.gib_strip("y", -1), "body_black", "y_rail", True, extra=(-0.4, 0, 0))
+    uw = WAY_UI + P.way_run(lip_y) + GIB_T + 0.1
+    for a in GIB_GRUBS:
+        add(f"grub_gib_y_{a}", Pos(-(uw + 2.0), a, BODY_Z1 + WAY_FL + lip_y / 2) * orient(hw.grub(3, 4), "+x"), "black_steel", "y_rail", extra=(-0.6, 0, 0))
     # drive: rod, bushings, nut, knob, O-ring, nut pair at the bottom
     y_bot, y_top = -H + 0.5, H + KNOB_H - 1.5
     add("rod_y", Pos(Y_SCREW_X, y_bot, Y_SCREW_Z) * orient(hw.threaded_rod(6, y_top - y_bot), "+y"), "steel", "y_drive")
     add("bush_y_top", Pos(Y_SCREW_X, P.Y_CHAN[1], Y_SCREW_Z) * orient(hw.bushing(6, 10, BUSH_L), "+y"), "bronze", "y_drive")
     add("bush_y_bot", Pos(Y_SCREW_X, P.Y_CHAN[0] - BUSH_L, Y_SCREW_Z) * orient(hw.bushing(6, 10, BUSH_L), "+y"), "bronze", "y_drive")
     add("nut_y_drive", Pos(Y_SCREW_X, sy - NUT_T / 2, Y_SCREW_Z) * orient(Rot(0, 0, 30) * hw.hex_nut(6, h=NUT_T), "+y"), "brass", "y_plate")
+
     for k in range(2):
         add(f"nut_y_bottom{k}", Pos(Y_SCREW_X, -H + 1.0 + k * 5.2, Y_SCREW_Z) * orient(hw.hex_nut(6, h=NUT_T), "+y"), "steel", "y_drive", extra=(0, -0.4, 0))
-    add("oring_y", Pos(Y_SCREW_X, H - ORING_T, Y_SCREW_Z) * orient(Torus(4.5, 0.75), "+y") if False else
-        Pos(Y_SCREW_X, H - ORING_T / 2, Y_SCREW_Z) * Rot(90, 0, 0) * Torus(4.4, 0.75), "rubber", "y_knob")
+    add("oring_y", Pos(Y_SCREW_X, H - ORING_T / 2, Y_SCREW_Z) * Rot(90, 0, 0) * Torus(3.75, 0.75), "rubber", "y_knob")
     kn, kidx = P.knob_part()
     add("knob_y", Pos(Y_SCREW_X, H, Y_SCREW_Z) * orient(kn, "+y"), "body_black", "y_knob", True)
     add("inlay_knob_y", Pos(Y_SCREW_X, H, Y_SCREW_Z) * orient(kidx, "+y"), "red", "y_knob")
     add("plunger_y", Pos(*P.Y_DETENT, 9.8) * (Cylinder(2.5, 10.5, align=hw.Z_UP) + Pos(0, 0, 10.5) * Sphere(1.5)), "steel", "body")
-    add("insert_plunger_y", Pos(*P.Y_DETENT, BODY_Z1 - 8.0) * hw.heat_insert(4), "brass", "body") if False else None
 
     # ---------------- Y plate ----------------
     add("velvet_body", P.velvet_body(), "velvet", "y_rail")
     add("y_plate", Pos(0, sy, 0) * P.y_plate_part(), "body_black", "y_plate", True)
     add("velvet_yplate", Pos(0, sy, 0) * P.velvet_yplate(), "velvet", "x_rail")
-    for i, pad in enumerate(P.y_plate_pads()):
-        add(f"pad_y_{i}", Pos(0, sy, 0) * pad, "white_ink", "y_plate", True, extra=(0, 0, 0.5))
-    for i, plug in enumerate(P.y_plate_plugs()):
-        add(f"plug_yblock_{i}", Pos(0, sy, 0) * plug, "body_black", "y_plate", True, extra=(0, 0, 0.4))
     red, white = P.y_plate_inlays()
     add("inlay_yplate_red", Pos(0, sy, 0) * red, "red", "y_plate")
     add("inlay_yplate_white", Pos(0, sy, 0) * white, "white_ink", "y_plate")
-    xr_z = XP_Z0 - BLOCK_H
-    add("rail_x", Pos(0, X_RAIL_Y + sy, xr_z) * P.mgn9_rail(RAIL_LEN_X), "steel", "x_rail")
-    for i, xx in enumerate(P.rail_holes(RAIL_LEN_X)):
-        add(f"insert_xrail_{i}", Pos(xx, X_RAIL_Y + sy, xr_z - 3.0) * hw.heat_insert(3, 3.0), "brass", "y_plate")
-        add(f"screw_xrail_{i}", Pos(xx, X_RAIL_Y + sy, xr_z + RAIL_H - 3.0) * hw.socket_cap(3, 6), "black_steel", "x_rail", extra=(0, 0, 0.3))
-    for i, xx in enumerate(P.X_BLOCK_X):
-        loc = Pos(xx + sx, X_RAIL_Y + sy, xr_z + BLOCK_UNDER)
-        add(f"block_x{i}", loc * blk, "steel", "x_block")
-        add(f"block_x{i}_seal", loc * seal, "red_seal", "x_block")
-        for dx in (-BLOCK_HOLES[1] / 2, BLOCK_HOLES[1] / 2):
-            for dy in (-BLOCK_HOLES[0] / 2, BLOCK_HOLES[0] / 2):
-                add(f"screw_xblock_{i}_{dx}_{dy}", Pos(xx + sx + dx, X_RAIL_Y + sy + dy, XP_Z1) * hw.countersunk(3, 10),
-                    "black_steel", "x_plate", extra=(0, 0, 0.5))
+    lip_x, hx, _ = P.way_stage("x")
+    for s_, gib in ((-1, False), (1, True)):
+        add(f"way_x_{'gib' if gib else 'fixed'}", Pos(0, sy, 0) * P.way_rail("x", s_, gib), "body_black", "x_rail", True, extra=(0, s_ * 0.3, 0))
+        for xx in X_WAY_SCREWS:
+            add(f"insert_xway_{s_}_{xx}", Pos(xx, s_ * WAY_SCREW_U + sy, YP_Z1) * hw.heat_insert(3, 3.0), "brass", "x_rail")
+            add(f"screw_xway_{s_}_{xx}", Pos(xx, s_ * WAY_SCREW_U + sy, YP_Z0 + 3.3) * orient(hw.socket_cap(3, 16), "-z"), "black_steel", "y_plate", extra=(0, 0, -0.4))
+    add("inlay_xway_index", Pos(0, sy, 0) * P.way_x_index_inlay(), "red", "x_rail")
+    add("gib_x", Pos(0, sy, 0) * P.gib_strip("x", 1), "body_black", "x_rail", True, extra=(0, 0.4, 0))
+    uwx = WAY_UI + P.way_run(lip_x) + GIB_T + 0.1
+    for a in GIB_GRUBS:
+        add(f"grub_gib_x_{a}", Pos(a, uwx + 2.0 + sy, YP_Z1 + WAY_FL + lip_x / 2) * orient(hw.grub(3, 4), "-y"), "black_steel", "x_rail", extra=(0, 0.6, 0))
     yx = X_SCREW_Y + sy
     x_left, x_right = P.X_CHAN[1] + BUSH_L + 11.0, -H - KNOB_H + 1.5
     add("rod_x", Pos(x_left, yx, X_SCREW_Z) * orient(hw.threaded_rod(6, x_left - x_right), "-x"), "steel", "x_drive")
@@ -150,7 +138,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     for k in range(2):
         add(f"nut_x_end{k}", Pos(P.X_CHAN[1] + BUSH_L + 0.3 + k * 5.2, yx, X_SCREW_Z) * orient(hw.hex_nut(6, h=NUT_T), "+x"), "steel", "x_drive")
     add("nut_x_drive", Pos(sx - NUT_T / 2, yx, X_SCREW_Z) * orient(Rot(0, 0, 30) * hw.hex_nut(6, h=NUT_T), "+x"), "brass", "turret")
-    add("oring_x", Pos(-H + ORING_T / 2, yx, X_SCREW_Z) * Rot(0, 90, 0) * Torus(4.4, 0.75), "rubber", "x_knob")
+    add("oring_x", Pos(-H + ORING_T / 2, yx, X_SCREW_Z) * Rot(0, 90, 0) * Torus(3.75, 0.75), "rubber", "x_knob")
     add("knob_x", Pos(-H, yx, X_SCREW_Z) * orient(kn, "-x"), "body_black", "x_knob", True)
     add("inlay_knob_x", Pos(-H, yx, X_SCREW_Z) * orient(kidx, "-x"), "red", "x_knob")
     add("plunger_x", Pos(P.X_DETENT[0], P.X_DETENT[1] + sy, YP_Z1 - 10.5) * (Cylinder(2.5, 10.5, align=hw.Z_UP) + Pos(0, 0, 10.5) * Sphere(1.5)), "steel", "y_plate")

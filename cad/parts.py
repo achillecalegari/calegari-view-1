@@ -87,11 +87,9 @@ def hexagon(af):
 GF_HALF = 65.0                      # Graflok module is 130 x 130
 GF_SCREWS = ((-52.0, -58.0), (46.0, -58.0), (-52.0, 58.0), (46.0, 58.0))
 Y_CHAN = (-(FALL + 10.3), RISE + 10.3)   # screw channel = hard stops for the nut turret (+/-10)
-Y_DETENT = (48.0, -10.0)
-Y_RAIL_SCREWS = (RAIL_Y_OFFSET - 60.0, RAIL_Y_OFFSET + 60.0)   # only holes outside the dark-slide band; rail also bonded
-PADS_YREAR = ((48.0, -50.0), (48.0, 20.0))   # hard pads on the Y plate rear, sliding on the body
+Y_DETENT = (-52.0, -10.0)
 TOP_POSTS_X = (TOP_HANDLE_X[0] + HANDLE_POST / 2, TOP_HANDLE_X[1] - HANDLE_POST / 2)
-HANDLE_INSERT_Z_TOP = 7.0
+HANDLE_INSERT_Z_TOP = 10.0
 
 
 def body_part():
@@ -114,16 +112,11 @@ def body_part():
         hz = opening_body(z)
         b -= box_at(-hz[0] - 1.6, hz[0] + 1.6, -hz[1] - 1.6, hz[1] + 1.6, z, z + 2.0)
 
-    # vertical guide channel (photographer's right): carriage top flush with the Y plate rear
-    floor = YP_Z0 - BLOCK_H
-    y_r0, y_r1 = RAIL_Y_OFFSET - RAIL_LEN_Y / 2, RAIL_Y_OFFSET + RAIL_LEN_Y / 2
-    b -= box_at(Y_RAIL_X - BLOCK_W / 2 - 0.5, Y_RAIL_X + BLOCK_W / 2 + 0.5, y_r0 - 1, y_r1 + 1, floor, BODY_Z1 + 1)
-    # rail seat: two locating ribs, 2 screws outside the dark-slide band (rail also bonded)
+    # dovetail ways: two printed rails along the side edges of the front face, screwed from the rear
     for s in (-1, 1):
-        b += box_at(Y_RAIL_X + s * (RAIL_W / 2 + 0.1), Y_RAIL_X + s * (RAIL_W / 2 + 1.1), y_r0, y_r1,
-                    floor - 0.01, floor + 1.0)
-    for yy in Y_RAIL_SCREWS:
-        b -= insert_hole(Y_RAIL_X, yy, floor, "+z")
+        for yy in Y_WAY_SCREWS[s]:
+            b -= cyl_z(1.7, BODY_Z0 - 1, BODY_Z1 + 1, s * WAY_SCREW_U, yy)
+            b -= cyl_z(3.0, BODY_Z0 - 1, BODY_Z0 + 3.3, s * WAY_SCREW_U, yy)
 
     # vertical screw channel (photographer's left); its ends are the hard stops
     b -= box_at(Y_SCREW_X - CHAN_W / 2, Y_SCREW_X + CHAN_W / 2, Y_CHAN[0], Y_CHAN[1], CHAN_FLOOR_Y, BODY_Z1 + 1)
@@ -131,7 +124,7 @@ def body_part():
     b -= cyl_y(BUSH_OD / 2 + 0.05, Y_CHAN[0] - BUSH_L, Y_CHAN[0] + 0.1, Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(ROD_D / 2 + 0.4, Y_CHAN[1], H + 1, Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(ROD_D / 2 + 0.4, -H - 1, Y_CHAN[0], Y_SCREW_X, Y_SCREW_Z)
-    b -= cyl_y(7.2, H - ORING_T, H + 1, Y_SCREW_X, Y_SCREW_Z)            # O-ring + washer seat, top
+    b -= cyl_y(4.6, H - ORING_T, H + 1, Y_SCREW_X, Y_SCREW_Z)            # O-ring seat, top
     b -= cyl_y(7.0, -H - PLINTH - 1, -H + 6.0, Y_SCREW_X, Y_SCREW_Z)     # nut pair recess, open at the bottom
 
     # zero detent (M5 ball plunger)
@@ -298,11 +291,95 @@ def graflok_wheel():
 # --------------------------------------------------------------------------
 # Y PLATE (rise and fall), front face on the bed
 # --------------------------------------------------------------------------
-Y_BLOCK_Y = (-BLOCK_PITCH / 2, BLOCK_PITCH / 2)
-Y_BLOCK_CB = 5.0                      # counterbore depth for M3x12 (2.5 mm into the carriage)
 X_CHAN = (-(SHIFT_X + 9.3), SHIFT_X + 9.3)   # turret travel = hard stops
-X_DETENT = (0.0, 45.0)
-PADS_Y = ((-40.0, 44.0), (40.0, 44.0))
+X_DETENT = (0.0, -52.0)
+
+
+# --------------------------------------------------------------------------
+# DOVETAIL WAYS. Profiles in (u, w): u outward from the axis of travel, w above the face the rail
+# sits on. The rails print lying on their outer face, so the flanks are perimeters, not layers.
+# --------------------------------------------------------------------------
+def way_run(lip):
+    return lip / math.tan(math.radians(WAY_ANG))
+
+
+def way_profile(lip, h, gib):
+    r, ui, uo, fl, fi = way_run(lip), WAY_UI, WAY_UO, WAY_FL, WAY_FL_IN
+    if not gib:
+        return [(fi, 0), (uo, 0), (uo, h), (ui, h), (ui, fl + lip), (ui + r, fl), (fi, fl)]
+    uw = ui + r + GIB_T + 0.1
+    return [(fi, 0), (uo, 0), (uo, h), (ui, h), (ui, fl + lip + 0.1), (uw, fl + lip + 0.1), (uw, fl), (fi, fl)]
+
+
+def gib_profile(lip):
+    r, ui, fl = way_run(lip), WAY_UI, WAY_FL
+    return [(ui + r, fl), (ui + r + GIB_T, fl), (ui + r + GIB_T, fl + lip), (ui, fl + lip)]
+
+
+def lip_cut_profile(lip, top):
+    """What is removed along a plate edge, leaving the dovetail lip (plate rear at w = WAY_FL)."""
+    r, ui, uo, fl = way_run(lip), WAY_UI, WAY_UO, WAY_FL
+    c = FLANK_C / math.sin(math.radians(WAY_ANG))
+    return [(ui + r - c, fl - 2), (uo + 2, fl - 2), (uo + 2, top), (ui - EDGE_C, top), (ui - EDGE_C, fl + lip),
+            (ui - c, fl + lip), (ui + r - c, fl)]
+
+
+def prism(pts, stage, side, z0, a0, a1):
+    """Extrude a (u, w) profile along the travel: stage 'y' runs along Y with u = side * X,
+    stage 'x' runs along X with u = side * Y; w is measured from z0."""
+    if stage == "y":
+        face = make_face(Polyline(*[(side * u, a0, z0 + w) for u, w in pts], close=True))
+        return extrude(face, amount=a1 - a0, dir=(0, 1, 0))
+    face = make_face(Polyline(*[(a0, side * u, z0 + w) for u, w in pts], close=True))
+    return extrude(face, amount=a1 - a0, dir=(1, 0, 0))
+
+
+def way_stage(stage):
+    return (Y_LIP, Y_WAY_H, BODY_Z1) if stage == "y" else (X_LIP, XP_Z1 - YP_Z1, YP_Z1)
+
+
+def way_rail(stage, side, gib):
+    """Y stage: +X rail fixed, -X rail with the gib. X stage: bottom rail fixed, top rail with the gib."""
+    lip, h, z0 = way_stage(stage)
+    r = prism(way_profile(lip, h, gib), stage, side, z0, -H, H)
+    su = side * WAY_SCREW_U
+    if stage == "y":                                  # inserts in the base, screws from the body rear
+        for yy in Y_WAY_SCREWS[side]:
+            r -= insert_hole(su, yy, z0, "-z", depth=3.8)
+    else:                                             # inserts in the base, screws from the Y plate rear
+        for xx in X_WAY_SCREWS:
+            r -= insert_hole(xx, su, z0, "-z", depth=5.5)
+    if gib:                                           # three grub screws push the gib strip
+        uw = WAY_UI + way_run(lip) + GIB_T + 0.1
+        zc = z0 + WAY_FL + lip / 2
+        for a in GIB_GRUBS:
+            if stage == "y":
+                r -= cyl_x(1.25, side * (uw - 0.5), side * (WAY_UO + 1), a, zc)
+            else:
+                r -= cyl_y(1.25, side * (uw - 0.5), side * (WAY_UO + 1), a, zc)
+    # round the outer ends where the part they sit on is rounded
+    ends = []
+    for e in r.edges().filter_by(Axis.Z):
+        c = e.center()
+        u_ = abs(c.X) if stage == "y" else abs(c.Y)
+        a_ = c.Y if stage == "y" else c.X
+        if abs(u_ - WAY_UO) < 0.01 and abs(abs(a_) - H) < 0.01:
+            if stage == "x" or (side < 0 and a_ > 0):
+                ends.append(e)
+    if ends:
+        r = sfillet(r, ends, CORNER_R)
+    if stage == "x" and not gib:                      # shift index, read against the dots of the lens panel
+        r -= Pos(*X_INDEX, z0 + h) * dot(2.6, 0.6)
+    return r
+
+
+def way_x_index_inlay():
+    return Pos(*X_INDEX, XP_Z1) * dot(2.6, 0.6, lift=0)
+
+
+def gib_strip(stage, side):
+    lip, _, z0 = way_stage(stage)
+    return prism(gib_profile(lip), stage, side, z0, -H + 0.5, H - 0.5)
 
 
 def y_plate_part():
@@ -312,44 +389,21 @@ def y_plate_part():
     for z in (25.0, 29.0):
         hz = opening_yplate(z)
         p -= box_at(-hz[0] - 1.4, hz[0] + 1.4, -hz[1] - 1.4, hz[1] + 1.4, z, z + 2.0)
-
-    # vertical carriages: 4 x M3 each, counterbored from the front
-    for yy in Y_BLOCK_Y:
-        for dx in (-BLOCK_HOLES[0] / 2, BLOCK_HOLES[0] / 2):
-            for dy in (-BLOCK_HOLES[1] / 2, BLOCK_HOLES[1] / 2):
-                x, y = Y_RAIL_X + dx, yy + dy
-                p -= cyl_z(1.7, YP_Z0 - 1, YP_Z1 + 1, x, y)
-                p -= cyl_z(3.1, YP_Z1 - Y_BLOCK_CB, YP_Z1 + 1, x, y)
+    # dovetail lips on both side edges; the front part overhangs the rails
+    for s_ in (-1, 1):
+        p -= prism(lip_cut_profile(Y_LIP, Y_WAY_H + EDGE_C), "y", s_, BODY_Z1, -H - 1, H + 1)
 
     # nut turret (rear) into the body screw channel; the nut floats 0.5 mm and cannot turn
-    t = box_at(Y_SCREW_X - CHAN_W / 2 + 1, Y_SCREW_X + CHAN_W / 2 - 1, -10, 10, CHAN_FLOOR_Y + 0.8, YP_Z0 + 0.5)
-    t = sfillet(t, t.edges().filter_by(Axis.Y), 1.0)
-    t -= cyl_y(ROD_D / 2 + 0.8, -11, 11, Y_SCREW_X, Y_SCREW_Z)
-    nut_r = (NUT_AF + 2 * NUT_FLOAT) / 2 / math.cos(math.pi / 6)
-    t -= Pos(Y_SCREW_X, -NUT_T / 2 - 0.15, Y_SCREW_Z) * Rot(-90, 0, 0) * Rot(0, 0, 90) * extrude(
-        RegularPolygon(nut_r, 6), amount=NUT_T + 0.3)
-    # side entry slot (flats vertical) from the +X face
-    t -= box_at(Y_SCREW_X, Y_SCREW_X + CHAN_W, -NUT_T / 2 - 0.15, NUT_T / 2 + 0.15,
-                Y_SCREW_Z - NUT_AF / 2 - NUT_FLOAT, Y_SCREW_Z + NUT_AF / 2 + NUT_FLOAT)
-    p += t
-
-    # rear relief for the rise knob (top-left corner) at full rise
-    kr = KNOB_D / 2 + 0.8
-    p -= box_at(Y_SCREW_X - kr, H + 1, H - RISE - 2, H + 1, YP_Z0 - 1, Y_SCREW_Z + kr)
-    # rear detent dimple and hard pads (set the gap on the non-rail side)
+    p += y_turret()
+    # rear relief for the rise knob (top-left corner) at full rise: the knob's own cylinder, no more
+    p -= cyl_y(KNOB_D / 2 + 0.8, H - RISE - 2, H + 1, Y_SCREW_X, Y_SCREW_Z)
+    # rear detent dimple
     p -= Pos(*Y_DETENT, YP_Z0) * Sphere(1.6)
-    for x, y in PADS_YREAR:
-        p += box_at(x - 3, x + 3, y - 5, y + 5, YP_Z0 - GAP, YP_Z0 + 0.01)
-
-    # horizontal guide channel (bottom): carriage top flush with the lens panel rear
-    floor = XP_Z0 - BLOCK_H
-    p -= box_at(-RAIL_LEN_X / 2 - 1, RAIL_LEN_X / 2 + 1, X_RAIL_Y - BLOCK_W / 2 - 0.5, X_RAIL_Y + BLOCK_W / 2 + 0.5,
-                floor, YP_Z1 + 1)
-    for s in (-1, 1):
-        p += box_at(-RAIL_LEN_X / 2, RAIL_LEN_X / 2, X_RAIL_Y + s * (RAIL_W / 2 + 0.1), X_RAIL_Y + s * (RAIL_W / 2 + 1.1),
-                    floor - 0.01, floor + 1.0)
-    for xx in rail_holes(RAIL_LEN_X):
-        p -= insert_hole(xx, X_RAIL_Y, floor, "+z")
+    # the horizontal rails are screwed from the rear
+    for s_ in (-1, 1):
+        for xx in X_WAY_SCREWS:
+            p -= cyl_z(1.7, YP_Z0 - 1, YP_Z1 + 1, xx, s_ * WAY_SCREW_U)
+            p -= cyl_z(3.0, YP_Z0 - 1, YP_Z0 + 3.3, xx, s_ * WAY_SCREW_U)
 
     # horizontal screw channel (top), bushings, knob exit on the right, nut pair pocket on the left
     sfloor = X_SCREW_Z - BUSH_OD / 2
@@ -358,41 +412,35 @@ def y_plate_part():
     p -= cyl_x(BUSH_OD / 2 + 0.05, X_CHAN[1] - 0.1, X_CHAN[1] + BUSH_L, X_SCREW_Y, X_SCREW_Z)
     p -= cyl_x(ROD_D / 2 + 0.4, -H - 1, X_CHAN[0], X_SCREW_Y, X_SCREW_Z)
     p -= box_at(X_CHAN[1] + BUSH_L, X_CHAN[1] + BUSH_L + 12, X_SCREW_Y - 7, X_SCREW_Y + 7, sfloor, YP_Z1 + 1)
-    p -= cyl_x(7.2, -H - 1, -H + ORING_T, X_SCREW_Y, X_SCREW_Z)
+    p -= cyl_x(4.6, -H - 1, -H + ORING_T, X_SCREW_Y, X_SCREW_Z)
 
-    # front: detent plunger and pockets for the two press-in pads that carry the lens panel
+    # front: detent plunger for the lens panel
     p -= Pos(*X_DETENT, YP_Z1) * dot(4.2, 11.0, "+z")
-    for x, y in PADS_Y:
-        p -= box_at(x - 5.05, x + 5.05, y - 3.05, y + 3.05, YP_Z1 - 1.5, YP_Z1 + 1)
 
-    # X scale index on the top edge, Y scale dots on the right edge
-    p -= Pos(0.0, H, YP_Z1 - 2.5) * dot(2.6, 0.6, "+y")
+    # Y scale dots on the right edge
     # (the dot that stands at the body's index reads the shift: 10 mm below zero = 10 mm of rise)
     for mm in range(-int(RISE), int(FALL) + 1, 5):
-        p -= Pos(-H, mm, YP_Z0 + 4.0) * dot(3.2 if mm == 0 else 2.0, 0.6, "-x")
+        p -= Pos(-H, mm, YP_Z1 - 4.5) * dot(3.2 if mm == 0 else 2.0, 0.6, "-x")
     return p
 
 
-def y_plate_pads():
-    """Press-in pads (1.5 mm in the pocket, 0.8 mm proud): the lens panel slides on them."""
-    return [box_at(x - 5.1, x + 5.1, y - 3.1, y + 3.1, YP_Z1 - 1.5, YP_Z1 + GAP) for x, y in PADS_Y]
-
-
-def y_plate_plugs():
-    """Flush plugs over the carriage screw heads (press fit): keep the Y plate front face continuous."""
-    out = []
-    for yy in Y_BLOCK_Y:
-        for dx in (-BLOCK_HOLES[0] / 2, BLOCK_HOLES[0] / 2):
-            for dy in (-BLOCK_HOLES[1] / 2, BLOCK_HOLES[1] / 2):
-                out.append(cyl_z(3.2, YP_Z1 - Y_BLOCK_CB + 3.1, YP_Z1, Y_RAIL_X + dx, yy + dy))   # press fit
-    return out
+def y_turret():
+    """Nut turret of the rise screw, part of the Y plate: it runs in the body channel."""
+    t = box_at(Y_SCREW_X - CHAN_W / 2 + 1, Y_SCREW_X + CHAN_W / 2 - 1, -10, 10, CHAN_FLOOR_Y + 0.8, YP_Z0 + 0.5)
+    t = sfillet(t, t.edges().filter_by(Axis.Y), 1.0)
+    t -= cyl_y(ROD_D / 2 + 0.8, -11, 11, Y_SCREW_X, Y_SCREW_Z)
+    nut_r = (NUT_AF + 2 * NUT_FLOAT) / 2 / math.cos(math.pi / 6)
+    t -= Pos(Y_SCREW_X, -NUT_T / 2 - 0.15, Y_SCREW_Z) * Rot(-90, 0, 0) * Rot(0, 0, 90) * extrude(
+        RegularPolygon(nut_r, 6), amount=NUT_T + 0.3)
+    t -= box_at(Y_SCREW_X, Y_SCREW_X + CHAN_W, -NUT_T / 2 - 0.15, NUT_T / 2 + 0.15,
+                Y_SCREW_Z - NUT_AF / 2 - NUT_FLOAT, Y_SCREW_Z + NUT_AF / 2 + NUT_FLOAT)
+    return t
 
 
 def y_plate_inlays():
     """Zero dot and X index red, other dots white (separate bodies for multi-material)."""
-    red = Compound([Pos(-H, 0, YP_Z0 + 4.0) * dot(3.2, 0.6, "-x", lift=0),
-                    Pos(0.0, H, YP_Z1 - 2.5) * dot(2.6, 0.6, "+y", lift=0)])
-    white = Compound([Pos(-H, mm, YP_Z0 + 4.0) * dot(2.0, 0.6, "-x", lift=0)
+    red = Compound([Pos(-H, 0, YP_Z1 - 4.5) * dot(3.2, 0.6, "-x", lift=0)])
+    white = Compound([Pos(-H, mm, YP_Z1 - 4.5) * dot(2.0, 0.6, "-x", lift=0)
                       for mm in range(-int(RISE), int(FALL) + 1, 5) if mm])
     return red, white
 
@@ -400,8 +448,11 @@ def y_plate_inlays():
 # --------------------------------------------------------------------------
 # LENS PANEL (X plate): back face on the bed; metal M65 flange flush with the front
 # --------------------------------------------------------------------------
-X_BLOCK_X = (-BLOCK_PITCH / 2, BLOCK_PITCH / 2)
-STOP_PIN = (-45.6, -45.6)            # r 64.5 at 225 deg
+STOP_R = FOCUS_OD / 2 + 3.0
+STOP_PIN = (-STOP_R * math.sqrt(0.5), -STOP_R * math.sqrt(0.5))   # at 225 deg, just outside the ring
+INDEX_R = FOCUS_OD / 2 + 2.2          # focus index and depth-of-field dots
+X_SCALE_Y = -61.0                     # shift dots on the lens panel front; the index is on the bottom rail
+X_INDEX = (0.0, -68.5)
 TURRET_SCREWS = ((-5.5, X_SCREW_Y + 5.0), (5.5, X_SCREW_Y + 5.0))
 
 
@@ -426,13 +477,9 @@ def x_plate_part():
         x, y = FLANGE_PCD / 2 * math.cos(math.radians(a)), FLANGE_PCD / 2 * math.sin(math.radians(a))
         p -= cyl_z(1.7, z0 - 1, z1, x, y)
         p -= Pos(x, y, z0 - 0.01) * Cone(3.2, 1.7, 1.6, align=Z_UP)
-    # horizontal carriages: 4 x M3 countersunk from the front
-    for xx in X_BLOCK_X:
-        for dx in (-BLOCK_HOLES[1] / 2, BLOCK_HOLES[1] / 2):
-            for dy in (-BLOCK_HOLES[0] / 2, BLOCK_HOLES[0] / 2):
-                x, y = xx + dx, X_RAIL_Y + dy
-                p -= cyl_z(1.7, z0 - 1, z1 + 1, x, y)
-                p -= Pos(x, y, z1 - 1.61) * Cone(1.7, 3.2, 1.62, align=Z_UP)
+    # dovetail lips top and bottom, between the two horizontal rails
+    for s_ in (-1, 1):
+        p -= prism(lip_cut_profile(X_LIP, XP_Z1 - YP_Z1 + 2), "x", s_, YP_Z1, -H - 1, H + 1)
     # turret screws (inserts in the rear face)
     for x, y in TURRET_SCREWS:
         p -= insert_hole(x, y, z0, "-z", depth=3.8)
@@ -441,27 +488,27 @@ def x_plate_part():
     # infinity stop pin (M3 screw standing on the front)
     p -= insert_hole(*STOP_PIN, z1, "+z", depth=4.5)
     # depth-of-field dots (f/11 small, f/22 large) and the focus index (red) above the ring
-    r = FOCUS_OD / 2 + 4.0
+    r = INDEX_R
     p -= Pos(0, r, z1) * dot(3.4, 0.6)
     for n, dd in ((11, 1.8), (22, 2.6)):
         for s in (-1, 1):
             p -= Rot(0, 0, s * dof_angle(n)) * (Pos(0, r, z1) * dot(dd, 0.6))
-    # X scale dots on the top edge (zero larger)
+    # X scale on the front, along the bottom rail (its index is on the rail)
     for mm in range(-25, 26, 5):
-        p -= Pos(mm, H, (z0 + z1) / 2) * dot(3.2 if mm == 0 else 2.0, 0.6, "+y")
+        p -= Pos(mm, X_SCALE_Y, z1) * dot(3.2 if mm == 0 else 2.0, 0.6)
     return p
 
 
 def x_plate_inlays():
-    r = FOCUS_OD / 2 + 4.0
-    red = [Pos(0, r, XP_Z1) * dot(3.4, 0.6, lift=0), Pos(0, H, (XP_Z0 + XP_Z1) / 2) * dot(3.2, 0.6, "+y", lift=0)]
+    r = INDEX_R
+    red = [Pos(0, r, XP_Z1) * dot(3.4, 0.6, lift=0), Pos(0, X_SCALE_Y, XP_Z1) * dot(3.2, 0.6, lift=0)]
     white = []
     for n, dd in ((11, 1.8), (22, 2.6)):
         for s in (-1, 1):
             white.append(Rot(0, 0, s * dof_angle(n)) * (Pos(0, r, XP_Z1) * dot(dd, 0.6, lift=0)))
     for mm in range(-25, 26, 5):
         if mm:
-            white.append(Pos(mm, H, (XP_Z0 + XP_Z1) / 2) * dot(2.0, 0.6, "+y", lift=0))
+            white.append(Pos(mm, X_SCALE_Y, XP_Z1) * dot(2.0, 0.6, lift=0))
     return Compound(red), Compound(white)
 
 
@@ -506,8 +553,10 @@ def focus_ring_part():
     lever = Rot(0, 0, -LEVER_ANG) * (Pos(0, r + 4, z0 + 2 + (FOCUS_W - 2) / 2) * Box(12, 10, FOCUS_W - 2))
     ring += sfillet(lever, lever.edges().filter_by(Axis.Z), 2.5)
     # stop tab on the rear face with a tangential M3 stop screw (adjust infinity per lens)
-    ring += Rot(0, 0, -STOP_TAB_ANG) * (Pos(0, r - 3.0, z0 - 0.65) * Box(10, 6, 1.5))
-    ring -= Rot(0, 0, -STOP_TAB_ANG) * (Pos(0, r - 3.0, z0 - 0.3) * Rot(0, 90, 0) * Cylinder(1.25, 12))
+    tab = Pos(0, r + 2.0, z0 - 1.2 + (FOCUS_W + 1.2) / 2) * Box(10, 8, FOCUS_W + 1.2)
+    tab = sfillet(tab, tab.edges().filter_by(Axis.Z), 1.5)
+    ring += Rot(0, 0, -STOP_TAB_ANG) * tab
+    ring -= Rot(0, 0, -STOP_TAB_ANG) * (Pos(0, STOP_R, z0 + 0.2) * Rot(0, 90, 0) * Cylinder(1.25, 12))
     # 4 radial M3 nylon-tip grub screws (2.5 mm holes, tap M3)
     for a in (45, 135, 225, 315):
         ring -= Rot(0, 0, a) * (Pos(0, (r + HELI_OD / 2) / 2, z0 + FOCUS_W / 2) * Rot(90, 0, 0) * Cylinder(1.25, r))
@@ -606,18 +655,21 @@ def adapter_part(with_thread=True, flange_t=ADAPTER_T):
 # KNOBS (base on the bed)
 # --------------------------------------------------------------------------
 def knob_part():
+    """Leica-style: fine straight knurl, a smooth chamfered crown, one red dot."""
     d, h = KNOB_D, KNOB_H
+    crown = 3.4
     k = Cylinder(d / 2, h, align=Z_UP)
-    for i in range(30):
-        k -= Rot(0, 0, i * 12) * Pos(d / 2 + 0.35, 0, h / 2 + 0.8) * Cylinder(0.8, h - 3.0)
-    k = sfillet(k, k.edges().filter_by(GeomType.CIRCLE).group_by(Axis.Z)[-1], 1.0)
-    k -= Pos(0, 3.5, h + 1.8) * Sphere(3.2)                                   # spinner dimple
+    k = schamfer(k, k.edges().filter_by(GeomType.CIRCLE).group_by(Axis.Z)[-1], 1.0)
+    k = schamfer(k, k.edges().filter_by(GeomType.CIRCLE).group_by(Axis.Z)[0], 0.4)
+    L = h - crown - 1.2
+    for i in range(48):
+        k -= Rot(0, 0, i * 7.5) * Pos(d / 2 + 0.3, 0, 0.8 + L / 2) * Cylinder(0.6, L)
+    k -= cyl_z(d / 2 + 1, h - crown - 0.5, h - crown) - cyl_z(d / 2 - 0.35, h - crown - 1, h)   # hairline
     k -= Pos(0, 0, -0.1) * extrude(hexagon(NUT_AF + 0.3), amount=NUT_T + 0.3)
     k -= cyl_z(ROD_D / 2 + 0.25, -1, h - 1.5)
     k -= Pos(0, 0, NUT_T + 3.0) * Rot(0, 90, 0) * Cylinder(1.25, d)          # M3 grub
-    k -= cyl_z(5.5, -0.1, 0.9) - cyl_z(3.4, -1, 2)                           # O-ring groove
-    k -= Pos(0, -(d / 2 - 3.6), h) * dot(2.4, 0.6)
-    index = Pos(0, -(d / 2 - 3.6), h) * dot(2.4, 0.6, lift=0)
+    k -= Pos(0, -(d / 2 - 4.2), h) * dot(2.4, 0.6)
+    index = Pos(0, -(d / 2 - 4.2), h) * dot(2.4, 0.6, lift=0)
     return k, index
 
 
@@ -660,14 +712,25 @@ def top_handle():
     for c in handle_screw_holes(x1 - x0, HANDLE_INSERT_Z_TOP):
         h -= c
     # landscape level: tubular vial along X in the bar, read from behind
-    h -= box_at(-14, 14, HANDLE_H - HANDLE_BAR / 2 - 3.6, HANDLE_H - HANDLE_BAR / 2 + 3.6, z0 - 1, z0 + 7.5)
+    h -= box_at(-14, 14, VIAL_Y - 3.6, VIAL_Y + 3.6, z0 - 1, z0 + 7.5)
+    # two ISO 518 accessory shoes, open to the rear (layers follow the slot: the lips print as walls)
+    for xs in SHOES_X:
+        u = xs - (x0 + x1) / 2
+        h -= box_at(u - SHOE_OPEN / 2, u + SHOE_OPEN / 2, HANDLE_H - SHOE_LIP - 0.1, HANDLE_H + 1, z0 - 1, z0 + SHOE_L)
+        h -= box_at(u - SHOE_W / 2, u + SHOE_W / 2, HANDLE_H - SHOE_LIP - SHOE_D, HANDLE_H - SHOE_LIP, z0 - 1, z0 + SHOE_L)
+        lead = Pos(u, HANDLE_H - SHOE_LIP - SHOE_D / 2, z0) * Rot(0, 0, 0) * Box(SHOE_W + 2, SHOE_D + 1.2, 2.0)
+        h -= lead
     return Pos((x0 + x1) / 2, H, 0) * h
+
+
+SHOE_OPEN, SHOE_W, SHOE_D, SHOE_LIP, SHOE_L = 12.6, 18.9, 2.2, 1.6, 18.5
+VIAL_Y = HANDLE_BAR * 0.0 + 35.0
 
 
 def top_vial():
     x0, x1 = TOP_HANDLE_X
     z0, _ = TOP_HANDLE_Z
-    return Pos((x0 + x1) / 2, H + HANDLE_H - HANDLE_BAR / 2, z0 + 3.5) * Rot(0, 90, 0) * Cylinder(3.4, 25.0)
+    return Pos((x0 + x1) / 2, H + VIAL_Y, z0 + 3.5) * Rot(0, 90, 0) * Cylinder(3.4, 25.0)
 
 
 def arca_plate():
@@ -763,35 +826,6 @@ def shrink_gauge():
 # --------------------------------------------------------------------------
 # BOUGHT PARTS (envelopes)
 # --------------------------------------------------------------------------
-def rail_holes(length):
-    """Hole positions (symmetric, 20 mm pitch) along a rail of this length, centred on 0."""
-    n = int((length - 8) // RAIL_HOLE_PITCH) + 1
-    return [(i - (n - 1) / 2) * RAIL_HOLE_PITCH for i in range(n)]
-
-
-def mgn9_rail(length):
-    r = Box(length, RAIL_W, RAIL_H, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    for s in (-1, 1):
-        r -= Pos(0, s * RAIL_W / 2, 4.2) * Box(length + 2, 1.6, 1.6)
-    for xx in rail_holes(length):
-        r -= Pos(xx, 0, 0) * Cylinder(1.75, 20)
-        r -= Pos(xx, 0, RAIL_H - 3.0) * Cylinder(3.0, 4, align=Z_UP)
-    return r
-
-
-def mgn9_block():
-    b = Box(BLOCK_L - 6, BLOCK_W, BLOCK_H - BLOCK_UNDER, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    b -= Pos(0, 0, -1) * Box(BLOCK_L, RAIL_W + 0.4, RAIL_H - BLOCK_UNDER + 1, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    b = sfillet(b, b.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 0.6)
-    for dx in (-BLOCK_HOLES[1] / 2, BLOCK_HOLES[1] / 2):
-        for dy in (-BLOCK_HOLES[0] / 2, BLOCK_HOLES[0] / 2):
-            b -= Pos(dx, dy, BLOCK_H - BLOCK_UNDER - 3) * Cylinder(1.25, 4, align=Z_UP)
-    seals = Box(BLOCK_L, BLOCK_W - 1, BLOCK_H - BLOCK_UNDER - 0.5, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    seals -= Box(BLOCK_L - 6, BLOCK_W + 2, 30)
-    seals -= Pos(0, 0, -1) * Box(BLOCK_L + 2, RAIL_W + 0.4, RAIL_H - BLOCK_UNDER + 1, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    return b, seals
-
-
 def helicoid_part(length):
     z0 = HELI_Z0
     core = cyl_z(HELI_OD / 2 - 4, z0, z0 + length) - cyl_z(HELI_BORE / 2, z0 - 1, z0 + length + 1)

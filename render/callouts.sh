@@ -10,6 +10,6 @@ sheets=("$@"); [[ ${#sheets} -eq 0 ]] && sheets=(out/mesh_cal_*(:t:s/mesh_cal_//
 for s in $sheets; do
   d=out/mesh_cal_$s
   read view dist expo <<< $($PY -c "import json;j=json.load(open('$d/points.json'));print(','.join(map(str,j['view'])),j.get('dist',4.3),j.get('expo',-2.4))")
-  env EXPO=$expo DIST=$dist ASPECT=0.75 PTS=$d/points.json $B -b -P render/white.py -- $d/manifest.json $R/cal_$s.png $view 64 1600 >/dev/null 2>&1
+  env SEALGREY=1 EXPO=$expo DIST=$dist ASPECT=0.75 PTS=$d/points.json $B -b -P render/white.py -- $d/manifest.json $R/cal_$s.png $view 64 1600 >/dev/null 2>&1
   $PY render/letter.py docs/img/parts $R/cal_$s.png
 done
