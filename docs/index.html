@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calegari View 1</title>
+<meta name="description" content="A rigid 6x7 architecture camera you can print at home: screw-driven rise and shift, helicoid focusing, Mamiya RB67 backs, large-format wide angles. Open source.">
+<meta property="og:title" content="Calegari View 1">
+<meta property="og:description" content="A rigid 6x7 architecture camera you can print at home. Open source.">
+<meta property="og:image" content="https://achillecalegari.github.io/calegari-view-1/img/01_three_quarter.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111112;
+    --ink-2: #505056;
+    --ink-3: #86868b;
+    --line: #e6e6e8;
+    --paper: #ffffff;
+    --soft: #f5f5f7;
+    --red: #c8102e;
+    --max: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; height: auto; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.86);
+        backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px);
+        border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  nav .brand { font-weight: 600; letter-spacing: -0.01em; text-decoration: none; display: flex; gap: 10px; align-items: center; }
+  nav .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); display: inline-block; }
+  nav ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; font-size: 14px; }
+  nav ul a { text-decoration: none; color: var(--ink-2); }
+  nav ul a:hover { color: var(--ink); }
+
+  /* hero */
+  .hero { text-align: center; padding: 72px 0 24px; }
+  .eyebrow { color: var(--red); font-weight: 600; font-size: 15px; letter-spacing: .02em; margin: 0 0 12px; }
+  h1 { font-size: clamp(44px, 8vw, 88px); line-height: 1.02; letter-spacing: -0.035em; margin: 0; font-weight: 700; }
+  .lede { font-size: clamp(19px, 2.4vw, 26px); color: var(--ink-2); max-width: 760px; margin: 20px auto 0; letter-spacing: -0.01em; line-height: 1.35; }
+  .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 32px 0 8px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; font-size: 16px; font-weight: 500;
+         text-decoration: none; border: 1px solid var(--ink); }
+  .btn.primary { background: var(--ink); color: #fff; }
+  .btn.primary:hover { background: #2a2a2d; }
+  .btn.ghost:hover { background: var(--soft); }
+  .hero-img { margin: 24px auto 0; max-width: 1000px; }
+
+  /* sections */
+  section { padding: 96px 0; }
+  section.soft { background: var(--soft); }
+  h2 { font-size: clamp(32px, 5vw, 56px); letter-spacing: -0.03em; line-height: 1.05; margin: 0 0 18px; font-weight: 700; }
+  h3 { font-size: 21px; letter-spacing: -0.01em; margin: 0 0 8px; font-weight: 600; }
+  .kicker { color: var(--ink-3); font-weight: 600; font-size: 15px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: .08em; }
+  .prose { max-width: 720px; font-size: 19px; color: var(--ink-2); }
+  .prose p { margin: 0 0 18px; }
+  .prose strong { color: var(--ink); font-weight: 600; }
+
+  /* specs */
+  .specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line);
+           border-radius: 18px; overflow: hidden; margin-top: 40px; }
+  .spec { background: var(--paper); padding: 26px 26px 24px; }
+  .spec .k { font-size: 13px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .07em; font-weight: 600; }
+  .spec .v { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; margin-top: 6px; line-height: 1.25; }
+  .spec .s { font-size: 15px; color: var(--ink-2); margin-top: 6px; }
+
+  /* gallery */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+  .gallery figure { margin: 0; background: var(--paper); border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
+  .gallery figcaption { font-size: 14px; color: var(--ink-3); padding: 12px 16px 16px; }
+  .wide { grid-column: span 3; }
+
+  /* layers */
+  .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center; }
+  .layers { list-style: none; padding: 0; margin: 0; counter-reset: l; }
+  .layers li { padding: 16px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 34px 1fr; }
+  .layers li:last-child { border-bottom: 1px solid var(--line); }
+  .layers li::before { counter-increment: l; content: counter(l); font-weight: 700; color: var(--red); }
+  .layers b { display: block; font-weight: 600; }
+  .layers span { color: var(--ink-2); font-size: 16px; }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
+  .step { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .step .t { padding: 18px 22px 22px; }
+  .step .n { color: var(--red); font-weight: 700; font-size: 14px; }
+  .step p { margin: 6px 0 0; color: var(--ink-2); font-size: 16px; }
+
+  /* checks */
+  .checks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
+  .check { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
+  .check .big { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; }
+  .check .big small { font-size: 18px; font-weight: 600; }
+  .check p { margin: 8px 0 0; color: var(--ink-2); font-size: 15px; }
+  .note { margin-top: 28px; font-size: 16px; color: var(--ink-2); max-width: 760px; }
+
+  /* downloads */
+  .dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+  .dl a { display: block; padding: 24px; border-radius: 18px; border: 1px solid var(--line); text-decoration: none; background: var(--paper); }
+  .dl a:hover { border-color: var(--ink); }
+  .dl b { display: block; font-size: 19px; letter-spacing: -0.01em; }
+  .dl span { display: block; color: var(--ink-2); font-size: 15px; margin-top: 6px; }
+  .dl i { font-style: normal; color: var(--red); font-weight: 600; font-size: 14px; display: block; margin-top: 14px; }
+
+  footer { padding: 48px 0 64px; color: var(--ink-3); font-size: 14px; border-top: 1px solid var(--line); }
+  footer a { color: var(--ink-2); }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .specs, .gallery, .checks, .dl { grid-template-columns: 1fr 1fr; }
+    .wide { grid-column: span 2; }
+    .split, .steps { grid-template-columns: 1fr; }
+    section { padding: 72px 0; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .specs, .gallery, .checks, .dl { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .hero { padding-top: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>Calegari View 1</a>
+    <ul>
+      <li><a href="#why">Why</a></li>
+      <li><a href="#specs">Specs</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#build">Build</a></li>
+      <li><a href="#checks">Checks</a></li>
+      <li><a href="https://github.com/achillecalegari/calegari-view-1">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Open-source view camera</p>
+    <h1>Calegari View 1</h1>
+    <p class="lede">A rigid 6×7 architecture camera you print at home. Rise and shift on screws, focus on a helicoid, Mamiya RB67 backs, large-format wide angles.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/achillecalegari/calegari-view-1/blob/main/docs/assembly.md">Build guide</a>
+      <a class="btn ghost" href="https://github.com/achillecalegari/calegari-view-1/archive/refs/heads/main.zip">Download everything</a>
+    </div>
+    <img class="hero-img" src="img/01_three_quarter.jpg" alt="Calegari View 1, three-quarter view" width="2000" height="1500">
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap">
+    <p class="kicker">Why</p>
+    <h2>A view camera I could never justify buying.</h2>
+    <div class="prose">
+      <p>I have wanted a view camera for years. The rigid kind, compact, built for architecture: you put it on the tripod, raise the lens a couple of centimetres and the verticals stay vertical, straight on the negative, with nothing to fix afterwards.</p>
+      <p>The problem is the price. A new Arca-Swiss or Silvestri costs thousands before you add a lens, and the used market is not much kinder. So I designed my own, around what I already had: a <strong>Bambu Lab P1S</strong>, the <strong>Mamiya RB67 backs</strong> you can find everywhere for little money, and a used large-format wide angle.</p>
+      <p>Everything is here: the print files, the parametric model they come from, the shopping list with links and step-by-step instructions. Without back and lens, the parts cost <strong>about 450 euro</strong>, much of it in packs of screws and inserts that will outlast the camera.</p>
+    </div>
+  </div>
+</section>
+
+<section class="soft" id="specs">
+  <div class="wrap">
+    <p class="kicker">Specifications</p>
+    <h2>Small, square, serious.</h2>
+    <div class="specs">
+      <div class="spec"><div class="k">Format</div><div class="v">6×7</div><div class="s">56 × 69.5 mm; the gate also clears 6×8</div></div>
+      <div class="spec"><div class="k">Back</div><div class="v">Mamiya RB67</div><div class="s">Pro, Pro-S, Pro-SD; Graflok-type interface and ground glass</div></div>
+      <div class="spec"><div class="k">Lens</div><div class="v">65 mm, Copal 0</div><div class="s">on a Linhof Technika 99 × 96 board</div></div>
+      <div class="spec"><div class="k">Rise and shift</div><div class="v">+25 / −8 mm, ±25 mm</div><div class="s">lead screws, 1 mm per turn, hard stops, zero clicks</div></div>
+      <div class="spec"><div class="k">Focus</div><div class="v">∞ to 0.47 m</div><div class="s">M65 helicoid on a metal flange, adjustable infinity stop</div></div>
+      <div class="spec"><div class="k">Tripod</div><div class="v">Arca-Swiss × 2</div><div class="s">under the body and on the side handle, for portrait</div></div>
+      <div class="spec"><div class="k">Light seal</div><div class="v">≥ 5.3 mm</div><div class="s">contact band at every shift position, velvet-lined</div></div>
+      <div class="spec"><div class="k">Size</div><div class="v">214 × 212 × 161 mm</div><div class="s">with back and lens</div></div>
+      <div class="spec"><div class="k">Weight</div><div class="v">≈ 1.1 kg</div><div class="s">without back and lens; about 2 kg ready to shoot</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Gallery</p>
+    <h2>Every angle.</h2>
+    <div class="gallery">
+      <figure><img src="img/02_front.jpg" alt="Front" loading="lazy"><figcaption>Front</figcaption></figure>
+      <figure><img src="img/03_side.jpg" alt="Side" loading="lazy"><figcaption>Side, photographer's right: rise scale and shift knob</figcaption></figure>
+      <figure><img src="img/05_top.jpg" alt="Top" loading="lazy"><figcaption>Top: focus ring, depth-of-field dots, shift scale</figcaption></figure>
+      <figure><img src="img/04_rear.jpg" alt="Rear" loading="lazy"><figcaption>Rear: RB67 back, red Graflok blade, portrait Arca plate</figcaption></figure>
+      <figure><img src="img/08_shift.jpg" alt="Rise and shift" loading="lazy"><figcaption>25 mm of rise, 12 mm of shift</figcaption></figure>
+      <figure><img src="img/07_section_three_quarter.jpg" alt="Section" loading="lazy"><figcaption>Cutaway: the light path through four sliding slabs</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="soft" id="how">
+  <div class="wrap split">
+    <div><img src="img/09_exploded.jpg" alt="Exploded view" loading="lazy"></div>
+    <div>
+      <p class="kicker">How it works</p>
+      <h2>Four slabs, one light path.</h2>
+      <ol class="layers">
+        <li><div><b>Graflok module</b><span>The back's seat, a fixed bottom rail that hooks it and releases the Pro-S interlock, and a red blade that locks it.</span></div></li>
+        <li><div><b>Body</b><span>Stepped gate, vertical steel guide, rise screw, Arca plinth. One print.</span></div></li>
+        <li><div><b>Y plate</b><span>Rises and falls on the guide and carries the horizontal guide and the shift screw.</span></div></li>
+        <li><div><b>Lens panel</b><span>Shifts left and right, holds a metal M65 flange for the helicoid.</span></div></li>
+        <li><div><b>Focus and lens</b><span>Helicoid, 124 mm focus ring, a printed adapter that is also the calibration part, and a Technika board holder with a spring latch.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <p class="kicker">Build</p>
+    <h2>Ten steps, one afternoon.</h2>
+    <p class="prose">Test-print the back interface and the M65 thread first, then eight plates of black ASA and one of red. Every screw, insert and nut is listed with a link in the <a href="https://github.com/achillecalegari/calegari-view-1/blob/main/docs/bom.md">shopping list</a>.</p>
+    <div class="steps">
+      <div class="step"><img src="img/step_01.jpg" alt="Step 1" loading="lazy"><div class="t"><div class="n">Step 1</div><h3>Body</h3><p>Heat-set inserts, portrait level, zero detent, velvet around the gate.</p></div></div>
+      <div class="step"><img src="img/step_02.jpg" alt="Step 2" loading="lazy"><div class="t"><div class="n">Step 2</div><h3>Graflok module</h3><p>Screwed into the rear recess; red blade and clamp wheel.</p></div></div>
+      <div class="step"><img src="img/step_03.jpg" alt="Step 3" loading="lazy"><div class="t"><div class="n">Step 3</div><h3>Arca plates and handles</h3><p>Two aluminium plates, top and side handles, levels readable from behind.</p></div></div>
+      <div class="step"><img src="img/step_04.jpg" alt="Step 4" loading="lazy"><div class="t"><div class="n">Step 4</div><h3>Vertical guide</h3><p>MGN9 rail bonded and screwed between two ribs; bronze bushings.</p></div></div>
+      <div class="step"><img src="img/step_05.jpg" alt="Step 5" loading="lazy"><div class="t"><div class="n">Step 5</div><h3>Y plate and rise screw</h3><p>Floating brass nut, M6 screw, O-ring drag, knob on top.</p></div></div>
+      <div class="step"><img src="img/step_06.jpg" alt="Step 6" loading="lazy"><div class="t"><div class="n">Step 6</div><h3>Horizontal guide</h3><p>Second rail on the Y plate front; bushings for the shift screw.</p></div></div>
+      <div class="step"><img src="img/step_07.jpg" alt="Step 7" loading="lazy"><div class="t"><div class="n">Step 7</div><h3>Lens panel</h3><p>Metal flange, nut turret, shift screw and knob, infinity stop pin.</p></div></div>
+      <div class="step"><img src="img/step_08.jpg" alt="Step 8" loading="lazy"><div class="t"><div class="n">Step 8</div><h3>Helicoid and focus ring</h3><p>Aligned at calibration, with the red infinity dot on the index.</p></div></div>
+      <div class="step"><img src="img/step_09.jpg" alt="Step 9" loading="lazy"><div class="t"><div class="n">Step 9</div><h3>Board holder and lens</h3><p>Adapter ring, felt seal, spring latch, Technika board.</p></div></div>
+      <div class="step"><img src="img/step_10.jpg" alt="Step 10" loading="lazy"><div class="t"><div class="n">Step 10</div><h3>Film back</h3><p>Hook under the rail, swing in, slide the blade up, tighten.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="soft" id="checks">
+  <div class="wrap">
+    <p class="kicker">Checked before printed</p>
+    <h2>Broken on purpose, then fixed.</h2>
+    <p class="prose">Five independent adversarial reviews (mechanics and printing, light-tightness, optics, the RB67 interface, field use) found 15 blockers in the first version. All of them are fixed, and the checks now run automatically on every change.</p>
+    <div class="checks">
+      <div class="check"><div class="big">0</div><p>interferences among 150 parts, at home and at the four shift extremes, locks open and closed</p></div>
+      <div class="check"><div class="big">5.3<small> mm</small></div><p>narrowest light seal between sliding plates, at any shift</p></div>
+      <div class="check"><div class="big">1</div><p>solid per printed part: no floating islands in any file</p></div>
+      <div class="check"><div class="big">21<small> mm</small></div><p>longest bridge in any part, in its print orientation</p></div>
+    </div>
+    <p class="note">What a computer cannot prove, a test print can: the back interface and the M65 thread come first, on a two-hour plate, before the body. The <a href="https://github.com/achillecalegari/calegari-view-1/blob/main/docs/calibration.md">calibration guide</a> says what to measure and how.</p>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap">
+    <p class="kicker">Files</p>
+    <h2>Everything you need.</h2>
+    <div class="dl">
+      <a href="https://github.com/achillecalegari/calegari-view-1/tree/main/print/plates"><b>Bambu plates</b><span>3MF plates for a P1S, one material per plate, parts already oriented.</span><i>print/plates →</i></a>
+      <a href="https://github.com/achillecalegari/calegari-view-1/blob/main/docs/bom.md"><b>Shopping list</b><span>Rails, screws, inserts, flange, helicoid, Arca plates, back and lenses, with links.</span><i>docs/bom.md →</i></a>
+      <a href="https://github.com/achillecalegari/calegari-view-1/blob/main/docs/printing.md"><b>Printing guide</b><span>Settings, orientations, multi-material dots, what to check after printing.</span><i>docs/printing.md →</i></a>
+      <a href="https://github.com/achillecalegari/calegari-view-1/blob/main/docs/assembly.md"><b>Assembly</b><span>Ten illustrated steps with every screw by name.</span><i>docs/assembly.md →</i></a>
+      <a href="https://github.com/achillecalegari/calegari-view-1/tree/main/print/step"><b>STEP files</b><span>Every printed part for Fusion or FreeCAD.</span><i>print/step →</i></a>
+      <a href="https://github.com/achillecalegari/calegari-view-1/tree/main/cad"><b>Parametric model</b><span>Python and build123d: change a number, rebuild the camera.</span><i>cad →</i></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Designed by Achille Calegari. Licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>: build it, change it, share it with credit; do not sell it.
+    RB67 interface measured from <a href="https://github.com/DamienHazard/Super-67">Super-67</a> and the <a href="https://www.thingiverse.com/thing:7270507">RB67 pinhole body</a>.
+  </div>
+</footer>
+
+</body>
+</html>
