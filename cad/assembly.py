@@ -53,8 +53,6 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
         add(f"insert_yrail_{yy}", Pos(Y_RAIL_X, yy, YP_Z0 - BLOCK_H - 3.0) * hw.heat_insert(3, 3.0), "brass", "body")
     for x in P.TOP_POSTS_X:
         add(f"insert_top_{x}", Pos(x, H, P.HANDLE_INSERT_Z_TOP) * orient(hw.heat_insert(4), "-y"), "brass", "body")
-    for y in P.SIDE_POSTS_Y:
-        add(f"insert_side_{y}", Pos(H, y, P.HANDLE_INSERT_Z_SIDE) * orient(hw.heat_insert(4), "-x"), "brass", "body")
 
     # ---------------- Graflok module and back ----------------
     add("graflok_module", P.graflok_module(), "body_black", "graflok", True)
@@ -83,10 +81,6 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     for x in P.TOP_POSTS_X:
         add(f"screw_top_{x}", Pos(x, H + HANDLE_H - 4.5, P.HANDLE_INSERT_Z_TOP) * orient(hw.socket_cap(4, 50), "+y"),
             "black_steel", "top_handle", extra=(0, 0.5, 0))
-    add("side_handle", P.side_handle(), "body_black", "side_handle", True)
-    for y in P.SIDE_POSTS_Y:
-        add(f"screw_side_{y}", Pos(H + HANDLE_H - 4.5, y, P.HANDLE_INSERT_Z_SIDE) * orient(hw.socket_cap(4, 45), "+x"),
-            "black_steel", "side_handle", extra=(0.5, 0, 0))
 
     # ---------------- vertical stage ----------------
     rail_z = YP_Z0 - BLOCK_H

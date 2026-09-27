@@ -2,7 +2,7 @@
 
 [Back to the project](../README.md)
 
-Designed for a Bambu Lab P1S with AMS, but any enclosed printer with a 256 x 256 mm bed works. The largest part, the body, is 190 x 190 mm on the bed.
+Designed for a Bambu Lab P1S with AMS, but any enclosed printer with a 256 x 256 mm bed works. The largest part, the body with its L bracket, is 170 x 170 mm on the bed.
 
 ## Order: test first
 
@@ -18,7 +18,7 @@ Print and fit the risky interfaces before spending half a kilo of ASA.
 
 **ASA.** It does not warp in a hot car, it resists UV and it has a matte finish that reads like anodized aluminium in black. PLA is fine for fit tests, not for the camera. No fibre-filled filaments: they need a hardened nozzle and give nothing here.
 
-- Black ASA: about 600 g for the whole camera, purge and brims included.
+- Black ASA: about 700 g for the whole camera, purge and brims included (a 1 kg spool is enough).
 - Red ASA: a few grams (Graflok blade, board latch, zero and infinity dots).
 - White ASA: a few grams, optional (the other scale dots).
 
@@ -48,8 +48,8 @@ All parts are already oriented. Open the 3MF in Bambu Studio, check the settings
 | Plate | Parts | Material |
 |---|---|---|
 | `plate_00_test_1` | Graflok module, blade, wheel, M65 male coupon, flange pocket coupon | PLA or ASA |
-| `plate_01_black` | body, top handle, 2 knobs, turret, wheel, 2 pads, 8 plugs | ASA black |
-| `plate_02_black` | Y plate, side handle | ASA black |
+| `plate_01_black` | body with L bracket, top handle, 2 knobs, turret, wheel, 2 pads, 8 plugs | ASA black |
+| `plate_02_black` | Y plate | ASA black |
 | `plate_03_black` | lens panel (X plate) | ASA black |
 | `plate_04_black` | focus ring, adapter ring | ASA black |
 | `plate_05_black` | board holder | ASA black |
@@ -60,7 +60,7 @@ Single parts, oriented and dropped on the bed, are in `print/stl`; the same part
 
 | Part | Orientation | Notes |
 |---|---|---|
-| body | front face down | the Graflok seat prints as the top surface of the recess: iron it |
+| body (with the L bracket) | front face down | the Graflok seat prints as the top surface of the recess: iron it; the name and the red dot are on the bed side, sharp |
 | Graflok module | seat face down | |
 | Graflok blade | countersunk slots up | 100 % infill |
 | Y plate | front face down | the nut turret points up |
@@ -71,7 +71,7 @@ Single parts, oriented and dropped on the bed, are in `print/stl`; the same part
 | board holder | rear face down | |
 | board latch | flat | red |
 | knobs | base down | |
-| handles | flat on their side | layers follow the loop: stronger |
+| top handle | flat on its side | layers follow the loop: stronger |
 
 ## Coloured dots with the AMS
 

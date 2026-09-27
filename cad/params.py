@@ -57,7 +57,7 @@ HELI_Z0 = ADAPTER_Z0 - HELI_INF      # helicoid shoulder = lens panel front face
 # --------------------------------------------------------------------------
 # Shift stages
 # --------------------------------------------------------------------------
-RISE, FALL = 25.0, 8.0               # vertical travel: fall is limited by the tripod clamp
+RISE, FALL = 25.0, 25.0              # vertical travel, symmetric
 SHIFT_X = 25.0                       # lateral travel, both ways
 OVERLAP_MOVE = 8.0                   # light seal overlap in the direction of motion
 OVERLAP_FIXED = 4.0                  # ... and across it
@@ -68,7 +68,7 @@ RAIL_W, RAIL_H = 9.0, 6.5
 BLOCK_W, BLOCK_L, BLOCK_H = 20.0, 39.9, 10.0      # H: rail bottom to block top
 BLOCK_HOLES = (15.0, 16.0)                        # 4 x M3, B x C
 BLOCK_UNDER = 2.0                                 # block underside above rail bottom
-RAIL_LEN_Y, RAIL_Y_OFFSET = 118.0, 8.5              # vertical rail, asymmetric travel
+RAIL_LEN_Y, RAIL_Y_OFFSET = 134.0, 0.0              # vertical rail (same as the horizontal one)
 RAIL_LEN_X = 134.0
 RAIL_HOLE_PITCH = 20.0
 BLOCK_PITCH = 42.0                                # two blocks per rail (L 39.9)
@@ -95,7 +95,7 @@ XP_Z0 = YP_Z1 + GAP
 XP_Z1 = HELI_Z0                      # lens panel front = helicoid shoulder
 XP_T = XP_Z1 - XP_Z0
 PLATE = 148.0
-XP_NOTCH = (47.0, 48.0)              # lens panel top corners removed for |x|>47, y>48 (knob clearance)
+XP_NOTCH = (47.0, 48.0)              # lens panel top corners removed for |x|>47, y>48 (shift knob clearance)
 
 Y_RAIL_X = -58.0                     # vertical guide: photographer's right
 Y_SCREW_X = 62.0                     # vertical screw: photographer's left, knob on top
@@ -114,16 +114,19 @@ ORING_T = 1.5                        # drag O-ring under each knob (constant fri
 # --------------------------------------------------------------------------
 ARCA_W, ARCA_L, ARCA_T = 38.0, 60.0, 10.0
 ARCA_POCKET = 1.8
-PLINTH = 12.0                        # bottom plinth: the clamp jaws stay below the Y plate at full fall
+PLINTH = 22.0                        # bottom of the L bracket: the clamp jaws stay below the Y plate at full fall
 ARCA_ZC = BODY_Z1 - ARCA_W / 2 - 1.0
 
+L_Z0 = ARCA_ZC - ARCA_W / 2 - 3.0   # the L bracket (bottom plinth + side leg) reaches behind the body
+SIDE_T = 22.0                        # side leg of the L bracket (photographer's left), portrait Arca plate
+SIDE_ARCA_YC = 0.0
+
 HANDLE_BAR = 14.0
-HANDLE_POST = 16.0
+HANDLE_POST = 14.0
 HANDLE_H = 44.0                      # protrusion (30 mm finger room)
-TOP_HANDLE_X = (-72.0, 44.0)         # leaves the top-left corner to the rise knob
-TOP_HANDLE_Z = (-6.0, BODY_Z1 - 8.0) # set back 8 mm from the sliding plates (no pinch)
-SIDE_HANDLE_Y = (-62.0, 53.0)        # photographer's left; carries the portrait Arca plate
-SIDE_HANDLE_Z = (ARCA_ZC - ARCA_W / 2 - 1.0, ARCA_ZC + ARCA_W / 2 + 1.0)
+HANDLE_FLARE = 5.0                   # concave fillet where the posts meet the body
+TOP_HANDLE_X = (-62.0, 42.0)         # leaves the top-left corner to the rise knob
+TOP_HANDLE_Z = (BODY_Z0, BODY_Z1 - 6.0)  # flush with the body rear, 6 mm behind the sliding plates
 
 # --------------------------------------------------------------------------
 # Focus ring

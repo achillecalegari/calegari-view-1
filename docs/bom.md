@@ -10,7 +10,7 @@ Most items come in packs: the quantities below are what the camera uses.
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| MGN9 rail, cut to length | MGN9R, 118 mm (vertical) and 134 mm (horizontal), symmetric holes, 20 mm pitch | 2 | [Dold Mechatronik](https://www.dold-mechatronik.de/Linear-guide-MGN9R-038-kg-m-cut-50-1000mm) | about 11 EUR each | enter the length; leave "drilling positions" symmetric. Lead time was about 4 months |
+| MGN9 rail, cut to length | MGN9R, 134 mm, symmetric holes, 20 mm pitch (both rails are the same) | 2 | [Dold Mechatronik](https://www.dold-mechatronik.de/Linear-guide-MGN9R-038-kg-m-cut-50-1000mm) | about 11 EUR each | enter the length; leave "drilling positions" symmetric. Lead time was about 4 months |
 | **or** MGN9 rail, 300 mm | MGN9R, holes every 20 mm starting 10 mm from the end | 1 | [Dold Mechatronik](https://www.dold-mechatronik.de/MGN9_1) | 14.10 EUR | cut both rails from it yourself, see below |
 | MGN9H carriage | long block, 4 x M3 on 15 x 16 mm | 4 | [Dold Mechatronik](https://www.dold-mechatronik.de/Linear-carriage-MGN9H) | 13.00 EUR each | |
 | alternative, global | MGN9 cut to order with MGN9H | 2 + 4 | [RobotDigg](https://www.robotdigg.com/product/347/Custom-length-GCr15-MGN9,-MGN12-or-MGN15-Linear-Rail-n-Carriage) | on request | order by email |
@@ -25,8 +25,7 @@ Most items come in packs: the quantities below are what the camera uses.
 **Cutting the rails from a 300 mm bar.** The rail is hardened: use an abrasive cut-off wheel, cool it, and deburr the ends. The holes of both rails must be symmetric about the rail centre.
 
 - On a standard 300 mm rail, the holes sit at 10, 30, 50 mm and so on from the end.
-- Cut the **134 mm** rail from 3 to 137 mm: its holes end up 7 mm from each end.
-- Cut the **118 mm** rail from 141 to 259 mm: its holes end up 9 mm from each end.
+- Cut the first **134 mm** rail from 3 to 137 mm and the second from 143 to 277 mm: the holes of both end up 7 mm from each end.
 
 Keep the carriages on their plastic dummy rail until they go on the real one.
 
@@ -35,13 +34,13 @@ Keep the carriages on their plastic dummy rail until they go on the real one.
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
 | Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 22 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | 7.99 EUR / 50 | the holes are designed for this size; 4 mm-long inserts are too long for the Graflok module |
-| Heat-set insert M4 | Ruthex RX-M4x8.1 | 4 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen) | 9.49 EUR / 50 | handles |
-| Heat-set insert 1/4"-20 | short, 6.4 mm | 4 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-1-4-short-gewindeeinsatz-zoll-unc-20-stuck-ge-1_4x64-001) | 8.99 EUR / 20 | Arca plates |
+| Heat-set insert M4 | Ruthex RX-M4x8.1 | 2 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen) | 9.49 EUR / 50 | handles |
+| Heat-set insert 1/4"-20 | short, 6.4 mm | 4 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-1-4-short-gewindeeinsatz-zoll-unc-20-stuck-ge-1_4x64-001) | 8.99 EUR / 20 | Arca plates, two per plate |
 | M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | 8.39 EUR / 1160 | M3 x 5 (1), x 6 (8), x 8 (1), x 10 (2), x 12 (8) |
 | M3 countersunk kit | ISO 10642, stainless, 6 to 30 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0GFDNBLK2) | 8.99 EUR / 1292 | M3 x 6 (6), x 8 (4), x 10 (8) |
 | M3 x 6 button head | ISO 7380, A2 | 4 | [Amazon.de](https://www.amazon.de/dp/B07ZPTX8B2) | 7.21 EUR / 100 | adapter ring |
 | M2.5 x 6 button head | in a stainless button-head kit | 2 | [Amazon.de](https://www.amazon.de/dp/B0F3HNGTY5) | 8.59 EUR / 900 | board latch; pick the "Linsenkopf-Innensechskant-304" variant |
-| M4 socket head | ISO 4762, stainless, 45 mm and 50 mm | 2 + 2 | [Amazon.de](https://www.amazon.de/dp/B09SKJKNPM) | 6.02 / 5.40 EUR per 10 | side handle 45 mm, top handle 50 mm |
+| M4 x 50 socket head | ISO 4762, stainless | 2 | [Amazon.de](https://www.amazon.de/dp/B09SKJKNPM) | 5.40 EUR / 10 | top handle; pick the 50 mm variant |
 | M3 x 4 grub screw | nylon tip, stainless | 6 | [Amazon.de](https://www.amazon.de/dp/B0DNMYPZZ3) | 8.29 EUR / 15 | focus ring (4), knobs (2); pick M3 x 4 |
 
 ## Tripod and levels

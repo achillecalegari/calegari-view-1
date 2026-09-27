@@ -58,7 +58,7 @@ Measure three things on your helicoid:
 
 1. In a dark room, with the lens board removed, shine a strong torch into the body through the lens panel bore, and look from behind through the gate, eyes adapted for two minutes.
 2. Then do the opposite: the torch outside, pointed at every edge and slot, a paper sheet behind the gate.
-3. Repeat at the five shift positions: centre, and the four combinations of +25/-25 lateral with +25/-8 rise.
+3. Repeat at the five shift positions: centre, and the four combinations of +/-25 mm lateral with +/-25 mm rise and fall.
 4. **Film test.** Load a roll, cap the lens and leave the camera in the sun for ten minutes at maximum shift, then develop. It must come out clear.
 
 ### Infinity
@@ -95,5 +95,5 @@ If one corner is consistently off, check the plates for flatness (straightedge) 
 ## 3. Limits worth knowing
 
 - **Super-Angulon 65/8 (153.5 mm image circle).** Full rise alone and full lateral shift alone are fine. Combined, keep each axis under about 22 mm or the corner falls outside the image circle. The Nikkor-SW 65/4 and Grandagon-N 65/4.5 (170 mm) cover 25 + 25.
-- **Portrait on the side handle.** The clamp must be 65 mm or smaller: the model checks a 65 x 65 mm clamp.
-- **Fall.** Limited to 8 mm, so the Y plate never reaches the jaws of the bottom clamp.
+- **Portrait on the side leg.** The model checks a 65 x 65 mm clamp; larger clamps may touch the lens panel at full shift toward the clamp.
+- **Fall.** At full fall the Y plate clears a 65 mm clamp's jaws by about 1 mm, thanks to the 22 mm base of the L bracket; much taller clamp jaws would touch it.

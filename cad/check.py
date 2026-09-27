@@ -20,7 +20,7 @@ EXPECTED = [
     ("insert_", "board_holder"), ("insert_", "screw_"),
     ("screw_gf", "graflok_module"), ("screw_blade", "graflok_blade"), ("screw_blade", "graflok_module"),
     ("screw_wheel", "graflok_wheel"), ("screw_wheel", "graflok_module"), ("screw_wheel", "graflok_blade"),
-    ("screw_top", "top_handle"), ("screw_top", "body"), ("screw_side", "side_handle"), ("screw_side", "body"),
+    ("screw_top", "top_handle"), ("screw_top", "body"),
     ("screw_yrail", "rail_y"), ("screw_xrail", "rail_x"),
     ("screw_yblock", "block_y"), ("screw_yblock", "y_plate"), ("screw_xblock", "block_x"), ("screw_xblock", "x_plate"),
     ("screw_turret", "x_turret"), ("screw_turret", "x_plate"), ("screw_flange", "x_plate"), ("screw_flange", "flange"),
@@ -37,7 +37,7 @@ EXPECTED = [
     ("focus_ring", "helicoid"), ("helicoid", "adapter_ring"), ("helicoid", "flange"), ("flange", "x_plate"),
     ("adapter_ring", "board_holder"), ("lens", "lensboard"), ("lens", "lens_glass"), ("lensboard", "board_holder"),
     ("spring_latch", "holder_latch"), ("spring_latch", "board_holder"),
-    ("arca_", "body"), ("arca_", "side_handle"), ("rb_", "rb_"), ("oring_", "body"), ("oring_x", "y_plate"),
+    ("arca_", "body"), ("rb_", "rb_"), ("oring_", "body"), ("oring_x", "y_plate"),
     ("plug_yblock", "y_plate"), ("pad_y", "y_plate"), ("felt_", "board_holder"), ("plug_", "screw_yblock"), ("bush_y", "body"), ("bush_x", "y_plate"), ("nut_y_bottom", "body"), ("nut_x_end", "y_plate"),
     # The RB67 envelope has no lips or Graflok slots: the back-to-module fit is verified on the
     # real back with the printed module (docs/calibration.md), not here.
@@ -61,13 +61,13 @@ def clamp_envelopes():
     """65 x 65 mm Arca clamp with jaws reaching 4 mm above the plate's clamp face."""
     y_face = -BODY / 2 - PLINTH + ARCA_POCKET - ARCA_T
     landscape = P.box_at(-32.5, 32.5, y_face - 25, y_face + 4.0, ARCA_ZC - 32.5, ARCA_ZC + 32.5)
-    x_face = BODY / 2 + HANDLE_H - ARCA_POCKET + ARCA_T
-    yc = sum(SIDE_HANDLE_Y) / 2
+    x_face = BODY / 2 + SIDE_T - ARCA_POCKET + ARCA_T
+    yc = SIDE_ARCA_YC
     portrait = P.box_at(x_face - 4.0, x_face + 25, yc - 32.5, yc + 32.5, ARCA_ZC - 32.5, ARCA_ZC + 32.5)
     return [Item("clamp_landscape", landscape, "clamp"), Item("clamp_portrait", portrait, "clamp")]
 
 
-CLAMP_OK = ("arca_", "body", "side_handle")
+CLAMP_OK = ("arca_", "body")
 
 
 def interferences(items):

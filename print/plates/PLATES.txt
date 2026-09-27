@@ -1,5 +1,5 @@
 plate_01_black.3mf: body, top_handle, knob_1, knob_2, x_turret, graflok_wheel, y_plate_pad_1, y_plate_pad_2, y_plate_plug_1, y_plate_plug_2, y_plate_plug_3, y_plate_plug_4, y_plate_plug_5, y_plate_plug_6, y_plate_plug_7, y_plate_plug_8
-plate_02_black.3mf: y_plate, side_handle
+plate_02_black.3mf: y_plate
 plate_03_black.3mf: x_plate
 plate_04_black.3mf: focus_ring, adapter_ring
 plate_05_black.3mf: board_holder

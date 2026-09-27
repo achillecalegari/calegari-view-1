@@ -52,7 +52,6 @@ def catalogue():
         ("holder_latch", P.holder_latch(), EYE, 1, "red", []),
         ("knob", kn, EYE, 2, "black", [("red", kidx)]),
         ("top_handle", P.top_handle(), EYE, 1, "black", []),
-        ("side_handle", P.side_handle(), EYE, 1, "black", []),
     ]
 
 

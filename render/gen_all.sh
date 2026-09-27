@@ -12,14 +12,14 @@ R=out/white; mkdir -p $R
   $PY render_meshes.py --tag section --section
   for n in 1 2 3 4 5 6 7 8 9 10; do $PY render_meshes.py --tag step$n --step $n; done )
 export EXPO=-2.5 DIST=3.75
-shot() { $B -b -P render/white.py -- out/mesh_$1/manifest.json $R/$2.png $3 ${4:-110} ${5:-2000} >/dev/null 2>&1; echo "$2"; }
+shot() { env FLAT="${FLAT:-}" $B -b -P render/white.py -- out/mesh_$1/manifest.json $R/$2.png $3 ${4:-110} ${5:-2000} >/dev/null 2>&1; echo "$2"; }
 shot home  01_three_quarter w_34
 shot home  02_front         w_front
 shot home  03_side          w_side
 shot home  04_rear          w_rear
 shot home  05_top           w_top
-shot section 06_section     w_section
-shot section 07_section_three_quarter w_section34
+FLAT=1 shot section 06_section     w_section
+FLAT=1 shot section 07_section_three_quarter w_section34
 shot rise  08_shift         w_34
 shot explode 09_exploded    explode34
 views=(w_34 w_rear w_rear w_34 w_34 w_34 w_34 w_34 w_34 w_rear)

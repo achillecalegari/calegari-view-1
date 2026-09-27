@@ -7,7 +7,7 @@
 The camera is a stack of flat slabs on the optical axis, from the film forward:
 
 1. **Graflok module** (printed, separate): the back's nose pocket, the fixed bottom rail that hooks the back and releases the Pro-S dark-slide interlock, and the red clamp blade with two tongues.
-2. **Body** (printed, one piece): the seat for the back, the stepped gate, the vertical guide, the rise screw and the bottom Arca plinth.
+2. **Body** (printed, one piece): the seat for the back, the stepped gate, the vertical guide, the rise screw, and an L bracket (bottom plinth and side leg) carrying the two Arca plates.
 3. **Y plate** (printed): rises and falls on an MGN9 guide, carries the horizontal guide and the shift screw.
 4. **Lens panel** (printed): shifts left and right, carries a metal M65 flange.
 5. **Optics on the flange:** the helicoid, the printed adapter ring, the Technika board holder and the lens.
@@ -27,14 +27,14 @@ The light seal is the flatness of these faces. Each plate covers the opening of 
 | M6 threaded rod and brass nut, 1 mm per turn | fine control, self-locking under gravity, parts from any hardware shop; the nut floats 0.5 mm so the rod never binds |
 | O-ring drag instead of lock wheels | lock wheels moved the composition as you tightened them; constant drag holds the plate and never shifts it |
 | Ball-plunger zero detents | you feel zero without looking |
-| Rise +25 / fall -8 | more fall drives the Y plate into the tripod clamp's jaws |
-| Side handle on the photographer's left, carrying the portrait Arca plate | the RB67 dark slide comes out on the right, so nothing can protrude there; in portrait the camera rests on the handle and the shifted lens panel stays far from the clamp |
-| Handles bolted on, set back 8 mm from the sliding plates | printable flat, no fingers pinched between a moving plate and a handle |
+| Rise and fall +/-25, the same as lateral shift | the base of the L bracket is 22 mm tall so that at full fall the Y plate stays above the clamp's jaws; the two scales read the same way |
+| L bracket printed with the body, side leg on the photographer's left | one continuous outline with the body's R9 corners, no joints to loosen; the RB67 dark slide comes out on the right, so nothing protrudes there; in portrait the shifted lens panel stays clear of the clamp |
+| One top handle, bolted, flush with the body rear and 6 mm behind the sliding plates | printable flat, feet flared into the body, nothing overhangs the film back's advance lever, no fingers pinched by a moving plate |
 | Recessed dot scales, red only for zeros, infinity and release controls | print cleanly in multi-material; red means "this is the reference" or "this lets go" |
 
-## Adversarial review
+## Design review
 
-Before the first print, five independent reviewers were asked to break the design, each from one angle. Between them they found 15 blockers in the first version (a few found twice, from different angles), plus about 40 major and minor issues. The blockers, all fixed in v1:
+Before the first print the design was reviewed area by area: mechanics and printing, light-tightness, optics and registration, the RB67 interface, field use and looks. The first version had 15 problems that would have stopped the prototype, plus about 40 smaller ones. The main ones, all fixed in v1:
 
 | Area | Blocker found | Fix |
 |---|---|---|
@@ -44,7 +44,8 @@ Before the first print, five independent reviewers were asked to break the desig
 | Optics | the back and the ground glass could seat on different surfaces | both seat on their nose face on the printed seat; everything else on the module (lips, rails) is relieved so it cannot touch first |
 | Optics | Nikkor-SW 65/4 rear cell (54 mm) could not pass the 54 mm bores | bores to 59 mm |
 | Optics / use | lens and focusing torque on 3 printed threads, helicoid free to unscrew | metal M65 flange, Loctite 222, infinity stop |
-| Use | at full fall the Y plate hit the tripod clamp | fall limited to 8 mm, clamp envelope in the checks |
+| Use | at full fall the Y plate hit the tripod clamp | taller base on the L bracket, clamp envelope in the checks at +/-25 mm |
+| Use | a large side loop handle added width and snagged, and both handles overhung the body | side loop replaced by an L bracket printed with the body; the top handle sits flush with the body rear |
 | Mechanics | the rise nut could not be inserted into its pocket | pocket rebuilt, nut slides in from the side |
 | Mechanics | carriage screw pattern and lengths wrong | 4 x M3 per carriage, lengths computed from the stack |
 | Mechanics | the lens panel could not be printed as documented | panel prints rear face down, turret is a separate part |
@@ -55,7 +56,7 @@ Other changes from the reviews:
 - Five walls around the light path.
 - Felt ring on the adapter flange.
 - Stepped baffles in the Y plate opening.
-- Handles set back from the sliding plates.
+- Top handle set back from the sliding plates, feet flared into the body.
 - Tubular levels readable from behind.
 - Red used only for references.
 - Single-solid and open/closed-state checks added to `check.py`.

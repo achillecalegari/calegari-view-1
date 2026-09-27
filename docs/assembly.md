@@ -27,8 +27,8 @@ Screw names below match the [shopping list](bom.md). Positions match the images:
    - 4 x M3 x 3 in the Graflok seat, the floor of the big rear recess.
    - 2 x M3 x 3 in the vertical guide channel floor, one near each end.
    - 2 x M4 x 8 in the top face for the top handle.
-   - 2 x M4 x 8 in the left side face (photographer's left) for the side handle.
-   - 2 x 1/4"-20 in the bottom plinth, inside the Arca pocket.
+   - 2 x 1/4"-20 in the bottom of the L bracket, inside the Arca pocket.
+   - 2 x 1/4"-20 in the side leg of the L bracket (photographer's left), inside its Arca pocket.
 2. **Tap and fit the vertical zero detent.** Tap M5 into the hole on the front face (photographer's left of the gate, low) and screw in an M5 ball plunger until the ball stands 0.6 mm proud of the face.
 3. **Portrait level.** Glue a 7 x 25 mm tubular vial in the slot on the photographer's right side face. Stand the body on its left side on a flat surface and centre the bubble before the glue sets.
 4. **Velvet.** Cut self-adhesive black velvet into a frame around the gate on the front face. Its inner edge runs 1 mm outside the gate and its outer edge stays 1 mm inside the two channels. Leave free the zero-detent plunger and the strip where the Y plate pads slide (photographer's left of the gate, 42 to 54 mm from the centre).
@@ -44,22 +44,20 @@ Do the fit test of [calibration, section 1](calibration.md#1-before-printing-the
 3. **Blade.** Lay the red blade on the top of the module rear face, tongues up. Fit 2 x M3 x 6 countersunk screws in its slots, snug them, then back them off a quarter turn so the blade slides freely.
 4. **Wheel.** Put the knurled wheel on the U-slot and fix it with an M3 x 8 socket screw. Tightening the wheel clamps the blade.
 
-## 3. Arca plates and handles
+## 3. Arca plates and top handle
 
 ![Step 3](img/step_03.jpg)
 
-1. **Bottom Arca plate.** Seat it in the plinth pocket with two 1/4"-20 screws.
-2. **Side handle.** Bolt it to the photographer's left side with 2 x M4 x 45 socket screws, from its outer face down through the posts into the body inserts.
-3. **Portrait Arca plate.** Before fitting it, heat-set 2 x 1/4"-20 inserts in the handle's outer face (the pocket). Then seat the second plate in the pocket with two screws.
-4. **Top handle.** Glue the second tubular vial in the slot at the back of its bar, bubble centred with the camera level. Then bolt the handle on with 2 x M4 x 50 socket screws.
+1. **Arca plates.** Seat one plate in the pocket under the body and one in the pocket of the side leg, each with two 1/4"-20 screws. Remove any rubber pad from the plates first.
+2. **Top handle.** Glue the second tubular vial in the slot at the back of its bar, bubble centred with the camera level. Then bolt the handle on with 2 x M4 x 50 socket screws, from the top of the bar down through the posts into the body inserts.
 
-To carry the camera on a strap, loop Peak Design Anchors (or any cord anchor) around the handle bars.
+To carry the camera on a strap, loop Peak Design Anchors (or any cord anchor) around the handle bar.
 
 ## 4. Vertical guide and bushings
 
 ![Step 4](img/step_04.jpg)
 
-1. **Bond the rail.** Degrease the 118 mm MGN9 rail and the channel floor with alcohol. Put a thin line of epoxy between the two locating ribs, press the rail in against the ribs, and fix it with 2 x M3 x 6 socket screws into the two inserts. The rail sits 8.5 mm off centre toward the top: the travel is +25 / -8 mm.
+1. **Bond the rail.** Degrease one 134 mm MGN9 rail and the channel floor with alcohol. Put a thin line of epoxy between the two locating ribs, press the rail in against the ribs, and fix it with 2 x M3 x 6 socket screws into the two inserts, through the outermost holes.
 2. **Carriages.** Slide the two MGN9H carriages onto the rail from its dummy rail.
 3. **Bushings.** Press the two 6 x 10 x 6 bronze bushings into the seats at both ends of the vertical screw channel (photographer's left of the gate).
 
@@ -80,13 +78,13 @@ Let the epoxy cure before step 5.
 5. **Rise screw.** Push the 160 mm M6 rod down from the top of the body, through the top bushing and the brass nut (turn it to thread through), through the bottom bushing and out of the recess in the bottom face.
 6. **Bottom nuts.** Put two M6 nuts on the bottom end with a drop of Loctite 243 and jam them against each other, touching the bottom of the recess.
 7. **Knob.** Put the O-ring over the rod on the top face, press an M6 nut into the knob, screw the knob down until the O-ring is lightly compressed, and lock it with the M3 grub screw and a drop of Loctite on the nut.
-8. **Check.** Turn the knob: 1 mm per turn, a click at zero, hard stops at +25 and -8 mm. The O-ring gives a constant drag, so the plate stays where you leave it.
+8. **Check.** Turn the knob: 1 mm per turn, a click at zero, hard stops at +25 and -25 mm. The O-ring gives a constant drag, so the plate stays where you leave it.
 
 ## 6. Horizontal guide and bushings
 
 ![Step 6](img/step_06.jpg)
 
-1. **Rail.** Screw the 134 mm MGN9 rail into the bottom channel of the Y plate front with 6 x M3 x 6 socket screws, between the locating ribs.
+1. **Rail.** Screw the second 134 mm MGN9 rail into the bottom channel of the Y plate front with 6 x M3 x 6 socket screws, between the locating ribs.
 2. **Carriages.** Slide on the two carriages.
 3. **Bushings.** Press the two bushings into the ends of the top screw channel.
 

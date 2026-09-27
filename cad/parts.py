@@ -87,16 +87,16 @@ GF_HALF = 65.0                      # Graflok module is 130 x 130
 GF_SCREWS = ((-52.0, -58.0), (46.0, -58.0), (-52.0, 58.0), (46.0, 58.0))
 Y_CHAN = (-(FALL + 10.3), RISE + 10.3)   # screw channel = hard stops for the nut turret (+/-10)
 Y_DETENT = (48.0, -10.0)
-Y_RAIL_SCREWS = (RAIL_Y_OFFSET - 50.0, RAIL_Y_OFFSET + 50.0)   # only holes outside the dark-slide band; rail also bonded
+Y_RAIL_SCREWS = (RAIL_Y_OFFSET - 60.0, RAIL_Y_OFFSET + 60.0)   # only holes outside the dark-slide band; rail also bonded
 PADS_YREAR = ((48.0, -50.0), (48.0, 20.0))   # hard pads on the Y plate rear, sliding on the body
 TOP_POSTS_X = (TOP_HANDLE_X[0] + HANDLE_POST / 2, TOP_HANDLE_X[1] - HANDLE_POST / 2)
-SIDE_POSTS_Y = (SIDE_HANDLE_Y[0] + HANDLE_POST / 2, SIDE_HANDLE_Y[1] - HANDLE_POST / 2)
 HANDLE_INSERT_Z_TOP = 7.0
-HANDLE_INSERT_Z_SIDE = 10.0
 
 
 def body_part():
     b = slab(BODY, BODY, BODY_Z0, BODY_Z1)
+    # L bracket first: every cut below goes through it too
+    b += l_bracket()
 
     # Graflok module recess; the seat is the floor of this recess (z = SEAT_Z)
     b -= box_at(-GF_HALF - 0.2, GF_HALF + 0.2, -GF_HALF - 0.2, GF_HALF + 0.2, BODY_Z0 - 1, SEAT_Z)
@@ -131,7 +131,7 @@ def body_part():
     b -= cyl_y(ROD_D / 2 + 0.4, Y_CHAN[1], H + 1, Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(ROD_D / 2 + 0.4, -H - 1, Y_CHAN[0], Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(7.2, H - ORING_T, H + 1, Y_SCREW_X, Y_SCREW_Z)            # O-ring + washer seat, top
-    b -= cyl_y(7.0, -H - 1, -H + 6.0, Y_SCREW_X, Y_SCREW_Z)              # nut pair recess, bottom
+    b -= cyl_y(7.0, -H - PLINTH - 1, -H + 6.0, Y_SCREW_X, Y_SCREW_Z)     # nut pair recess, open at the bottom
 
     # zero detent (M5 ball plunger)
     b -= Pos(*Y_DETENT, BODY_Z1) * dot(4.2, 11.0, "+z")
@@ -143,23 +143,73 @@ def body_part():
     # handle inserts (M4)
     for x in TOP_POSTS_X:
         b -= Pos(x, H, HANDLE_INSERT_Z_TOP) * dot(5.0, 8.5, "+y", lift=0.2)
-    for y in SIDE_POSTS_Y:
-        b -= Pos(H, y, HANDLE_INSERT_Z_SIDE) * dot(5.0, 8.5, "+x", lift=0.2)
 
-    # bottom plinth with the Arca plate pocket and two 1/4"-20 inserts
-    pl = box_at(-ARCA_L / 2 - 6, ARCA_L / 2 + 6, -H - PLINTH, -H + 0.5, ARCA_ZC - ARCA_W / 2 - 3, BODY_Z1 - 0.01)
-    pl = sfillet(pl, pl.edges().filter_by(Axis.Y), 3.0)
-    b += pl
+    # Arca pockets in the L bracket: bottom (landscape) and side leg (portrait)
     b -= box_at(-ARCA_L / 2 - 0.15, ARCA_L / 2 + 0.15, -H - PLINTH - 1, -H - PLINTH + ARCA_POCKET,
                 ARCA_ZC - ARCA_W / 2 - 0.15, ARCA_ZC + ARCA_W / 2 + 0.15)
     for x in (-15.0, 15.0):
         b -= Pos(x, -H - PLINTH + ARCA_POCKET, ARCA_ZC) * dot(8.2, 10.0, "-y", lift=0.2)
+    xf = H + SIDE_T
+    b -= box_at(xf - ARCA_POCKET, xf + 1, SIDE_ARCA_YC - ARCA_L / 2 - 0.15, SIDE_ARCA_YC + ARCA_L / 2 + 0.15,
+                ARCA_ZC - ARCA_W / 2 - 0.15, ARCA_ZC + ARCA_W / 2 + 0.15)
+    for y in (-15.0, 15.0):
+        b -= Pos(xf - ARCA_POCKET, SIDE_ARCA_YC + y, ARCA_ZC) * dot(8.2, 10.0, "+x", lift=0.2)
 
     # portrait level: tubular vial on the photographer's right side face, above the dark-slide band
     b -= box_at(-H - 1, -H + 7.2, 46.0, 72.0, 2.0, 9.2)
     # Y scale index (red dot) on the right side face
     b -= Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x")
+    # name and red dot on the front band of the base
+    text, _ = wordmark()
+    b -= text
+    b -= brand_dot()
     return b
+
+
+def l_bracket():
+    """Bottom plinth + side leg as one L around the body, same R9 corners as the body."""
+    x0, x1 = -H, H + SIDE_T
+    y0, y1 = -H - PLINTH, H
+    outer = Pos((x0 + x1) / 2, (y0 + y1) / 2) * RectangleRounded(x1 - x0, y1 - y0, CORNER_R)
+    inner = Pos((x0 - 1 + H - 0.5) / 2, (-H + 0.5 + y1 + 1) / 2) * Rectangle(H - 0.5 - (x0 - 1), y1 + 1 - (-H + 0.5))
+    band = Pos(0, 0, L_Z0) * extrude(outer - inner, amount=BODY_Z1 - L_Z0)
+    band = sfillet(band, band.edges().filter_by(Plane.XY), EDGE)
+    # fill the body's rounded corners where they meet the L (no cusps)
+    for cx, cy in ((H - CORNER_R, -H + CORNER_R), (-H + CORNER_R, -H + CORNER_R), (H - CORNER_R, H - CORNER_R)):
+        sx = 1 if cx > 0 else -1
+        sy = 1 if cy > 0 else -1
+        band += box_at(cx, cx + sx * CORNER_R, cy, cy + sy * CORNER_R, BODY_Z0, BODY_Z1)
+    return band
+
+
+WORDMARK = "CALEGARI VIEW 1"
+WORDMARK_Y = -H - PLINTH / 2        # centred on the front band of the base, under the lens
+BRAND_DOT_D = 3.2
+
+
+def wordmark(depth=0.5, size=5.0, tracking=1.1):
+    """Spaced capitals, engraved into the front face of the base (prints on the bed: sharp)."""
+    letters, x = [], 0.0
+    for ch in WORDMARK:
+        if ch == " ":
+            x += size * 0.55
+            continue
+        t = Text(ch, font_size=size, font="Helvetica Neue", font_style=FontStyle.BOLD,
+                 align=(Align.MIN, Align.CENTER))
+        w = t.bounding_box().size.X
+        letters.append(Pos(x, 0) * t)
+        x += w + tracking
+    width = x - tracking
+    x0 = -width / 2 + (BRAND_DOT_D + 3.0) / 2
+    face = Compound([Pos(x0, WORDMARK_Y) * l for l in letters])
+    text = Pos(0, 0, BODY_Z1 - depth) * extrude(face, amount=depth + 0.3)
+    dot_x = x0 - 3.0 - BRAND_DOT_D / 2
+    return text, dot_x
+
+
+def brand_dot(lift=None):
+    _, dx = wordmark()
+    return Pos(dx, WORDMARK_Y, BODY_Z1) * dot(BRAND_DOT_D, 0.6, lift=lift)
 
 
 def body_vial():
@@ -168,7 +218,7 @@ def body_vial():
 
 
 def body_index_inlay():
-    return Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x", lift=0)
+    return Compound([Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x", lift=0), brand_dot(lift=0)])
 
 
 # --------------------------------------------------------------------------
@@ -316,7 +366,8 @@ def y_plate_part():
 
     # X scale index on the top edge, Y scale dots on the right edge
     p -= Pos(0.0, H, YP_Z1 - 2.5) * dot(2.6, 0.6, "+y")
-    for mm in range(-5, 26, 5):
+    # (the dot that stands at the body's index reads the shift: 10 mm below zero = 10 mm of rise)
+    for mm in range(-int(RISE), int(FALL) + 1, 5):
         p -= Pos(-H, mm, YP_Z0 + 4.0) * dot(3.2 if mm == 0 else 2.0, 0.6, "-x")
     return p
 
@@ -340,7 +391,8 @@ def y_plate_inlays():
     """Zero dot and X index red, other dots white (separate bodies for multi-material)."""
     red = Compound([Pos(-H, 0, YP_Z0 + 4.0) * dot(3.2, 0.6, "-x", lift=0),
                     Pos(0.0, H, YP_Z1 - 2.5) * dot(2.6, 0.6, "+y", lift=0)])
-    white = Compound([Pos(-H, mm, YP_Z0 + 4.0) * dot(2.0, 0.6, "-x", lift=0) for mm in range(-5, 26, 5) if mm])
+    white = Compound([Pos(-H, mm, YP_Z0 + 4.0) * dot(2.0, 0.6, "-x", lift=0)
+                      for mm in range(-int(RISE), int(FALL) + 1, 5) if mm])
     return red, white
 
 
@@ -348,11 +400,13 @@ def y_plate_inlays():
 # LENS PANEL (X plate): back face on the bed; metal M65 flange flush with the front
 # --------------------------------------------------------------------------
 X_BLOCK_X = (-BLOCK_PITCH / 2, BLOCK_PITCH / 2)
-STOP_PIN = (0.0, -64.5)
+STOP_PIN = (-45.6, -45.6)            # r 64.5 at 225 deg
 TURRET_SCREWS = ((-5.5, X_SCREW_Y + 5.0), (5.5, X_SCREW_Y + 5.0))
 
 
 def x_plate_outline():
+    """Lens panel: full width where it seals the light path and over the guide; the two top
+    corners are cut so the shift knob can pass at full travel."""
     nx, ny = XP_NOTCH
     pts = [(-H, -H), (H, -H), (H, ny), (nx, ny), (nx, H), (-nx, H), (-nx, ny), (-H, ny)]
     return make_face(Polyline(*pts, close=True))
@@ -433,7 +487,7 @@ def x_turret():
 # --------------------------------------------------------------------------
 FOCUS_DIST = (("inf", 0.0), ("5", 5), ("3", 3), ("2", 2), ("1.5", 1.5), ("1", 1), ("0.7", 0.7))
 LEVER_ANG = -95.0
-STOP_TAB_ANG = 172.0          # the tab touches the stop pin (at 180 deg) at infinity
+STOP_TAB_ANG = 217.0          # the tab touches the stop pin (at 225 deg) at infinity
 
 
 def focus_ring_part():
@@ -504,6 +558,8 @@ def holder_part():
     for x in (-9.0, 9.0):
         h -= cyl_z(1.05, z1 - 4.5, z1 + 0.1, x, LATCH_SCREW_Y)
     h += box_at(-4.0, 4.0, BOARD_H / 2 + 22.0, BOARD_H / 2 + 26.0, z1 - 0.01, z1 + 2.6)   # spring abutment
+    hood = box_at(-15.2, 15.2, BOARD_H / 2 + 8.5, BOARD_H / 2 + 26.0, z1 + 2.6, z1 + 3.6)   # hides the spring
+    h += sfillet(hood, hood.edges().filter_by(Axis.Y), 0.6)
     return h
 
 
@@ -521,7 +577,7 @@ def holder_latch(locked=True):
     travel = LATCH_ENGAGE + 1.0
     for x in (-9.0, 9.0):
         l -= Pos(x, LATCH_SCREW_Y - travel / 2, z0 - 1) * extrude(SlotCenterToCenter(travel, 2.8, rotation=90), amount=5)
-    grip = box_at(-8, 8, y1 - 4.0, y1, z0 + 2.39, z0 + 4.4)
+    grip = box_at(-8, 8, y0 + 2.0, y0 + 6.0, z0 + 2.39, z0 + 4.4)
     l += sfillet(grip, grip.edges().filter_by(Axis.X), 0.8)
     return Pos(0, oy, 0) * l
 
@@ -567,13 +623,23 @@ def knob_part():
 # --------------------------------------------------------------------------
 # HANDLES (printed on their side, bolted with M4 x 50 through the posts)
 # --------------------------------------------------------------------------
-def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POST):
+def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POST, flare=HANDLE_FLARE):
+    """Loop handle, profile in XY (u = X, protrusion +Y), extruded along Z. The feet flare into the
+    body with concave fillets, so the handle reads as part of the camera."""
     outer = Pos(0, height / 2, 0) * Rectangle(length, height)
     inner = Pos(0, (height - bar) / 2 - 1, 0) * Rectangle(length - 2 * post, height - bar + 2)
-    h = Pos(0, 0, z0) * extrude(outer - inner, amount=z1 - z0)
+    prof = outer - inner
+    for s in (-1, 1):
+        xo = s * length / 2                       # outer face of the post
+        prof += Pos(xo + s * flare / 2, flare / 2) * Rectangle(flare, flare)
+        prof -= Pos(xo + s * flare, flare) * Circle(flare)
+        xi = s * (length / 2 - post)              # inner face of the post
+        prof += Pos(xi - s * flare / 2, flare / 2) * Rectangle(flare, flare)
+        prof -= Pos(xi - s * flare, flare) * Circle(flare)
+    h = Pos(0, 0, z0) * extrude(prof, amount=z1 - z0)
     h = sfillet(h, h.edges().filter_by(Axis.Z).group_by(Axis.Y)[-1], CORNER_R)
     h = sfillet(h, [e for e in h.edges().filter_by(Axis.Z) if abs(e.center().Y - (height - bar)) < 0.2], 4.0)
-    h = sfillet(h, [e for e in h.edges().filter_by(Plane.XY) if e.center().Y > 0.5], 1.6)
+    h = sfillet(h, [e for e in h.edges().filter_by(Plane.XY) if e.center().Y > 0.5], EDGE)
     return h
 
 
@@ -603,21 +669,6 @@ def top_vial():
     return Pos((x0 + x1) / 2, H + HANDLE_H - HANDLE_BAR / 2, z0 + 3.5) * Rot(0, 90, 0) * Cylinder(3.4, 25.0)
 
 
-def side_handle():
-    """Photographer's left. Its outer bar carries the portrait Arca plate."""
-    y0, y1 = SIDE_HANDLE_Y
-    z0, z1 = SIDE_HANDLE_Z
-    h = handle_loop(y1 - y0, z0, z1)
-    for c in handle_screw_holes(y1 - y0, HANDLE_INSERT_Z_SIDE):
-        h -= c
-    zc = ARCA_ZC
-    h -= box_at(-ARCA_L / 2 - 0.15, ARCA_L / 2 + 0.15, HANDLE_H - ARCA_POCKET, HANDLE_H + 1,
-                zc - ARCA_W / 2 - 0.15, zc + ARCA_W / 2 + 0.15)
-    for x in (-15.0, 15.0):
-        h -= Pos(x, HANDLE_H - ARCA_POCKET, zc) * dot(8.2, 10.0, "+y", lift=0.2)
-    return Pos(H, (y0 + y1) / 2, 0) * Rot(0, 0, -90) * h
-
-
 def arca_plate():
     """Arca-Swiss plate 60 x 38 x 10 lying along X, clamp face at -Y (bottom plate position)."""
     zc = ARCA_ZC
@@ -635,13 +686,11 @@ def arca_plate():
 
 
 def side_arca_plate():
-    """Same plate on the side handle's outer face (portrait)."""
+    """Same plate on the side leg of the L bracket (portrait)."""
     base = arca_plate()
     y_top = -H - PLINTH + ARCA_POCKET
-    # move from the bottom-plate frame to the side handle's outer face
-    x_face = H + HANDLE_H - ARCA_POCKET
-    yc = sum(SIDE_HANDLE_Y) / 2
-    return Pos(x_face, yc, 0) * Rot(0, 0, 90) * Pos(0, -y_top, 0) * base
+    x_face = H + SIDE_T - ARCA_POCKET
+    return Pos(x_face, SIDE_ARCA_YC, 0) * Rot(0, 0, 90) * Pos(0, -y_top, 0) * base
 
 
 # --------------------------------------------------------------------------
