@@ -38,7 +38,7 @@ EXPECTED = [
     ("adapter_ring", "board_holder"), ("lens", "lensboard"), ("lens", "lens_glass"), ("lensboard", "board_holder"),
     ("spring_latch", "holder_latch"), ("spring_latch", "board_holder"),
     ("arca_", "body"), ("rb_", "rb_"), ("oring_", "body"), ("oring_x", "y_plate"),
-    ("plug_yblock", "y_plate"), ("pad_y", "y_plate"), ("felt_", "board_holder"), ("plug_", "screw_yblock"), ("bush_y", "body"), ("bush_x", "y_plate"), ("nut_y_bottom", "body"), ("nut_x_end", "y_plate"),
+    ("plug_yblock", "y_plate"), ("velvet_", "body"), ("velvet_", "y_plate"), ("velvet_", "x_plate"), ("velvet_", "plug_"), ("felt_board", "board_holder"), ("felt_board", "lensboard"), ("insert_arca", "arca_"), ("pad_y", "y_plate"), ("felt_", "board_holder"), ("plug_", "screw_yblock"), ("bush_y", "body"), ("bush_x", "y_plate"), ("nut_y_bottom", "body"), ("nut_x_end", "y_plate"),
     # The RB67 envelope has no lips or Graflok slots: the back-to-module fit is verified on the
     # real back with the printed module (docs/calibration.md), not here.
     ("rb_", "graflok_"), ("rb_", "screw_blade"), ("rb_", "screw_wheel"),

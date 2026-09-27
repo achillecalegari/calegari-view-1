@@ -4,7 +4,8 @@ print/step/     STEP of every printed part, in assembly coordinates (open in Fus
 print/stl/      STL of every printed part, already oriented on the bed
 print/inlays/   coloured dot inlays (same coordinates as their part's STL) for AMS printing
 print/plates/   Bambu P1S build plates (256 x 256), one material per plate, as 3MF
-print/test/     the two test prints to run before anything else
+print/test/     the test prints to run before anything else
+print/templates/ 1:1 SVG cutting templates for the velvet and felt (V1 to V4)
 print/PRINTABILITY.txt  overhang and bridge report for every part in its print orientation
 
 python export.py [--fast]    (--fast skips the printed threads)
@@ -128,8 +129,57 @@ def write_plate(path, groups):
     scene.export(str(path))
 
 
+def svg_page(path, title, shapes, note):
+    """A4 page, 1:1 in mm. shapes: SVG elements already in mm around (0, 0), drawn at the page centre."""
+    body = "\n".join(shapes)
+    path.write_text(f'''<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<rect width="210" height="297" fill="white"/>
+<text x="15" y="18" font-family="Helvetica, Arial" font-size="6" font-weight="bold">{title}</text>
+<text x="15" y="26" font-family="Helvetica, Arial" font-size="3.6">{note}</text>
+<text x="15" y="31" font-family="Helvetica, Arial" font-size="3.6">Print at 100 % (no "fit to page"), then check the 100 mm bar with a ruler.</text>
+<g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
+<text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
+<g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
+{body}
+</g>
+</svg>
+''')
+
+
+def rect_path(x0, y0, x1, y1, r=0.0):
+    """Rectangle (y up in the model, so flipped for SVG) with optional corner radius, as path data."""
+    y0, y1 = -y1, -y0
+    if not r:
+        return f"M{x0} {y0}H{x1}V{y1}H{x0}Z"
+    return (f"M{x0 + r} {y0}H{x1 - r}A{r} {r} 0 0 1 {x1} {y0 + r}V{y1 - r}A{r} {r} 0 0 1 {x1 - r} {y1}"
+            f"H{x0 + r}A{r} {r} 0 0 1 {x0} {y1 - r}V{y0 + r}A{r} {r} 0 0 1 {x0 + r} {y0}Z")
+
+
+def ring_path(r0, r1):
+    return (f"M{r1} 0A{r1} {r1} 0 1 0 {-r1} 0A{r1} {r1} 0 1 0 {r1} 0Z"
+            f"M{r0} 0A{r0} {r0} 0 1 1 {-r0} 0A{r0} {r0} 0 1 1 {r0} 0Z")
+
+
+def templates():
+    d = ROOT / "templates"
+    ob, oy = opening_body(BODY_Z1), opening_yplate(YP_Z1)
+    hy = max(oy[1], 33.0)
+    svg_page(d / "V1_velvet_body.svg", "V1 - velvet, body front",
+             [f'<path d="{rect_path(-46.5, -72, 44, 72)} {rect_path(-ob[0] - 1, -ob[1] - 1, ob[0] + 1, ob[1] + 1, 3)}"/>',
+              '<g font-family="Helvetica, Arial" font-size="4" stroke="none" fill="black"><text x="0" y="-62" text-anchor="middle">TOP</text><text transform="translate(-42 0) rotate(-90)" text-anchor="middle">rail side</text></g>'],
+             "Cut on the lines. The camera sees this from the front: the vertical rail is on the left.")
+    svg_page(d / "V2_velvet_y_plate.svg", "V2 - velvet, Y plate front",
+             [f'<path d="{rect_path(-72, -45.5, 72, 40)} {rect_path(-oy[0] - 1, -hy - 1, oy[0] + 1, hy + 1, 3)}"/>',
+              '<text x="0" y="-34" font-family="Helvetica, Arial" font-size="4" text-anchor="middle" stroke="none" fill="black">TOP</text>'],
+             "Cut on the lines. The top edge stops 4 mm below the two white pads.")
+    svg_page(d / "V3_V4_felt_rings.svg", "V3 and V4 - felt rings, board holder",
+             [f'<g transform="translate(0 -65)"><path d="{ring_path(30.7, 34.8)}"/><text y="1.5" font-family="Helvetica, Arial" font-size="5" text-anchor="middle" stroke="none" fill="black">V3</text></g>',
+              f'<g transform="translate(0 45)"><path d="{ring_path(REAR_CLEAR_D / 2 + 3.6, 44.8)}"/><text y="1.5" font-family="Helvetica, Arial" font-size="5" text-anchor="middle" stroke="none" fill="black">V4</text></g>'],
+             "1 mm adhesive felt. V3: groove on the back of the holder. V4: shallow seat under the lens board.")
+
+
 if __name__ == "__main__":
-    for d in ("step", "stl", "inlays", "plates", "test"):
+    for d in ("step", "stl", "inlays", "plates", "test", "templates"):
         (ROOT / d).mkdir(parents=True, exist_ok=True)
         for f in (ROOT / d).iterdir():          # start clean: no stale parts from older versions
             if f.is_file():
@@ -156,7 +206,8 @@ if __name__ == "__main__":
             write_plate(path, pl["groups"])
             summary.append(f"{path.name}: " + ", ".join(g[0] for g in pl["groups"]))
     # test prints: Graflok module with blade and wheel; M65 thread coupons
-    test = [("graflok_module", [drop([oriented(mesh(P.graflok_module()), FLIP)])[0]]),
+    test = [("shrink_gauge_100mm", [drop([oriented(mesh(P.shrink_gauge()), EYE)])[0]]),
+            ("graflok_module", [drop([oriented(mesh(P.graflok_module()), FLIP)])[0]]),
             ("graflok_blade", [drop([oriented(mesh(P.graflok_blade()), FLIP)])[0]]),
             ("graflok_wheel", [drop([oriented(mesh(P.graflok_wheel()), EYE)])[0]])]
     if not FAST:
@@ -171,6 +222,14 @@ if __name__ == "__main__":
     for i, pl in enumerate(pack(test), 1):
         write_plate(ROOT / "plates" / f"plate_00_test_{i}.3mf", pl["groups"])
         summary.append(f"plate_00_test_{i}.3mf: " + ", ".join(g[0] for g in pl["groups"]))
+    # lens shims: their own plate, printed at 0.2 mm layers
+    shims = [(f"copal0_shim_{t:.1f}mm", [drop([oriented(mesh(P.copal0_shim(t)), EYE)])[0]]) for t in P.SHIM_STEPS]
+    for label, g in shims:
+        g[0].export(str(ROOT / "stl" / f"{label}.stl"))
+    for i, pl in enumerate(pack(shims), 1):
+        write_plate(ROOT / "plates" / f"plate_07_shims_0.2mm_layers.3mf", pl["groups"])
+        summary.append("plate_07_shims_0.2mm_layers.3mf: " + ", ".join(g[0] for g in pl["groups"]))
+    templates()
     (ROOT / "plates" / "PLATES.txt").write_text("\n".join(summary) + "\n")
     print("\n".join(summary))
     print((ROOT / "PRINTABILITY.txt").read_text())

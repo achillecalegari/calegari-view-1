@@ -33,10 +33,10 @@ Keep the carriages on their plastic dummy rail until they go on the real one.
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 22 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | 7.99 EUR / 50 | the holes are designed for this size; 4 mm-long inserts are too long for the Graflok module |
+| Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 23 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | 7.99 EUR / 50 | the holes are designed for this size; 4 mm-long inserts are too long for the Graflok module |
 | Heat-set insert M4 | Ruthex RX-M4x8.1 | 2 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen) | 9.49 EUR / 50 | handles |
 | Heat-set insert 1/4"-20 | short, 6.4 mm | 4 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-1-4-short-gewindeeinsatz-zoll-unc-20-stuck-ge-1_4x64-001) | 8.99 EUR / 20 | Arca plates, two per plate |
-| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | 8.39 EUR / 1160 | M3 x 5 (1), x 6 (8), x 8 (1), x 10 (2), x 12 (8) |
+| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | 8.39 EUR / 1160 | M3 x 5 (1), x 6 (9), x 8 (1), x 10 (2), x 12 (9: eight for the Y carriages, one as the infinity stop screw) |
 | M3 countersunk kit | ISO 10642, stainless, 6 to 30 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0GFDNBLK2) | 8.99 EUR / 1292 | M3 x 6 (6), x 8 (4), x 10 (8) |
 | M3 x 6 button head | ISO 7380, A2 | 4 | [Amazon.de](https://www.amazon.de/dp/B07ZPTX8B2) | 7.21 EUR / 100 | adapter ring |
 | M2.5 x 6 button head | in a stainless button-head kit | 2 | [Amazon.de](https://www.amazon.de/dp/B0F3HNGTY5) | 8.59 EUR / 900 | board latch; pick the "Linsenkopf-Innensechskant-304" variant |
@@ -54,9 +54,9 @@ Keep the carriages on their plastic dummy rail until they go on the real one.
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| Black adhesive velvet | self-adhesive velour, about 1 mm | 1 roll | [Amazon.it](https://www.amazon.it/dp/B005FWUK44) | 12.97 EUR | measure it: it must be 0.9 to 1.2 mm to be compressed in the 0.8 mm gap |
+| Black adhesive velvet | self-adhesive velour, about 1 mm | 1 roll | [Amazon.it](https://www.amazon.it/dp/B005FWUK44) | 12.97 EUR | pieces V1 and V2, cut with the templates in `print/templates`; measure it: it must be 0.9 to 1.2 mm to be compressed in the 0.8 mm gap |
 | optical flocking (global) | Protostar Hi-Tack | 15" | [Protostar](https://www.fpi-protostar.com/hitack.htm) | 0.50 USD / inch | better light absorption, ships from the US |
-| Adhesive felt | black, 1 mm, A4 | 1 | [Amazon.it](https://www.amazon.it/dp/B089NZG3Q3) | 11.39 EUR / 10 | ring under the adapter flange |
+| Adhesive felt | black, 1 mm, A4 | 1 | [Amazon.it](https://www.amazon.it/dp/B089NZG3Q3) | 11.39 EUR / 10 | rings V3 and V4 in the board holder, cut with `print/templates/V3_V4_felt_rings.svg` |
 
 ## Optics and back
 

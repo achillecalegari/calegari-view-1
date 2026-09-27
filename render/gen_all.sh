@@ -18,8 +18,8 @@ shot home  02_front         w_front
 shot home  03_side          w_side
 shot home  04_rear          w_rear
 shot home  05_top           w_top
-FLAT=1 shot section 06_section     w_section
-FLAT=1 shot section 07_section_three_quarter w_section34
+DIST=4.4 shot section 06_section w_section
+DIST=4.1 shot section 07_section_three_quarter w_section34
 shot rise  08_shift         w_34
 shot explode 09_exploded    explode34
 views=(w_34 w_rear w_rear w_34 w_34 w_34 w_34 w_34 w_34 w_rear)

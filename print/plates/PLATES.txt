@@ -5,4 +5,6 @@ plate_04_black.3mf: focus_ring, adapter_ring
 plate_05_black.3mf: board_holder
 plate_06_black.3mf: graflok_module
 plate_red_1.3mf: graflok_blade, holder_latch
-plate_00_test_1.3mf: graflok_module, flange_pocket_coupon, m65_male_coupon, graflok_blade, graflok_wheel
+plate_00_test_1.3mf: graflok_module, shrink_gauge_100mm, flange_pocket_coupon, m65_male_coupon, graflok_wheel
+plate_00_test_2.3mf: graflok_blade
+plate_07_shims_0.2mm_layers.3mf: copal0_shim_1.2mm, copal0_shim_0.8mm, copal0_shim_0.4mm, copal0_shim_1.0mm, copal0_shim_0.6mm

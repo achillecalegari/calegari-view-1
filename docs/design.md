@@ -21,6 +21,7 @@ The light seal is the flatness of these faces. Each plate covers the opening of 
 | 6x7 with RB67 backs | backs are common and cheap; the Graflok-type interface is simple enough to print; the gate also clears 6x8 |
 | 65 mm lenses in Copal 0 | 33 mm equivalent on 6x7, cheap used, image circles of 153 to 170 mm for large shifts |
 | Technika 99 x 96 boards | the most common board: lenses often come mounted on one, and it swaps with 4x5 field cameras |
+| One board per lens, spring latch | a lens changes in ten seconds without tools; printed shims under the shutter (0.4 to 1.2 mm) let every lens reach infinity on the same stop |
 | Metal M65 flange on the lens panel | a printed thread carrying the lens and the focusing torque was the weakest point of the first design |
 | Printed adapter ring as the calibration part | if infinity is out of reach, reprint a thinner 20-minute part instead of a plate |
 | MGN9H guides, one per axis | 20 mm carriages leave room for a seal band 6.5 mm wide; one rail and a screw per axis is enough for a stage this size |

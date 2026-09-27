@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<rect width="210" height="297" fill="white"/>
+<text x="15" y="18" font-family="Helvetica, Arial" font-size="6" font-weight="bold">V2 - velvet, Y plate front</text>
+<text x="15" y="26" font-family="Helvetica, Arial" font-size="3.6">Cut on the lines. The top edge stops 4 mm below the two white pads.</text>
+<text x="15" y="31" font-family="Helvetica, Arial" font-size="3.6">Print at 100 % (no "fit to page"), then check the 100 mm bar with a ruler.</text>
+<g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
+<text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
+<g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
+<path d="M-72 -40H72V45.5H-72Z M-39.545 -34.0H39.545A3 3 0 0 1 42.545 -31.0V31.0A3 3 0 0 1 39.545 34.0H-39.545A3 3 0 0 1 -42.545 31.0V-31.0A3 3 0 0 1 -39.545 -34.0Z"/>
+<text x="0" y="-34" font-family="Helvetica, Arial" font-size="4" text-anchor="middle" stroke="none" fill="black">TOP</text>
+</g>
+</svg>

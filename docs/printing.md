@@ -10,9 +10,21 @@ Print and fit the risky interfaces before spending half a kilo of ASA.
 
 | Step | Plate | What you check |
 |---|---|---|
-| 1 | `print/plates/plate_00_test_1.3mf` (PLA is fine) | Graflok module, blade and wheel on your RB67 back and ground glass; the M65 male coupon in your helicoid; the metal flange in its pocket. See [calibration, section 1](calibration.md#1-before-printing-the-body-test-prints). |
+| 1 | `print/plates/plate_00_test_1.3mf` and `plate_00_test_2.3mf` in ASA, then set the shrinkage (below) and reprint the Graflok module and the coupons | Graflok module, blade and wheel on your RB67 back and ground glass; the M65 male coupon in your helicoid; the metal flange in its pocket. See [calibration, section 1](calibration.md#1-before-printing-the-body-test-prints). |
 | 2 | adjust `cad/params.py` if needed, re-run `export.py` | |
 | 3 | plates 01 to 06 in black ASA, then the red plate | |
+
+## Shrinkage: calibrate it before anything else
+
+ASA shrinks about 0.5 to 0.7 % as it cools. Uncompensated, that is 0.5 mm on the lens board pocket (99.6 mm designed for a 99 mm board) and on the flange pocket: the board or the flange would not go in. Bambu Studio compensates it per filament, but the value must be measured on your spool.
+
+1. Print `print/test/shrink_gauge_100mm.stl` (it is on the test plate) in the ASA you will use, with the settings below.
+2. Let it cool for ten minutes, then measure the outer size along X (the side with the tab) and along Y with a caliper.
+3. Shrinkage (%) = measured / 100 x 100. For example 99.45 mm gives 99.45 %.
+4. In Bambu Studio, open the filament (three dots next to it, *Edit*), set *Shrinkage* to that value and save the profile as "ASA - Calegari View".
+5. Use that profile for every part, test prints included. Reprint the gauge once: it should now measure 100.0 +/- 0.1 mm.
+
+Height shrinkage does not matter for this camera: the printed stack between back and lens is about 39 mm, so 0.5 % is 0.2 mm, which the infinity calibration absorbs.
 
 ## Material
 
@@ -47,7 +59,8 @@ All parts are already oriented. Open the 3MF in Bambu Studio, check the settings
 
 | Plate | Parts | Material |
 |---|---|---|
-| `plate_00_test_1` | Graflok module, blade, wheel, M65 male coupon, flange pocket coupon | PLA or ASA |
+| `plate_00_test_1` | shrinkage gauge, Graflok module, wheel, M65 male coupon, flange pocket coupon | the ASA you will use (the gauge must be ASA) |
+| `plate_00_test_2` | Graflok blade | the same |
 | `plate_01_black` | body with L bracket, top handle, 2 knobs, turret, wheel, 2 pads, 8 plugs | ASA black |
 | `plate_02_black` | Y plate | ASA black |
 | `plate_03_black` | lens panel (X plate) | ASA black |
@@ -55,6 +68,9 @@ All parts are already oriented. Open the 3MF in Bambu Studio, check the settings
 | `plate_05_black` | board holder | ASA black |
 | `plate_06_black` | Graflok module | ASA black |
 | `plate_red_1` | Graflok blade, board latch | ASA red |
+| `plate_07_shims_0.2mm_layers` | five lens shims, 0.4 to 1.2 mm | ASA black, **0.2 mm layers**, 100 % infill; only if you use more than one lens ([calibration, section 4](calibration.md#4-more-lenses-one-stop-for-all-of-them)) |
+
+The cutting templates for the velvet and felt (V1 to V4) are in `print/templates` as A4 SVG files: print them at 100 %.
 
 Single parts, oriented and dropped on the bed, are in `print/stl`; the same parts in assembly coordinates are in `print/step` for editing.
 

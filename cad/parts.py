@@ -16,6 +16,7 @@ except Exception:  # pragma: no cover
     IsoThread = None
 
 H = BODY / 2  # 74
+FIT = 0.3     # clearance per side on bought parts that drop into a pocket (board, flange, Arca plates)
 
 
 # --------------------------------------------------------------------------
@@ -145,13 +146,13 @@ def body_part():
         b -= Pos(x, H, HANDLE_INSERT_Z_TOP) * dot(5.0, 8.5, "+y", lift=0.2)
 
     # Arca pockets in the L bracket: bottom (landscape) and side leg (portrait)
-    b -= box_at(-ARCA_L / 2 - 0.15, ARCA_L / 2 + 0.15, -H - PLINTH - 1, -H - PLINTH + ARCA_POCKET,
-                ARCA_ZC - ARCA_W / 2 - 0.15, ARCA_ZC + ARCA_W / 2 + 0.15)
+    b -= box_at(-ARCA_L / 2 - FIT, ARCA_L / 2 + FIT, -H - PLINTH - 1, -H - PLINTH + ARCA_POCKET,
+                ARCA_ZC - ARCA_W / 2 - FIT, ARCA_ZC + ARCA_W / 2 + FIT)
     for x in (-15.0, 15.0):
         b -= Pos(x, -H - PLINTH + ARCA_POCKET, ARCA_ZC) * dot(8.2, 10.0, "-y", lift=0.2)
     xf = H + SIDE_T
-    b -= box_at(xf - ARCA_POCKET, xf + 1, SIDE_ARCA_YC - ARCA_L / 2 - 0.15, SIDE_ARCA_YC + ARCA_L / 2 + 0.15,
-                ARCA_ZC - ARCA_W / 2 - 0.15, ARCA_ZC + ARCA_W / 2 + 0.15)
+    b -= box_at(xf - ARCA_POCKET, xf + 1, SIDE_ARCA_YC - ARCA_L / 2 - FIT, SIDE_ARCA_YC + ARCA_L / 2 + FIT,
+                ARCA_ZC - ARCA_W / 2 - FIT, ARCA_ZC + ARCA_W / 2 + FIT)
     for y in (-15.0, 15.0):
         b -= Pos(xf - ARCA_POCKET, SIDE_ARCA_YC + y, ARCA_ZC) * dot(8.2, 10.0, "+x", lift=0.2)
 
@@ -418,7 +419,7 @@ def x_plate_part():
     p = sfillet(p, p.edges().filter_by(Axis.Z), CORNER_R)
     p = sfillet(p, p.edges().filter_by(Plane.XY), EDGE)
     # metal flange pocket, flush with the front; bore behind it
-    p -= cyl_z(FLANGE_D / 2 + 0.2, z1 - FLANGE_T, z1 + 1)
+    p -= cyl_z(FLANGE_D / 2 + FIT, z1 - FLANGE_T, z1 + 1)
     p -= cyl_z(31.5, z0 - 1, z1)
     # flange screws: 4 x M3 countersunk from the rear, into the flange's M3 holes
     for a in (0, 90, 180, 270):
@@ -538,10 +539,10 @@ def holder_part():
     z0, z1 = HOLDER_Z0, BOARD_Z1
     h = extrude(Pos(0, 9.5, z0) * RectangleRounded(HOLDER_W, HOLDER_H, CORNER_R), amount=z1 - z0)
     h = sfillet(h, h.edges().group_by(Axis.Z)[-1], EDGE)
-    h -= box_at(-BOARD_W / 2 - 0.2, BOARD_W / 2 + 0.2, -BOARD_H / 2 - 0.2, BOARD_H / 2 + 0.2, BOARD_Z0, z1 + 1)
+    h -= box_at(-BOARD_W / 2 - FIT, BOARD_W / 2 + FIT, -BOARD_H / 2 - FIT, BOARD_H / 2 + FIT, BOARD_Z0, z1 + 1)
     h -= cyl_z(REAR_CLEAR_D / 2, z0 - 1, z1 + 1)
     h -= cyl_z(REAR_CLEAR_D / 2 + 3.5, BOARD_Z0 - 1.6, BOARD_Z0 + 0.1)        # board light-trap ring
-    h -= cyl_z(45.0, BOARD_Z0 - 0.6, BOARD_Z0 + 0.1)                          # felt ring seat
+    h -= cyl_z(45.0, BOARD_Z0 - 0.8, BOARD_Z0 + 0.1)                          # seat of a 1 mm felt ring (V4)
     # groove for a 1 mm felt ring against the adapter flange (light seal of the arc slots)
     h -= cyl_z(35.0, z0 - 0.1, z0 + 0.8) - cyl_z(30.5, z0 - 1, z0 + 2)
     # adapter inserts, 1.2 mm skin under the board seat
@@ -691,6 +692,72 @@ def side_arca_plate():
     y_top = -H - PLINTH + ARCA_POCKET
     x_face = H + SIDE_T - ARCA_POCKET
     return Pos(x_face, SIDE_ARCA_YC, 0) * Rot(0, 0, 90) * Pos(0, -y_top, 0) * base
+
+
+# --------------------------------------------------------------------------
+# LIGHT SEAL MATERIALS (cut from velvet / felt sheet; see docs/templates)
+# --------------------------------------------------------------------------
+VELVET_T = GAP
+
+
+def velvet_body_outline():
+    """Velvet on the body front face: a frame around the gate, clear of the channels and the pads."""
+    op = opening_body(BODY_Z1)
+    outer = Pos((-46.5 + 44.0) / 2, 0) * Rectangle(44.0 + 46.5, 144.0)
+    hole = RectangleRounded(2 * (op[0] + 1.0), 2 * (op[1] + 1.0), 3.0)
+    return outer - hole
+
+
+def velvet_yplate_outline():
+    """Velvet on the Y plate front face: a band around the opening, between the guide channel and the pads."""
+    op = opening_yplate(YP_Z1)
+    hy = max(op[1], 33.0)
+    outer = Pos(0, (-45.5 + 40.0) / 2) * Rectangle(144.0, 40.0 + 45.5)
+    hole = RectangleRounded(2 * (op[0] + 1.0), 2 * (hy + 1.0), 3.0)
+    return outer - hole
+
+
+def velvet_body():
+    return Pos(0, 0, BODY_Z1) * extrude(velvet_body_outline(), amount=VELVET_T)
+
+
+def velvet_yplate():
+    return Pos(0, 0, YP_Z1) * extrude(velvet_yplate_outline(), amount=VELVET_T)
+
+
+def felt_board_outline():
+    return Circle(44.8) - Circle(REAR_CLEAR_D / 2 + 3.6)
+
+
+def felt_adapter_outline():
+    return Circle(34.8) - Circle(30.7)
+
+
+def felt_board():
+    return Pos(0, 0, BOARD_Z0 - 0.8) * extrude(felt_board_outline(), amount=0.8)
+
+
+# --------------------------------------------------------------------------
+# LENS SHIMS: printed rings under the shutter flange, so every lens reaches infinity at the stop
+# --------------------------------------------------------------------------
+SHIM_STEPS = (0.4, 0.6, 0.8, 1.0, 1.2)     # print at 0.2 mm layers: every step is whole layers
+
+
+def copal0_shim(t):
+    """Ring between the shutter and the lens board front. The notches on the rim tell the thickness:
+    count them and multiply by 0.2 mm."""
+    ring = Circle(26.0) - Circle(35.4 / 2)
+    n = round(t / 0.2)
+    for i in range(n):
+        ring -= Rot(0, 0, 90 + (i - (n - 1) / 2) * 9) * Pos(26.0, 0) * Rectangle(2.4, 1.6)
+    return extrude(ring, amount=t)
+
+
+def shrink_gauge():
+    """100.0 x 100.0 mm frame for measuring the filament's XY shrinkage (tab marks the X side)."""
+    g = extrude(Rectangle(100, 100) - Rectangle(88, 88), amount=3.0)
+    g += Pos(0, -50 - 4, 0) * extrude(Rectangle(20, 8), amount=3.0)
+    return g
 
 
 # --------------------------------------------------------------------------

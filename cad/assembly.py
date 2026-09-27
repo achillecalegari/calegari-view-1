@@ -75,6 +75,12 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
 
     # ---------------- tripod plates and handles ----------------
     add("arca_bottom", P.arca_plate(), "alu_black", "arca_b")
+    y_in = -H - PLINTH + ARCA_POCKET
+    for x in (-15.0, 15.0):
+        add(f"insert_arca_b_{x}", Pos(x, y_in, ARCA_ZC) * orient(hw.heat_insert(4, 6.4), "+y"), "brass", "body")
+    x_in = H + SIDE_T - ARCA_POCKET
+    for y in (-15.0, 15.0):
+        add(f"insert_arca_s_{y}", Pos(x_in, SIDE_ARCA_YC + y, ARCA_ZC) * orient(hw.heat_insert(4, 6.4), "-x"), "brass", "body")
     add("arca_side", P.side_arca_plate(), "alu_black", "arca_s")
     add("top_handle", P.top_handle(), "body_black", "top_handle", True)
     add("vial_top", P.top_vial(), "vial", "top_handle")
@@ -113,7 +119,9 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("insert_plunger_y", Pos(*P.Y_DETENT, BODY_Z1 - 8.0) * hw.heat_insert(4), "brass", "body") if False else None
 
     # ---------------- Y plate ----------------
+    add("velvet_body", P.velvet_body(), "velvet", "y_rail")
     add("y_plate", Pos(0, sy, 0) * P.y_plate_part(), "body_black", "y_plate", True)
+    add("velvet_yplate", Pos(0, sy, 0) * P.velvet_yplate(), "velvet", "x_rail")
     for i, pad in enumerate(P.y_plate_pads()):
         add(f"pad_y_{i}", Pos(0, sy, 0) * pad, "white_ink", "y_plate", True, extra=(0, 0, 0.5))
     for i, plug in enumerate(P.y_plate_plugs()):
@@ -176,6 +184,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
         add(f"screw_adapter_{a}", mv * Pos(x, y, ADAPTER_Z0) * orient(hw.button_head(3, 6), "-z"), "black_steel", "adapter", extra=(0, 0, -0.4))
         add(f"insert_holder_{a}", mv * Pos(x, y, HOLDER_Z0) * hw.heat_insert(3, 3.0), "brass", "holder")
     add("board_holder", mv * P.holder_part(), "body_black", "holder", True)
+    add("felt_board", mv * P.felt_board(), "felt", "holder")
     add("felt_adapter", mv * (P.cyl_z(34.8, HOLDER_Z0, HOLDER_Z0 + 0.8) - P.cyl_z(30.7, HOLDER_Z0 - 1, HOLDER_Z0 + 2)), "felt", "holder")
     add("holder_latch", mv * P.holder_latch(latch_locked), "red", "latch", True)
     for x in (-9.0, 9.0):

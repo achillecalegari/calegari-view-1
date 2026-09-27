@@ -31,7 +31,7 @@ if a.step:
             i.shape = exploded[i.name]
 if a.section:
     half = Pos(-500, 0, 0) * Box(1000, 1000, 1000)
-    slab = Pos(-0.2, 0, 0) * Box(0.4, 1000, 1000)
+    slab = Pos(0.05, 0, 0) * Box(0.2, 1000, 1000)   # cap stands 0.15 mm proud of the cut: no z-fighting
     cut = []
     for i in items:
         try:

@@ -64,7 +64,8 @@ MATS = {
     "ink_dark": mat("ink_dark", (0.08, 0.08, 0.08), 0.6),
     "ink_light": mat("ink_light", (0.85, 0.85, 0.82), 0.5),
     "rubber": mat("rubber", (0.02, 0.02, 0.02), 0.8),
-    "felt": mat("felt", (0.015, 0.015, 0.015), 0.95),
+    "felt": mat("felt", (0.3, 0.3, 0.32), 1.0, spec=0.2, bump=0.6),
+    "velvet": mat("velvet", (0.3, 0.3, 0.32), 1.0, spec=0.2, bump=0.6),
     "vial": mat("vial", (0.55, 0.75, 0.45), 0.05, transm=0.7, coat=1.0),
     "white_ink": mat("white_ink", (0.85, 0.85, 0.83), 0.5),
     "clamp": mat("clamp", (0.3, 0.3, 0.3), 0.5),
@@ -159,7 +160,7 @@ cam = bpy.data.cameras.new("cam")
 cam.lens = float(__import__("os").environ.get("LENS", "135"))
 co = bpy.data.objects.new("cam", cam)
 sc.collection.objects.link(co)
-dirv = Vector(VIEWS[view]).normalized()
+dirv = Vector(VIEWS[view] if view in VIEWS else [float(v) for v in view.split(",")]).normalized()
 dist = float(__import__("os").environ.get("DIST", "2.55"))
 co.location = ctr + dirv * size * dist
 zoom = __import__("os").environ.get("AIM")
@@ -189,4 +190,17 @@ sc.view_settings.view_transform = "Filmic"
 sc.view_settings.look = "Medium High Contrast"
 sc.view_settings.exposure = float(__import__("os").environ.get("EXPO", "-3.0"))
 sc.render.filepath = out
+pts_file = __import__("os").environ.get("PTS")
+if pts_file:                                   # project callout points to pixels (render/letter.py)
+    from bpy_extras.object_utils import world_to_camera_view
+    bpy.context.view_layer.update()
+    data = json.load(open(pts_file))
+    rx, ry = sc.render.resolution_x, sc.render.resolution_y
+    for lab in data["labels"]:
+        px = []
+        for p in lab["points"]:
+            v = world_to_camera_view(sc, co, root.matrix_world @ Vector(p))
+            px.append([v.x * rx, (1 - v.y) * ry])
+        lab["px"] = px
+    json.dump(data, open(out.rsplit(".", 1)[0] + ".json", "w"), indent=1)
 bpy.ops.render.render(write_still=True)
