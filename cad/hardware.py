@@ -52,6 +52,24 @@ def grub(d, length):
     return g
 
 
+def hex_bolt(d, length):
+    """ISO 4017 hex-head bolt: head above z=0, shank toward -z."""
+    af = {2.5: 5.0, 3: 5.5, 4: 7.0, 5: 8.0, 6: 10.0}[d]
+    head = extrude(RegularPolygon(af / 2 / math.cos(math.pi / 6), 6), amount=0.7 * d)
+    shank = Pos(0, 0, -length) * Cylinder(d / 2 * 0.95, length, align=Z_UP)
+    return head + shank
+
+
+def cap_nut(d):
+    """DIN 1587 domed cap nut, bearing face at z=0, dome toward +z."""
+    af = {6: 10.0}[d]
+    n = extrude(RegularPolygon(af / 2 / math.cos(math.pi / 6), 6), amount=0.7 * af)
+    n = chamfer(n.edges().filter_by(GeomType.LINE).filter_by(Axis.Z, reverse=True), 0.3)
+    n += Pos(0, 0, 0.7 * af) * (Sphere(af / 2 - 0.2) & Pos(0, 0, af / 2) * Box(af, af, af))
+    n -= Pos(0, 0, -1) * Cylinder(d / 2, 0.9 * af + 1, align=Z_UP)
+    return n
+
+
 def hex_nut(d, af=None, h=None):
     af = af or {2.5: 5.0, 3: 5.5, 4: 7.0, 5: 8.0, 6: 10.0, 8: 13.0}[d]
     h = h or 0.8 * d

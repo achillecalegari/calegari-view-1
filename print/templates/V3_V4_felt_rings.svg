@@ -6,7 +6,7 @@
 <g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
 <text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
 <g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
-<g transform="translate(0 -65)"><path d="M34.8 0A34.8 34.8 0 1 0 -34.8 0A34.8 34.8 0 1 0 34.8 0ZM30.7 0A30.7 30.7 0 1 1 -30.7 0A30.7 30.7 0 1 1 30.7 0Z"/><text y="1.5" font-family="Helvetica, Arial" font-size="5" text-anchor="middle" stroke="none" fill="black">V3</text></g>
-<g transform="translate(0 45)"><path d="M44.8 0A44.8 44.8 0 1 0 -44.8 0A44.8 44.8 0 1 0 44.8 0ZM33.1 0A33.1 33.1 0 1 1 -33.1 0A33.1 33.1 0 1 1 33.1 0Z"/><text y="1.5" font-family="Helvetica, Arial" font-size="5" text-anchor="middle" stroke="none" fill="black">V4</text></g>
+<g transform="translate(0 -65)"><path d="M36.3 0A36.3 36.3 0 1 0 -36.3 0A36.3 36.3 0 1 0 36.3 0ZM30.2 0A30.2 30.2 0 1 1 -30.2 0A30.2 30.2 0 1 1 30.2 0Z"/><text y="1.5" font-family="Helvetica, Arial" stroke="none" fill="black" font-size="5" text-anchor="middle">V3</text></g>
+<g transform="translate(0 45)"><path d="M44.8 0A44.8 44.8 0 1 0 -44.8 0A44.8 44.8 0 1 0 44.8 0ZM33.1 0A33.1 33.1 0 1 1 -33.1 0A33.1 33.1 0 1 1 33.1 0Z"/><text y="1.5" font-family="Helvetica, Arial" stroke="none" fill="black" font-size="5" text-anchor="middle">V4</text></g>
 </g>
 </svg>

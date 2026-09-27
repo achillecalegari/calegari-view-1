@@ -6,42 +6,34 @@ Everything to buy for one camera, with links. Every link was opened and checked 
 
 Most items come in packs: the quantities below are what the camera uses.
 
-## Linear guides and drive
+## Drive
+
+The two movements slide on printed dovetail ways: there are no linear guides to buy.
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| MGN9 rail, cut to length | MGN9R, 134 mm, symmetric holes, 20 mm pitch (both rails are the same) | 2 | [Dold Mechatronik](https://www.dold-mechatronik.de/Linear-guide-MGN9R-038-kg-m-cut-50-1000mm) | about 11 EUR each | enter the length; leave "drilling positions" symmetric. Lead time was about 4 months |
-| **or** MGN9 rail, 300 mm | MGN9R, holes every 20 mm starting 10 mm from the end | 1 | [Dold Mechatronik](https://www.dold-mechatronik.de/MGN9_1) | 14.10 EUR | cut both rails from it yourself, see below |
-| MGN9H carriage | long block, 4 x M3 on 15 x 16 mm | 4 | [Dold Mechatronik](https://www.dold-mechatronik.de/Linear-carriage-MGN9H) | 13.00 EUR each | |
-| alternative, global | MGN9 cut to order with MGN9H | 2 + 4 | [RobotDigg](https://www.robotdigg.com/product/347/Custom-length-GCr15-MGN9,-MGN12-or-MGN15-Linear-Rail-n-Carriage) | on request | order by email |
 | M6 threaded rod | stainless A2, DIN 976, 1 m | 1 | [Amazon.it](https://www.amazon.it/dp/B09MMFZBV2) | 7.61 EUR | select M6; cut 160 mm and 140 mm |
 | M6 hex nut, brass | 10 mm across flats | 2 | [Amazon.it](https://www.amazon.it/dp/B0F6V4BLQG) | 11.29 EUR / 15 | the drive nuts |
 | M6 hex nut, stainless | DIN 934, A2 | 6 | [Amazon.it](https://www.amazon.it/dp/B0B6BYB1CN) | 10.19 EUR / 50 | end nuts and knob nuts |
 | Sintered bronze bushing | 6 x 10 x 6 mm | 4 | [Amazon.it](https://www.amazon.it/dp/B0G5PZG1VN) | 16.23 EUR / 30 | |
 | M5 ball spring plunger | stainless, M5 x 10 or 12 | 2 | [Amazon.de](https://www.amazon.de/dp/B0CD1XP9H9) | 12.20 EUR / 30 | pick M5 x 10; zero detents |
-| O-ring | NBR 70, 7 x 1.5 mm | 2 | [Amazon.de](https://www.amazon.de/dp/B0DSXM2TVY) | 3.99 EUR / 5 | knob drag |
+| O-ring | NBR 70, 5 x 1.5 mm | 2 | [Amazon.de](https://www.amazon.de/dp/B01KHW71FM) | pack of 10 | knob drag; stretched over the M6 rod |
 | Compression spring | 4 mm OD x 10 mm, light | 1 | [Amazon.de](https://www.amazon.de/dp/B0CTCQW4JY) | 7.59 EUR / 20 | board latch |
-
-**Cutting the rails from a 300 mm bar.** The rail is hardened: use an abrasive cut-off wheel, cool it, and deburr the ends. The holes of both rails must be symmetric about the rail centre.
-
-- On a standard 300 mm rail, the holes sit at 10, 30, 50 mm and so on from the end.
-- Cut the first **134 mm** rail from 3 to 137 mm and the second from 143 to 277 mm: the holes of both end up 7 mm from each end.
-
-Keep the carriages on their plastic dummy rail until they go on the real one.
+| Dry PTFE lubricant | spray, dries to a film | 1 | [Amazon.it](https://www.amazon.it/dp/B07C7H4PLS) | 400 ml | a light coat on the dovetails; candle wax also works |
 
 ## Fasteners and inserts
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 23 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | 7.99 EUR / 50 | the holes are designed for this size; 4 mm-long inserts are too long for the Graflok module |
+| Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 31 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | 7.99 EUR / 50 | the holes are designed for this size; 4 mm-long inserts are too long for the Graflok module |
 | Heat-set insert M4 | Ruthex RX-M4x8.1 | 2 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen) | 9.49 EUR / 50 | handles |
 | Heat-set insert 1/4"-20 | short, 6.4 mm | 4 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-1-4-short-gewindeeinsatz-zoll-unc-20-stuck-ge-1_4x64-001) | 8.99 EUR / 20 | Arca plates, two per plate |
-| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | 8.39 EUR / 1160 | M3 x 5 (1), x 6 (9), x 8 (1), x 10 (2), x 12 (9: eight for the Y carriages, one as the infinity stop screw) |
-| M3 countersunk kit | ISO 10642, stainless, 6 to 30 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0GFDNBLK2) | 8.99 EUR / 1292 | M3 x 6 (6), x 8 (4), x 10 (8) |
+| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | 8.39 EUR / 1160 | M3 x 5 (1, the infinity stop pin), x 8 (1), x 10 (2), x 16 (10) |
+| M3 countersunk kit | ISO 10642, stainless, 6 to 30 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0GFDNBLK2) | 8.99 EUR / 1292 | M3 x 6 (6), x 8 (4), x 10 (7) |
 | M3 x 6 button head | ISO 7380, A2 | 4 | [Amazon.de](https://www.amazon.de/dp/B07ZPTX8B2) | 7.21 EUR / 100 | adapter ring |
 | M2.5 x 6 button head | in a stainless button-head kit | 2 | [Amazon.de](https://www.amazon.de/dp/B0F3HNGTY5) | 8.59 EUR / 900 | board latch; pick the "Linsenkopf-Innensechskant-304" variant |
 | M4 x 50 socket head | ISO 4762, stainless | 2 | [Amazon.de](https://www.amazon.de/dp/B09SKJKNPM) | 5.40 EUR / 10 | top handle; pick the 50 mm variant |
-| M3 x 4 grub screw | nylon tip, stainless | 6 | [Amazon.de](https://www.amazon.de/dp/B0DNMYPZZ3) | 8.29 EUR / 15 | focus ring (4), knobs (2); pick M3 x 4 |
+| M3 x 4 grub screw | nylon tip, stainless | 12 | [Amazon.de](https://www.amazon.de/dp/B0DNMYPZZ3) | 8.29 EUR / 15 | gib strips (6), focus ring (4), knobs (2); pick M3 x 4 |
 
 ## Tripod and levels
 
@@ -80,21 +72,20 @@ The ground glass is sold out at Mercury at the time of writing. Any Graflok 23 g
 |---|---|---|---|---|---|
 | Filament | Bambu Lab ASA, 1 kg: black, plus red and white | 1 + small amounts | [Bambu Lab EU](https://eu.store.bambulab.com/products/asa-filament) | 24.99 EUR each | about 600 g black; a few grams of red and white |
 | Threadlocker | Loctite 243, medium, 10 ml | 1 | [Amazon.it](https://www.amazon.it/dp/B0D8L2RR6S) | 15.15 EUR | metal to metal only: anaerobic threadlockers can crack ASA |
-| Epoxy | UHU Plus Endfest 300, 2 parts | 1 | [Amazon.it](https://www.amazon.it/dp/B000KJP0QK) | 10.90 EUR | bonds the vertical rail |
+| Epoxy | UHU Plus Endfest 300, 2 parts | 1 | [Amazon.it](https://www.amazon.it/dp/B000KJP0QK) | 10.90 EUR | glues the two spirit vials |
 | Threadlocker, low strength | Loctite 222 | 1 | search: "Loctite 222" | | helicoid into the flange |
 
 ## Cost
 
 | Group | About |
 |---|---|
-| Guides and carriages | 75 EUR |
-| Drive: rod, nuts, bushings, plungers, O-rings, spring | 70 EUR |
+| Drive: rod, nuts, bushings, plungers, O-rings, spring, PTFE lubricant | 80 EUR |
 | Inserts and screws | 80 EUR |
 | Arca plates, vials, velvet, felt | 45 EUR |
 | Metal flange and helicoid (AliExpress helicoid) | 70 EUR |
 | Lens board | 25 EUR |
 | ASA (black; red and white optional) | 25 to 75 EUR |
 | Threadlockers and epoxy | 35 EUR |
-| **Camera without back, ground glass and lens** | **about 450 EUR** |
+| **Camera without back, ground glass and lens** | **about 385 EUR** |
 
-Much of it is packs of screws, inserts and nuts that will outlast the camera: what the camera itself consumes is closer to 250 EUR. The back, the ground glass and the lens are extra: 150 to 350 EUR for a back, 75 USD for the ground glass, 260 to 450 EUR for a lens.
+Much of it is packs of screws, inserts and nuts that will outlast the camera: what the camera itself consumes is closer to 180 EUR. The back, the ground glass and the lens are extra: 150 to 350 EUR for a back, 75 USD for the ground glass, 260 to 450 EUR for a lens.

@@ -2,7 +2,8 @@
 
 print/step/     STEP of every printed part, in assembly coordinates (open in Fusion, FreeCAD...)
 print/stl/      STL of every printed part, already oriented on the bed
-print/inlays/   coloured dot inlays (same coordinates as their part's STL) for AMS printing
+print/inlays/   coloured dot inlays for AMS printing, only for dots on a top or bed face (the dots on
+                side walls are filled with paint: dozens of colour changes are not worth it)
 print/plates/   Bambu P1S build plates (256 x 256), one material per plate, as 3MF
 print/test/     the test prints to run before anything else
 print/templates/ 1:1 SVG cutting templates for the velvet and felt (V1 to V4)
@@ -23,7 +24,7 @@ BED = 256.0
 
 FLIP = trimesh.transformations.rotation_matrix(math.pi, [1, 0, 0])
 EYE = np.eye(4)
-# rails and gib strips print lying on their outer face: the flanks are perimeters, not layers
+# the gib rails print lying on their outer face (the gib pocket roof is then a wall, not an overhang)
 ON_PLUS_X = trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])
 ON_MINUS_X = trimesh.transformations.rotation_matrix(-math.pi / 2, [0, 1, 0])
 ON_PLUS_Y = trimesh.transformations.rotation_matrix(-math.pi / 2, [1, 0, 0])
@@ -43,26 +44,26 @@ def catalogue():
     xred, xwhite = P.x_plate_inlays()
     fm = P.focus_ring_marks(0.6, lift=0)
     return [
-        ("body", P.body_part(), FLIP, 1, "black", [("red", P.body_index_inlay())]),
+        ("body", P.body_part(), FLIP, 1, "black", []),
         ("graflok_module", P.graflok_module(), FLIP, 1, "black", []),
         ("graflok_blade", P.graflok_blade(), FLIP, 1, "red", []),
         ("graflok_wheel", P.graflok_wheel(), EYE, 1, "black", []),
-        ("y_plate", P.y_plate_part(), FLIP, 1, "black", [("red", yred), ("white", ywhite)]),
-        ("way_y_fixed", P.way_rail("y", 1, False), ON_PLUS_X, 1, "black", []),
-        ("way_y_gib", P.way_rail("y", -1, True), ON_MINUS_X, 1, "black", []),
-        ("gib_y", P.gib_strip("y", -1), ON_MINUS_X, 1, "black", []),
-        ("way_x_fixed", P.way_rail("x", -1, False), ON_MINUS_Y, 1, "black", [("red", P.way_x_index_inlay())]),
-        ("way_x_gib", P.way_rail("x", 1, True), ON_PLUS_Y, 1, "black", []),
-        ("gib_x", P.gib_strip("x", 1), ON_PLUS_Y, 1, "black", []),
-        ("x_plate", P.x_plate_part(), EYE, 1, "black", [("red", xred), ("white", xwhite)]),
-        ("x_turret", P.x_turret(), FLIP, 1, "black", []),
+        ("y_plate", P.y_plate_part(), FLIP, 1, "black", []),
         ("y_turret", P.y_turret(), FLIP, 1, "black", []),
-        ("focus_ring", P.focus_ring_part(), FLIP, 1, "black", [("red", fm[0]), ("white", Compound(fm[1:]))]),
-        ("adapter_ring", P.adapter_part(with_thread=thread), FLIP, 1, "black", []),
+        ("way_y_fixed", P.way_rail("y", 1, False), EYE, 1, "black", []),
+        ("way_y_gib", P.way_rail("y", -1, True), ON_MINUS_X, 1, "black", []),
+        ("gib_y", P.gib_strip("y", -1), FLIP, 1, "black", []),
+        ("way_x_fixed", P.way_rail("x", -1, False), EYE, 1, "black", [("red", P.way_x_index_inlay())]),
+        ("way_x_gib", P.way_rail("x", 1, True), ON_PLUS_Y, 1, "black", []),
+        ("gib_x", P.gib_strip("x", 1), FLIP, 1, "black", []),
+        ("x_plate", P.x_plate_part(), EYE, 1, "black", [("red", xred), ("white", xwhite)]),
+        ("x_turret", P.x_turret(), EYE, 1, "black", []),
+        ("focus_ring", P.focus_ring_part(), FLIP, 1, "black012", []),
+        ("adapter_ring", P.adapter_part(with_thread=thread), FLIP, 1, "black012", []),
         ("board_holder", P.holder_part(), EYE, 1, "black", []),
         ("holder_latch", P.holder_latch(), EYE, 1, "red", []),
         ("knob", kn, EYE, 2, "black", [("red", kidx)]),
-        ("top_handle", P.top_handle(), EYE, 1, "black", [("red", P.brand_dot(lift=0))]),
+        ("top_handle", P.top_handle(), FLIP, 1, "black", [("red", P.brand_dot(lift=0))]),
     ]
 
 
@@ -174,17 +175,23 @@ def templates():
     d = ROOT / "templates"
     ob, oy = opening_body(BODY_Z1), opening_yplate(YP_Z1)
     hy = max(oy[1], 33.0)
+    txt = 'font-family="Helvetica, Arial" stroke="none" fill="black"'
+    x0, x1 = P.V1_X
     svg_page(d / "V1_velvet_body.svg", "V1 - velvet, body front",
-             [f'<path d="{rect_path(-46.5, -72, 44, 72)} {rect_path(-ob[0] - 1, -ob[1] - 1, ob[0] + 1, ob[1] + 1, 3)}"/>',
-              '<g font-family="Helvetica, Arial" font-size="4" stroke="none" fill="black"><text x="0" y="-62" text-anchor="middle">TOP</text><text transform="translate(-42 0) rotate(-90)" text-anchor="middle">rail side</text></g>'],
-             "Cut on the lines. The camera sees this from the front: the vertical rail is on the left.")
+             [f'<path d="{rect_path(x0, -72, x1, 72)} {rect_path(-ob[0] - 0.3, -ob[1] - 0.3, ob[0] + 0.3, ob[1] + 0.3, 3)}"/>',
+              f'<g {txt} font-size="4"><text x="0" y="-62" text-anchor="middle">TOP</text>'
+              f'<text transform="translate({x0 + 4} 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>'],
+             "Seen from the front. The narrow margin (right) goes next to the rise screw channel.")
+    y0, y1 = P.V2_Y
+    holes = " ".join(f"M{x + 3.5} {-y}A3.5 3.5 0 1 0 {x - 3.5} {-y}A3.5 3.5 0 1 0 {x + 3.5} {-y}Z"
+                     for x, y in P.Y_TURRET_SCREWS)
     svg_page(d / "V2_velvet_y_plate.svg", "V2 - velvet, Y plate front",
-             [f'<path d="{rect_path(-72, -45.5, 72, 40)} {rect_path(-oy[0] - 1, -hy - 1, oy[0] + 1, hy + 1, 3)}"/>',
-              '<text x="0" y="-34" font-family="Helvetica, Arial" font-size="4" text-anchor="middle" stroke="none" fill="black">TOP</text>'],
-             "Cut on the lines. The top edge stops 4 mm below the two white pads.")
+             [f'<path d="{rect_path(-72, y0, 72, y1)} {rect_path(-oy[0] - 1, -hy - 1, oy[0] + 1, hy + 1, 3)} {holes}"/>',
+              f'<text x="0" y="{-y1 + 8}" {txt} font-size="4" text-anchor="middle">TOP</text>'],
+             "Seen from the front. The two small holes go over the rise-nut screws (photographer's left).")
     svg_page(d / "V3_V4_felt_rings.svg", "V3 and V4 - felt rings, board holder",
-             [f'<g transform="translate(0 -65)"><path d="{ring_path(30.7, 34.8)}"/><text y="1.5" font-family="Helvetica, Arial" font-size="5" text-anchor="middle" stroke="none" fill="black">V3</text></g>',
-              f'<g transform="translate(0 45)"><path d="{ring_path(REAR_CLEAR_D / 2 + 3.6, 44.8)}"/><text y="1.5" font-family="Helvetica, Arial" font-size="5" text-anchor="middle" stroke="none" fill="black">V4</text></g>'],
+             [f'<g transform="translate(0 -65)"><path d="{ring_path(30.2, 36.3)}"/><text y="1.5" {txt} font-size="5" text-anchor="middle">V3</text></g>',
+              f'<g transform="translate(0 45)"><path d="{ring_path(REAR_CLEAR_D / 2 + 3.6, 44.8)}"/><text y="1.5" {txt} font-size="5" text-anchor="middle">V4</text></g>'],
              "1 mm adhesive felt. V3: groove on the back of the holder. V4: shallow seat under the lens board.")
 
 
@@ -195,7 +202,7 @@ if __name__ == "__main__":
             if f.is_file():
                 f.unlink()
     report = ["part                 copies  material  overhang_area_mm2  largest_downward_span_mm"]
-    plate_items = {"black": [], "red": []}
+    plate_items = {"black": [], "black012": [], "red": []}
     for name, shape, T, copies, mat, inlays in catalogue():
         export_step(shape, str(ROOT / "step" / f"{name}.step"))
         group = drop([oriented(mesh(shape, 0.01 if name in ("x_plate", "adapter_ring") else 0.02), T)]
@@ -210,9 +217,16 @@ if __name__ == "__main__":
         print(f"{name}: {group[0].extents.round(1)}")
     (ROOT / "PRINTABILITY.txt").write_text("\n".join(report) + "\n")
     summary = []
+    n_black = 0
     for mat, items in plate_items.items():
         for i, pl in enumerate(pack(items), 1):
-            path = ROOT / "plates" / f"plate_{i:02d}_{mat}.3mf" if mat == "black" else ROOT / "plates" / f"plate_{mat}_{i}.3mf"
+            if mat == "black":
+                n_black = i
+                path = ROOT / "plates" / f"plate_{i:02d}_black.3mf"
+            elif mat == "black012":
+                path = ROOT / "plates" / f"plate_{n_black + i:02d}_black_0.12mm_layers.3mf"
+            else:
+                path = ROOT / "plates" / f"plate_{mat}_{i}.3mf"
             write_plate(path, pl["groups"])
             summary.append(f"{path.name}: " + ", ".join(g[0] for g in pl["groups"]))
     # test prints: Graflok module with blade and wheel; M65 thread coupons
@@ -225,14 +239,14 @@ if __name__ == "__main__":
     cut_y = lambda sh: sh & P.box_at(-80, 80, -20, 20, -50, 120)
     cut_x = lambda sh: sh & P.box_at(-20, 20, -80, 80, -50, 120)
     coupons = [
-        ("coupon_way_y_fixed", cut_y(P.way_rail("y", 1, False)), ON_PLUS_X),
+        ("coupon_way_y_fixed", cut_y(P.way_rail("y", 1, False)), EYE),
         ("coupon_way_y_gib", cut_y(P.way_rail("y", -1, True)), ON_MINUS_X),
-        ("coupon_gib_y", cut_y(P.gib_strip("y", -1)), ON_MINUS_X),
+        ("coupon_gib_y", cut_y(P.gib_strip("y", -1)), FLIP),
         ("coupon_lip_y_left", yp & P.box_at(50, 75, -20, 20, YP_Z0 - 0.1, YP_Z1 + 1), FLIP),
         ("coupon_lip_y_right", yp & P.box_at(-75, -50, -20, 20, YP_Z0 - 0.1, YP_Z1 + 1), FLIP),
-        ("coupon_way_x_fixed", cut_x(P.way_rail("x", -1, False)), ON_MINUS_Y),
+        ("coupon_way_x_fixed", cut_x(P.way_rail("x", -1, False)), EYE),
         ("coupon_way_x_gib", cut_x(P.way_rail("x", 1, True)), ON_PLUS_Y),
-        ("coupon_gib_x", cut_x(P.gib_strip("x", 1)), ON_PLUS_Y),
+        ("coupon_gib_x", cut_x(P.gib_strip("x", 1)), FLIP),
         ("coupon_lip_x_bottom", xp_ & P.box_at(-20, 20, -75, -50, XP_Z0 - 0.1, XP_Z1 + 1), EYE),
         ("coupon_lip_x_top", xp_ & P.box_at(-20, 20, 50, 75, XP_Z0 - 0.1, XP_Z1 + 1), EYE),
     ]

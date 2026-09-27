@@ -16,35 +16,31 @@ THRESHOLD = 0.3  # mm3
 
 # pairs that touch or nest by design (prefix pairs)
 EXPECTED = [
+    # heat-set inserts sit in their hosts (interference fit) and carry their screws
     ("insert_", "body"), ("insert_", "y_plate"), ("insert_", "x_plate"), ("insert_", "graflok_module"),
-    ("insert_", "board_holder"), ("insert_", "screw_"),
-    ("screw_gf", "graflok_module"), ("screw_blade", "graflok_blade"), ("screw_blade", "graflok_module"),
-    ("screw_wheel", "graflok_wheel"), ("screw_wheel", "graflok_module"), ("screw_wheel", "graflok_blade"),
-    ("screw_top", "top_handle"), ("screw_top", "body"),
-    ("screw_yrail", "rail_y"), ("screw_xrail", "rail_x"),
-    ("screw_yblock", "block_y"), ("screw_yblock", "y_plate"), ("screw_xblock", "block_x"), ("screw_xblock", "x_plate"),
-    ("screw_turret", "x_turret"), ("screw_turret", "x_plate"), ("screw_flange", "x_plate"), ("screw_flange", "flange"),
-    ("screw_adapter", "adapter_ring"), ("screw_adapter", "board_holder"), ("screw_latch", "holder_latch"),
-    ("screw_latch", "board_holder"), ("stop_pin", "x_plate"),
-    ("rod_y", "bush_y"), ("rod_y", "nut_y"), ("rod_y", "knob_y"), ("rod_y", "oring_y"), ("rod_x", "bush_x"),
-    ("rod_x", "nut_x"), ("rod_x", "knob_x"), ("rod_x", "oring_x"),
-    ("nut_y_drive", "y_plate"), ("nut_x_drive", "x_turret"), ("knob_", "inlay_knob"),
-    ("block_y", "rail_y"), ("block_x", "rail_x"), ("block_", "block_"),
-    ("rail_y", "body"), ("rail_x", "y_plate"),
-    ("plunger_y", "body"), ("plunger_x", "y_plate"), ("plunger_y", "y_plate"), ("plunger_x", "x_plate"),
-    ("inlay_", "body"), ("inlay_", "y_plate"), ("inlay_", "x_plate"), ("inlay_", "focus_ring"),
-    ("vial_side", "body"), ("vial_top", "top_handle"),
+    ("insert_", "board_holder"), ("insert_", "adapter_ring"), ("insert_", "way_"), ("insert_", "y_turret"),
+    ("insert_", "screw_"), ("insert_", "stop_pin"),
+    # threads cut or formed in the plastic: grubs in the gib rails, latch screws, ball plungers
+    ("grub_gib", "way_"), ("screw_latch", "board_holder"), ("plunger_y", "body"), ("plunger_x", "y_plate"),
+    # the detent balls stand 1.0 proud in the 0.8 gap: they press on the plate and click into a dimple at zero
+    ("plunger_y", "y_plate"), ("plunger_x", "x_plate"),
+    # rods: bushings, drive nuts, cap nuts, O-rings (stretched)
+    ("rod_", "bush_"), ("rod_", "nut_"), ("rod_", "oring_"), ("rod_", "knob_"), ("knob_", "inlay_knob"),
+    # O-rings squeezed between their seat and the knob
+    ("oring_y", "body"), ("oring_y", "knob_y"), ("oring_x", "y_plate"), ("oring_x", "knob_x"),
+    # press fits and contacts
+    ("bush_y", "body"), ("bush_x", "y_plate"), ("arca_", "body"), ("vial_side", "body"), ("vial_top", "top_handle"),
+    ("inlay_", "body"), ("inlay_", "y_plate"), ("inlay_", "x_plate"), ("inlay_", "focus_ring"), ("inlay_", "top_handle"),
+    ("inlay_xway", "way_x"), ("velvet_", "body"), ("velvet_", "y_plate"), ("velvet_", "x_plate"),
+    ("felt_", "board_holder"), ("felt_board", "lensboard"), ("felt_adapter", "adapter_ring"),
     ("focus_ring", "helicoid"), ("helicoid", "adapter_ring"), ("helicoid", "flange"), ("flange", "x_plate"),
-    ("adapter_ring", "board_holder"), ("lens", "lensboard"), ("lens", "lens_glass"), ("lensboard", "board_holder"),
-    ("spring_latch", "holder_latch"), ("spring_latch", "board_holder"),
-    ("arca_", "body"), ("rb_", "rb_"), ("oring_", "body"), ("oring_x", "y_plate"),
-    ("plug_yblock", "y_plate"), ("velvet_", "body"), ("velvet_", "y_plate"), ("velvet_", "x_plate"), ("velvet_", "plug_"), ("felt_board", "board_holder"), ("felt_board", "lensboard"), ("insert_arca", "arca_"), ("pad_y", "y_plate"), ("felt_", "board_holder"), ("plug_", "screw_yblock"), ("bush_y", "body"), ("bush_x", "y_plate"), ("nut_y_bottom", "body"), ("nut_x_end", "y_plate"),
+    ("lens", "lensboard"), ("lens", "lens_glass"), ("spring_latch", "holder_latch"), ("spring_latch", "board_holder"),
+    ("rb_", "rb_"),
+    # countersunk heads seat in their cones
+    ("screw_gf", "graflok_module"), ("screw_blade", "graflok_blade"), ("screw_flange", "x_plate"), ("screw_yway", "way_y"),
+    ("screw_flange", "flange"),                 # M3 threads in the metal flange
     # The RB67 envelope has no lips or Graflok slots: the back-to-module fit is verified on the
     # real back with the printed module (docs/calibration.md), not here.
-    ("way_", "body"), ("leather_", "body"), ("inlay_handle", "top_handle"), ("inlay_xway", "way_x"), ("way_", "y_plate"), ("way_", "x_plate"), ("gib_", "way_"), ("gib_", "y_plate"), ("gib_", "x_plate"),
-    ("grub_", "way_"), ("grub_", "gib_"), ("screw_yway", "way_"), ("screw_yway", "body"), ("screw_xway", "y_plate"),
-    ("screw_xway", "way_"), ("insert_", "way_"), ("screw_yturret", "y_plate"), ("screw_yturret", "y_turret"),
-    ("y_turret", "y_plate"), ("nut_y_drive", "y_turret"), ("rod_y", "y_turret"), ("insert_", "y_turret"),
     ("rb_", "graflok_"), ("rb_", "screw_blade"), ("rb_", "screw_wheel"),
 ]
 

@@ -73,19 +73,21 @@ WAY_FL_IN = WAY_UI - 1.0             # flange inner edge (bearing under the lip)
 WAY_ANG = 60.0
 Y_LIP, X_LIP = 2.6, 4.0              # lip heights of the Y plate and of the lens panel
 Y_WAY_H = WAY_FL + Y_LIP + 1.8       # Y rails stay under the Y plate front (the X knob passes over them)
-GIB_T = 1.5
+GIB_T = {"y": 2.3, "x": 1.5}      # gib strip thickness per stage (same outer wall for the grubs)
+GIB_BACK = 0.4                       # room behind the gib: an oversize print still goes together
 FLANK_C = 0.05                       # clearance on the flanks, as modelled (the gib takes it up)
 EDGE_C = 0.3
 WAY_SCREW_U = 70.5
 Y_WAY_SCREWS = {1: (-58.0, -20.0, 20.0, 58.0), -1: (-58.0, -43.0, 43.0)}   # from the body rear (clear of the dark slide and the vial)
 X_WAY_SCREWS = (-54.0, -18.0, 18.0, 36.0)
-GIB_GRUBS = (-50.0, 0.0, 30.0)
+GIB_GRUBS = {"y": (-50.0, 0.0, 50.0), "x": (-40.0, 0.0, 50.0)}   # cone-point grubs into dimples in the gib
+X_WAY_SCREW_U = 71.0                 # M2.5 screws from the Y plate rear into inserts in the X rails
 
 # M6 drive screws
 ROD_D = 6.0
 NUT_AF, NUT_T = 10.0, 5.0
 NUT_FLOAT = 0.5                                   # radial float of the drive nut (no binding)
-BUSH_OD, BUSH_L, BUSH_FLANGE_D, BUSH_FLANGE_T = 10.0, 6.0, 12.0, 1.0   # flanged sintered bronze 6x10x6
+BUSH_OD, BUSH_L = 8.0, 6.0          # sintered bronze bushing 6 x 8 x 6 (fits inside the Y plate without breaking its front)
 CHAN_W = 16.0
 
 # --------------------------------------------------------------------------
@@ -112,28 +114,35 @@ X_ROD_END = 44.0                     # the horizontal rod stops here (keeps the 
 Y_SCREW_Z = 12.6                     # nut and bushings live in the body channel (floor above the Graflok recess)
 X_SCREW_Z = YP_Z1 - 5.0              # nut in the lens-panel turret, bushings in the Y plate
 CHAN_FLOOR_Y = SEAT_Z + 1.5          # body screw channel floor
-KNOB_D, KNOB_H = 24.0, 13.0
+KNOB_D, KNOB_H = 24.0, 15.0
+KNOB_GAP = 0.4                       # the knob rides on its O-ring, 0.4 mm off the face
 ORING_T = 1.5                        # drag O-ring under each knob (constant friction, no lock wheels)
+ORING_SEAT = 1.1                     # seat depth: the 1.5 mm O-ring stands 0.4 proud and is squeezed by the knob
+CAP_NUT_H = 12.0                     # DIN 1587 M6 domed cap nut at the far end of each rod (Loctite on the bench)
+Y_CAP_ROD_END = -62.5 - 9.0          # the rise rod ends 9 mm inside its cap nut
+X_CAP_ROD_END = 9.0                  # the shift rod ends 9 mm inside its cap nut (outside the Y plate's left edge)
 
 # --------------------------------------------------------------------------
 # Tripod plates and handles
 # --------------------------------------------------------------------------
 ARCA_W, ARCA_L, ARCA_T = 38.0, 60.0, 10.0
 ARCA_POCKET = 1.8
-PLINTH = 22.0                        # bottom of the L bracket: the clamp jaws stay below the Y plate at full fall
-ARCA_ZC = BODY_Z1 - ARCA_W / 2 - 1.0
+PLINTH = 25.0                        # bottom of the L bracket: 4 mm from a 65 mm clamp's jaws to the Y plate at full fall
+ARCA_ZC = BODY_Z1 - ARCA_W / 2 - 1.5
 
 L_Z0 = ARCA_ZC - ARCA_W / 2 - 3.0   # the L bracket (bottom plinth + side leg) reaches behind the body
-SIDE_T = 22.0                        # side leg of the L bracket (photographer's left), portrait Arca plate
+SIDE_T = 25.0                        # side leg of the L bracket (photographer's left), portrait Arca plate
 SIDE_ARCA_YC = 0.0
 
 HANDLE_BAR = 14.0
 HANDLE_POST = 14.0
 HANDLE_H = 44.0                      # protrusion (30 mm finger room)
 HANDLE_FLARE = 5.0                   # concave fillet where the posts meet the body
-TOP_HANDLE_X = (-69.0, 32.0)         # leaves the top-left corner to the rise knob
+TOP_HANDLE_X = (-60.0, 28.0)         # over the flat of the body top; 9 mm of finger room to the rise knob
 TOP_HANDLE_Z = (BODY_Z0, BODY_Z1)    # flush with the body rear and front: deep enough for two accessory shoes
-SHOES_X = (-31.0, 7.0)               # ISO 518 accessory shoes on top of the bar, open to the rear
+SHOES_X = (-35.5, 2.5)               # ISO 518 accessory shoes on top of the bar, open to the rear
+LEVEL_TOP_X = -16.5                  # 15 mm bull's-eye level between the shoes (pitch and roll in landscape)
+LEVEL_D, LEVEL_H = 15.4, 8.2         # pocket for a 15 x 8 mm bull's-eye vial
 
 # --------------------------------------------------------------------------
 # Focus ring

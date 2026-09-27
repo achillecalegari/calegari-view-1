@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
 <rect width="210" height="297" fill="white"/>
 <text x="15" y="18" font-family="Helvetica, Arial" font-size="6" font-weight="bold">V1 - velvet, body front</text>
-<text x="15" y="26" font-family="Helvetica, Arial" font-size="3.6">Cut on the lines. The camera sees this from the front: the vertical rail is on the left.</text>
+<text x="15" y="26" font-family="Helvetica, Arial" font-size="3.6">Seen from the front. The narrow margin (right) goes next to the rise screw channel.</text>
 <text x="15" y="31" font-family="Helvetica, Arial" font-size="3.6">Print at 100 % (no "fit to page"), then check the 100 mm bar with a ruler.</text>
 <g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
 <text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
 <g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
-<path d="M-46.5 -72H44V72H-46.5Z M-37.25 -35.95454545454545H37.25A3 3 0 0 1 40.25 -32.95454545454545V32.95454545454545A3 3 0 0 1 37.25 35.95454545454545H-37.25A3 3 0 0 1 -40.25 32.95454545454545V-32.95454545454545A3 3 0 0 1 -37.25 -35.95454545454545Z"/>
-<g font-family="Helvetica, Arial" font-size="4" stroke="none" fill="black"><text x="0" y="-62" text-anchor="middle">TOP</text><text transform="translate(-42 0) rotate(-90)" text-anchor="middle">rail side</text></g>
+<path d="M-46.5 -72H45.5V72H-46.5Z M-36.55 -35.25454545454545H36.55A3 3 0 0 1 39.55 -32.25454545454545V32.25454545454545A3 3 0 0 1 36.55 35.25454545454545H-36.55A3 3 0 0 1 -39.55 32.25454545454545V-32.25454545454545A3 3 0 0 1 -36.55 -35.25454545454545Z"/>
+<g font-family="Helvetica, Arial" stroke="none" fill="black" font-size="4"><text x="0" y="-62" text-anchor="middle">TOP</text><text transform="translate(-42.5 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>
 </g>
 </svg>

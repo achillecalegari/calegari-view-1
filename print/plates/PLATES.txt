@@ -1,9 +1,9 @@
-plate_01_black.3mf: body, way_y_fixed, way_y_gib, way_x_fixed, way_x_gib, gib_x, knob_1, knob_2, x_turret
-plate_02_black.3mf: y_plate, gib_y, top_handle, graflok_wheel
-plate_03_black.3mf: x_plate, adapter_ring
+plate_01_black.3mf: body, way_y_fixed, way_y_gib, way_x_fixed, way_x_gib, gib_x, knob_1, knob_2, y_turret
+plate_02_black.3mf: y_plate, gib_y, top_handle, x_turret, graflok_wheel
+plate_03_black.3mf: x_plate
 plate_04_black.3mf: board_holder
 plate_05_black.3mf: graflok_module
-plate_06_black.3mf: focus_ring
+plate_06_black_0.12mm_layers.3mf: focus_ring, adapter_ring
 plate_red_1.3mf: graflok_blade, holder_latch
 plate_00_test_1.3mf: graflok_module, shrink_gauge_100mm, flange_pocket_coupon, m65_male_coupon, coupon_way_y_fixed, coupon_way_y_gib, coupon_gib_y, coupon_gib_x
 plate_00_test_2.3mf: graflok_blade, coupon_lip_y_left, coupon_lip_y_right, coupon_way_x_fixed, coupon_way_x_gib, coupon_lip_x_bottom, coupon_lip_x_top, graflok_wheel
