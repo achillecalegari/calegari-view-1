@@ -131,7 +131,7 @@ HANDLE_BAR = 14.0
 HANDLE_POST = 14.0
 HANDLE_H = 44.0                      # protrusion (30 mm finger room)
 HANDLE_FLARE = 5.0                   # concave fillet where the posts meet the body
-TOP_HANDLE_X = (-66.0, 38.0)         # leaves the top-left corner to the rise knob
+TOP_HANDLE_X = (-69.0, 32.0)         # leaves the top-left corner to the rise knob
 TOP_HANDLE_Z = (BODY_Z0, BODY_Z1)    # flush with the body rear and front: deep enough for two accessory shoes
 SHOES_X = (-31.0, 7.0)               # ISO 518 accessory shoes on top of the bar, open to the rear
 
