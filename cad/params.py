@@ -120,8 +120,8 @@ ORING_T = 1.5                        # drag O-ring under each knob (constant fri
 ORING_SEAT = 1.1                     # seat depth: the 1.5 mm O-ring stands 0.4 proud and is squeezed by the knob
 CAP_NUT_H = 12.0                     # DIN 1587 M6 domed cap nut at the far end of each rod (Loctite on the bench)
 Y_CAP_ROD_END = -62.5 - 7.5          # the rise rod ends 7.5 mm inside its cap nut (DIN 1587: about 8 mm of thread)
-X_CAP_ROD_END = 7.5                  # the shift rod ends 7.5 mm inside its cap nut (outside the Y plate's left edge)
-ROD_Y_LEN, ROD_X_LEN = 156.0, 168.0
+X_CAP_ROD_END = 7.5 + 1.6            # 7.5 mm inside its cap nut, which sits on a DIN 125 washer at the Y plate's left edge
+ROD_Y_LEN, ROD_X_LEN = 156.0, 170.0
 
 # --------------------------------------------------------------------------
 # Tripod plates and handles

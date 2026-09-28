@@ -129,7 +129,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
         add(f"way_x_{'gib' if gib else 'fixed'}", Pos(0, sy, 0) * P.way_rail("x", s_, gib), "body_black", "x_rail", True, extra=(0, s_ * 0.3, 0))
         for xx in X_WAY_SCREWS:
             add(f"insert_xway_{s_}_{xx}", Pos(xx, s_ * X_WAY_SCREW_U + sy, YP_Z1) * hw.heat_insert(2.5, 4.0), "brass", "x_rail")
-            add(f"screw_xway_{s_}_{xx}", Pos(xx, s_ * X_WAY_SCREW_U + sy, YP_Z0 + 2.8) * orient(hw.socket_cap(2.5, 16), "-z"), "black_steel", "y_plate", extra=(0, 0, -0.4))
+            add(f"screw_xway_{s_}_{xx}", Pos(xx, s_ * X_WAY_SCREW_U + sy, YP_Z0 + 3.5) * orient(hw.socket_cap(2.5, 16), "-z"), "black_steel", "y_plate", extra=(0, 0, -0.4))
     add("inlay_xway_index", Pos(0, sy, 0) * P.way_x_index_inlay(), "red", "x_rail")
     add("gib_x", Pos(0, sy, 0) * P.gib_strip("x", 1), "body_black", "x_rail", True, extra=(0, 0.4, 0))
     uwx = P.gib_wall("x")
@@ -140,7 +140,8 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("rod_x", Pos(x_left, yx, X_SCREW_Z) * orient(hw.threaded_rod(6, x_left - x_right), "-x"), "steel", "x_drive")
     add("bush_x_right", Pos(P.X_CHAN[0], yx, X_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "-x"), "bronze", "x_drive")
     add("bush_x_left", Pos(P.X_CHAN[1] + BUSH_L, yx, X_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "-x"), "bronze", "x_drive")
-    add("nut_x_cap", Pos(H, yx, X_SCREW_Z) * orient(hw.cap_nut(6), "+x"), "steel", "x_drive", extra=(0.5, 0, 0))
+    add("washer_x_cap", Pos(H, yx, X_SCREW_Z) * orient(hw.washer(6, 12.0, 1.6), "+x"), "steel", "x_drive", extra=(0.5, 0, 0))
+    add("nut_x_cap", Pos(H + 1.6, yx, X_SCREW_Z) * orient(hw.cap_nut(6), "+x"), "steel", "x_drive", extra=(0.5, 0, 0))
     add("nut_x_drive", Pos(sx - NUT_T / 2, yx, X_SCREW_Z) * orient(Rot(0, 0, 30) * hw.hex_nut(6, h=NUT_T), "+x"), "brass", "turret")
     add("oring_x", Pos(-H + ORING_SEAT - 0.75, yx, X_SCREW_Z) * Rot(0, 90, 0) * Torus(3.75, 0.75), "rubber", "x_knob")
     add("knob_x", Pos(-H - KNOB_GAP, yx, X_SCREW_Z) * orient(kn, "-x"), "body_black", "x_knob", True)
@@ -180,7 +181,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("holder_latch", mv * P.holder_latch(latch_locked), "red", "latch", True)
     for x in (-9.0, 9.0):
         add(f"washer_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 2.5) * hw.washer(2.5, 6.0, 0.5), "black_steel", "latch", extra=(0, 0, 0.3))
-        add(f"screw_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 3.0) * hw.button_head(2.5, 8),
+        add(f"screw_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 3.0) * hw.button_head(2.5, 6),
             "black_steel", "latch", extra=(0, 0, 0.3))
     y_sp0 = BOARD_H / 2 - P.LATCH_ENGAGE + P.LATCH_LEN + (0 if latch_locked else P.LATCH_ENGAGE + 1)
     y_sp1 = BOARD_H / 2 + 22.0

@@ -15,7 +15,7 @@ from shapely.ops import unary_union
 from params import *
 import parts as P
 
-MIN_SEAL = 4.0
+MIN_SEAL = 4.6
 STEP = 5
 
 
@@ -87,5 +87,5 @@ if __name__ == "__main__":
             for w, name in ((w1, "body/Y plate"), (w2, "Y plate/lens panel")):
                 if w < worst[0]:
                     worst = (w, f"{name} at x {sx:+d} y {sy:+d}")
-    print(f"narrowest velvet seal {worst[0]:.1f} mm, {worst[1]} (minimum {MIN_SEAL}; swept every {STEP} mm)")
+    print(f"narrowest velvet seal {worst[0]:.2f} mm, {worst[1]} (minimum {MIN_SEAL}; swept every {STEP} mm)")
     sys.exit(0 if worst[0] >= MIN_SEAL else 1)

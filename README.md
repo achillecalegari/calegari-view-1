@@ -12,7 +12,7 @@ I have wanted a view camera for years. The rigid kind, compact, built for archit
 
 The problem is the price. A new Arca-Swiss or Silvestri costs thousands before you add a lens, and the used market is not much kinder. So I designed my own, around what I already had: a Bambu Lab P1S, the Mamiya RB67 backs you can find everywhere for little money, and a used large-format wide angle.
 
-This repository is the whole camera: the files to print, the parametric model they come from, the shopping list with links, and step-by-step instructions written for someone who has never held a view camera. Every hole of every printed part is shown in a picture with a letter, and a table says what goes into it. Without back and lens, the parts cost about 450 EUR, much of it in packs of screws and inserts that will outlast the camera.
+This repository is the whole camera: the files to print, the parametric model they come from, the shopping list with links, and step-by-step instructions written for someone who has never held a view camera. Every hole of every printed part is shown in a picture with a letter, and a table says what goes into it. Without back and lens, the parts cost about 385 EUR, much of it in packs of screws and inserts that will outlast the camera.
 
 ## What it is
 
@@ -21,15 +21,15 @@ This repository is the whole camera: the files to print, the parametric model th
 | Format | 6x7 (56 x 69.5 mm); the gate also clears 6x8 |
 | Back | Mamiya RB67 Pro, Pro-S, Pro-SD on a Graflok-type interface; Mercury Works Graflok 23 ground glass |
 | Lens | 65 mm large-format wide angle in Copal 0 (Super-Angulon 65/8, Nikkor-SW 65/4, Grandagon-N 65/4.5) on a Linhof Technika 99 x 96 board |
-| Movements | rise and fall +/-25 mm, lateral shift +/-25 mm; M6 lead screws, 1 mm per turn, hard stops, zero detents |
-| Focus | M65 helicoid 17-31 on a metal flange, 124 mm focus ring with a lever and an adjustable infinity stop, infinity to 0.47 m |
+| Movements | rise and fall +/-25 mm, lateral shift +/-25 mm, on printed dovetail ways with gibs; M6 lead screws, 1 mm per turn, hard stops, zero detents |
+| Focus | M65 helicoid 17-31 on a metal flange, 116 mm focus ring with a tab and a hidden infinity stop, infinity to 0.47 m |
 | Tripod | integrated L bracket with two Arca-Swiss plates: under the body (landscape) and on the side leg (portrait) |
 | Lens change | every lens on its own board: a spring latch, no tools, ten seconds; printed shims put every lens at infinity on the same stop |
-| Handle | one top handle, bolted on; tubular spirit levels readable from behind for landscape and portrait |
-| Size | 192 x 222 mm front, 161 mm deep with back and lens |
-| Weight | about 1.15 kg without back and lens (605 g printed ASA, 530 g of metal); about 2 kg ready to shoot (estimate) |
+| Handle | one top handle with the engraved name, two ISO 518 accessory shoes and a bull's-eye level; a second bull's-eye on the side for portrait |
+| Size | 197 x 225 mm front, 161 mm deep with back and lens |
+| Weight | about 1.1 kg without back and lens (about 730 g of printed ASA, 400 g of metal); about 2 kg ready to shoot (estimate) |
 
-The body, the two shift plates and the lens panel are flat slabs that slide face to face on MGN9 steel guides. Every plate covers the opening of the one behind it with at least 5.3 mm of contact at every shift position, with black velvet in between: that is how it stays light-tight without a bellows. The rise knob is on top; turned onto the side leg for portrait, the knob that ends up on top is again the one that raises the lens.
+The body, the Y plate and the lens panel are flat slabs that slide face to face on printed dovetail ways, like the standards of a technical camera. Every plate covers the opening of the one behind it with at least 4.6 mm of black velvet at every shift position: that is how it stays light-tight without a bellows. The rise knob is on top; turned onto the side leg for portrait, the knob that ends up on top is again the one that raises the lens.
 
 | | | |
 |---|---|---|
@@ -42,12 +42,13 @@ The body, the two shift plates and the lens panel are flat slabs that slide face
 
 The design is complete and checked in software, not yet proven in the hand.
 
-- `cad/check.py`: no interference between any of the 152 components, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
-- `cad/seal_check.py`: every sliding light seal is at least 5.3 mm wide at every shift position.
-- `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation; the longest bridge is 21 mm.
-- Before the first print the design was reviewed area by area: mechanics and printing, light-tightness, optics and registration, the RB67 interface, field use. What changed as a result is in the [design notes](docs/design.md).
+- `cad/check.py`: no interference between any of the 153 components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
+- `cad/seal_check.py`: the velvet seal is at least 4.6 mm wide at both sliding interfaces, at every shift position in 5 mm steps.
+- `cad/optics_check.py`: a ray trace from the lens to the corners of the frame. Single movements up to 25 mm are clean at f/22 and f/8 from infinity to about 0.9 m; combined rise and shift up to 22 + 22 mm are clean at infinity.
+- `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation. No part needs supports.
+- Before the first print the design went through three rounds of independent review: mechanics, light and optics, printability, assembly and use. What changed is in the [design notes](docs/design.md).
 
-What only the first physical build can prove is listed in [calibration and tests](docs/calibration.md). The most important is the first: the fit of the Graflok module on a real RB67 back. It is a separate 1-hour print for exactly that reason, and it comes before the body.
+What only the first physical build can prove is listed in [calibration and tests](docs/calibration.md). It starts with about four hours of test prints: the shrinkage of your ASA, the Graflok module on your RB67 back, and slices of the dovetail ways to slide by hand. They come before the body.
 
 ## The model
 
@@ -57,7 +58,8 @@ Everything is generated from Python with [build123d](https://github.com/gumyr/bu
 python -m venv .venv && .venv/bin/pip install -r requirements.txt
 cd cad
 ../.venv/bin/python check.py          # interference, single-solid and clamp checks
-../.venv/bin/python seal_check.py     # light-seal widths
+../.venv/bin/python seal_check.py     # velvet seal widths over the whole shift range
+../.venv/bin/python optics_check.py   # ray trace: vignetting at shift, aperture and focus (about 6 minutes)
 ../.venv/bin/python export.py         # STEP, oriented STL, AMS inlays, P1S plates, test prints
 ../render/gen_all.sh                  # every image in docs/img (needs Blender)
 ```

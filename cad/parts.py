@@ -88,7 +88,7 @@ GF_HALF = 65.0                      # Graflok module is 130 x 130
 GF_SCREWS = ((-52.0, -58.0), (47.5, -58.0), (-52.0, 58.0), (47.5, 58.0))
 Y_CHAN = (-(FALL + 10.3), RISE + 10.3)   # screw channel = hard stops for the nut turret (+/-10)
 Y_DETENT = (-52.0, -10.0)
-TOP_POSTS_X = (TOP_HANDLE_X[0] + HANDLE_POST / 2, TOP_HANDLE_X[1] - HANDLE_POST / 2)
+TOP_POSTS_X = (TOP_HANDLE_X[0] + HANDLE_POST / 2 + 1.5, TOP_HANDLE_X[1] - HANDLE_POST / 2 - 1.5)
 HANDLE_INSERT_Z_TOP = 10.0
 
 
@@ -315,7 +315,9 @@ def graflok_blade(locked=True):
     for x in BLADE_GUIDES_X:
         c = (x, BLADE_Y0 + 4.0 + BLADE_TRAVEL / 2)
         blade -= Pos(*c, z0 - 1) * extrude(SlotCenterToCenter(BLADE_TRAVEL, 3.4, rotation=90), amount=5)
-        blade -= Pos(*c, z0 - 0.01) * extrude(SlotCenterToCenter(BLADE_TRAVEL, 6.9, rotation=90), amount=1.2)
+        top = Pos(c[0], c[1], z0 - 0.01) * SlotCenterToCenter(BLADE_TRAVEL, 6.9, rotation=90)
+        bot = Pos(c[0], c[1], z0 + 1.75) * SlotCenterToCenter(BLADE_TRAVEL, 3.4, rotation=90)
+        blade -= loft([top, bot])
     blade = sfillet(blade, blade.edges().filter_by(Axis.Z), 0.6)
     return Pos(0, oy, 0) * blade
 
@@ -405,7 +407,7 @@ def way_rail(stage, side, gib):
             r -= Pos(su, yy, z0 + h - 1.25) * Cone(1.4, 2.65, 1.26, align=Z_UP)
     else:                                             # M2.5 inserts in the base, screws from the Y plate rear
         for xx in X_WAY_SCREWS:
-            r -= insert_hole(xx, side * X_WAY_SCREW_U, z0, "-z", depth=4.8, d=3.3)
+            r -= insert_hole(xx, side * X_WAY_SCREW_U, z0, "-z", depth=6.2, d=3.3)
     if gib:                                           # three cone-point grubs push the gib strip
         uw = gib_wall(stage)
         zc = z0 + WAY_FL + lip / 2
@@ -425,6 +427,9 @@ def way_rail(stage, side, gib):
                 ends.append(e)
     if ends:
         r = sfillet(r, ends, CORNER_R)
+    if stage == "y":                                  # clearance for the shift knob and the cap-nut washer
+        cham = [(WAY_UO - 1.2, h + 0.01), (WAY_UO + 0.01, h + 0.01), (WAY_UO + 0.01, h - 1.2)]
+        r -= prism(cham, "y", side, z0, -H - 1, H + 1)
     if stage == "x" and not gib:                      # shift index, read against the dots of the lens panel
         r -= Pos(*X_INDEX, z0 + h) * dot(2.6, 0.6)
     return r
@@ -441,7 +446,7 @@ def gib_strip(stage, side):
     ub = WAY_UI + way_run(lip) + GIB_T[stage]          # back face of the strip
     zc = z0 + WAY_FL + lip / 2
     for a in GIB_GRUBS[stage]:
-        tip = Cone(1.3, 0.0, 0.8, align=Z_UP)            # 90 degree dimple, 0.8 deep
+        tip = Cone(1.3, 0.3, 0.7, align=Z_UP)            # conical dimple for the cone-point grub
         if stage == "y":
             g -= Pos(side * (ub + 0.01), a, zc) * orient(tip, "-x" if side > 0 else "+x")
         else:
@@ -472,12 +477,12 @@ def y_plate_part():
                                   (-H - 1, sy_ * (H + 0.01), YP_Z0 + 1.15), close=True))
         p -= extrude(lead, amount=2 * H + 2, dir=(1, 0, 0))
     # rear detent dimple
-    p -= Pos(*Y_DETENT, YP_Z0 - 0.95) * Sphere(1.25)        # 0.3 deep seat for the ball (1.0 proud): no dead band
+    p -= Pos(*Y_DETENT, YP_Z0 - 0.01) * Cone(0.9, 0.25, 0.37, align=Z_UP)   # 0.35 deep conical seat for the ball
     # the horizontal rails are screwed from the rear (M2.5 x 16; 3.8 mm holes on the gib side: it floats)
     for s_ in (-1, 1):
         for xx in X_WAY_SCREWS:
             p -= cyl_z(1.45 if s_ < 0 else 1.9, YP_Z0 - 1, YP_Z1 + 1, xx, s_ * X_WAY_SCREW_U)
-            p -= cyl_z(2.45, YP_Z0 - 1, YP_Z0 + 2.8, xx, s_ * X_WAY_SCREW_U)
+            p -= cyl_z(2.45, YP_Z0 - 1, YP_Z0 + 3.5, xx, s_ * X_WAY_SCREW_U)
 
     # horizontal screw channel (top): the floor clears the drive nut by 0.8 mm; bushings in the end walls;
     # the rod runs through the plate to a cap nut on the photographer's left edge, knob on the right
@@ -576,10 +581,11 @@ def x_plate_part():
     # the nut turret sits 2.5 mm deep in a pocket (the hard stops bear on its walls, not on the glue),
     # bonded with epoxy and located by two pegs
     p -= box_at(-9.15, 9.15, X_SCREW_Y - CHAN_W / 2 + 0.85, X_SCREW_Y + CHAN_W / 2 - 0.85, z0 - 1, z0 + TURRET_KEY)
+    p -= box_at(-9.45, 9.45, X_SCREW_Y - CHAN_W / 2 + 0.55, X_SCREW_Y + CHAN_W / 2 - 0.55, z0 - 1, z0 + 0.3)   # lead-in
     for x, y in TURRET_SCREWS:
         p -= cyl_z(2.05, z0 + TURRET_KEY - 0.01, z0 + TURRET_KEY + 2.3, x, y)
     # rear detent dimple
-    p -= Pos(*X_DETENT, z0 - 0.95) * Sphere(1.25)
+    p -= Pos(*X_DETENT, z0 - 0.01) * Cone(0.9, 0.25, 0.37, align=Z_UP)
     # infinity stop pin (M3 x 4 socket screw standing on the front)
     p -= insert_hole(*STOP_PIN, z1, "+z", depth=5.5)
     # depth-of-field dots (f/11 small, f/22 large) and the focus index (red) above the ring
@@ -655,7 +661,7 @@ def focus_ring_part():
     # infinity stop, hidden: a groove in the rear face with one solid block; the pin on the lens panel
     # runs in the groove and meets the block at infinity (set by turning the ring on the helicoid)
     groove = cyl_z(STOP_R + 4.0, z0 - 1, z0 + 2.5) - cyl_z(STOP_R - 4.0, z0 - 2, z0 + 3)
-    block = Rot(0, 0, -STOP_TAB_ANG) * (Pos(0, STOP_R, z0 + 1) * Box(5.0, 8.0, 5.0))
+    block = Rot(0, 0, -STOP_TAB_ANG) * (Pos(0, STOP_R, z0 + 1) * Box(5.0, 8.4, 5.0))
     ring -= groove - block
     # 4 radial M3 nylon-tip grub screws (2.5 mm holes, tap M3)
     for a in (45, 135, 225, 315):
@@ -719,10 +725,9 @@ def holder_part():
     h -= cyl_y(2.2, BOARD_H / 2 + 9.0, BOARD_H / 2 + 22.5, 0.0, z1 + 1.3)                # spring channel
     h += box_at(-4.0, 4.0, BOARD_H / 2 + 22.0, BOARD_H / 2 + 26.0, z1 - 0.01, z1 + 4.0)   # spring abutment
     # hood over the spring, bridging rail to rail
-    hood = box_at(-18.0, 18.0, BOARD_H / 2 + 8.5, BOARD_H / 2 + 26.0, z1 + 4.0, z1 + 5.2)
+    # hood over the spring, bridging rail to rail, behind the bosses (the latch goes on from the front)
+    hood = box_at(-18.0, 18.0, BOARD_H / 2 + 11.5, BOARD_H / 2 + 26.0, z1 + 4.0, z1 + 5.2)
     hood = sfillet(hood, hood.edges().filter_by(Axis.Y), 0.6)
-    for x in (-9.0, 9.0):
-        hood -= cyl_z(3.25, z1, z1 + 6, x, LATCH_SCREW_Y)                                  # key and washer access
     h += hood
     return h
 
@@ -740,7 +745,7 @@ def arc_slot(r, a, half, w, z0, z1):
 
 LATCH_LEN = 14.0
 LATCH_BOSS_R = 2.0
-LATCH_SCREW_Y = BOARD_H / 2 + 11.0
+LATCH_SCREW_Y = BOARD_H / 2 + 7.0        # inside the latch: the slot ends are its stops, both ways
 
 
 def holder_latch(locked=True):
@@ -756,7 +761,7 @@ def holder_latch(locked=True):
         l -= Pos(x, LATCH_SCREW_Y - travel / 2, z0 - 1) * extrude(SlotCenterToCenter(travel, 2 * LATCH_BOSS_R + 0.3, rotation=90), amount=5)
     l = schamfer(l, [e for e in l.edges().filter_by(Axis.X)
                      if abs(e.center().Y - y0) < 0.01 and abs(e.center().Z - (z0 + 2.4)) < 0.01], 1.2)
-    grip = box_at(-8, 8, y0 + 2.0, y0 + 6.0, z0 + 2.39, z0 + 4.4)
+    grip = box_at(-5.5, 5.5, y0 + 2.0, y0 + 6.0, z0 + 2.39, z0 + 4.4)
     l += sfillet(grip, grip.edges().filter_by(Axis.X), 0.8)
     return Pos(0, oy, 0) * l
 
@@ -816,24 +821,28 @@ def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POS
     inner = Pos(0, (height - bar) / 2 - 1, 0) * Rectangle(length - 2 * post, height - bar + 2)
     prof = outer - inner
     land = 0.8                                # the flares end in a flat, not a knife edge
+
+    def flare_face(x_face, d):
+        """Concave foot on a post face at x_face, flaring in direction d (+1/-1), as a faceted polygon."""
+        cx, cy = x_face + d * flare, flare + land
+        arc = [(cx - d * flare * math.cos(t), cy - flare * math.sin(t)) for t in [i * math.pi / 2 / 16 for i in range(17)]]
+        pts = [(x_face, 0.0), (x_face + d * flare, 0.0)] + arc[::-1]
+        return make_face(Polyline(*pts, close=True))
+
     for s in (-1, 1):
-        xo = s * length / 2                       # outer face of the post
-        prof += Pos(xo + s * flare / 2, (flare + land) / 2) * Rectangle(flare, flare + land)
-        prof -= Pos(xo + s * flare, flare + land) * Circle(flare)
-        xi = s * (length / 2 - post)              # inner face of the post
-        prof += Pos(xi - s * flare / 2, (flare + land) / 2) * Rectangle(flare, flare + land)
-        prof -= Pos(xi - s * flare, flare + land) * Circle(flare)
+        prof += flare_face(s * length / 2, s)                 # outside of the post
+        prof += flare_face(s * (length / 2 - post), -s)       # inside of the post
     h = Pos(0, 0, z0) * extrude(prof, amount=z1 - z0)
-    h = sfillet(h, h.edges().filter_by(Axis.Z).group_by(Axis.Y)[-1], CORNER_R)
+    h = sfillet(h, h.edges().filter_by(Axis.Z).group_by(Axis.Y)[-1], 6.0)
     h = sfillet(h, [e for e in h.edges().filter_by(Axis.Z) if abs(e.center().Y - (height - bar)) < 0.2], 4.0)
-    h = sfillet(h, [e for e in h.edges().filter_by(Plane.XY) if e.center().Y > 1.5], EDGE)
+    h = sfillet(h, [e for e in h.edges().filter_by(Plane.XY) if e.center().Y > flare + 1.5], EDGE)
     return h
 
 
 def handle_screw_holes(length, zc, height=HANDLE_H, post=HANDLE_POST):
     out = []
     for sx_ in (-1, 1):
-        x = sx_ * (length / 2 - post / 2)
+        x = sx_ * (length / 2 - post / 2 - 1.5)
         out.append(Pos(x, -1, zc) * Rot(-90, 0, 0) * Cylinder(2.2, height + 2, align=Z_UP))
         out.append(Pos(x, height - 6.0, zc) * Rot(-90, 0, 0) * Cylinder(3.8, 8, align=Z_UP))
     return out

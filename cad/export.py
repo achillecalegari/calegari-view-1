@@ -202,12 +202,15 @@ if __name__ == "__main__":
             if f.is_file():
                 f.unlink()
     report = ["part                 copies  material  overhang_area_mm2  largest_downward_span_mm"]
+    bad_meshes = []
     plate_items = {"blackbody": [], "black": [], "black012": [], "red": []}
     for name, shape, T, copies, mat, inlays in catalogue():
         export_step(shape, str(ROOT / "step" / f"{name}.step"))
         group = drop([oriented(mesh(shape, 0.01 if name in ("x_plate", "adapter_ring") else 0.02), T)]
                      + [oriented(mesh(s, 0.02), T) for _, s in inlays])
         group[0].export(str(ROOT / "stl" / f"{name}.stl"))
+        if not group[0].is_watertight or group[0].body_count != 1:
+            bad_meshes.append(f"{name}: watertight {group[0].is_watertight}, bodies {group[0].body_count}")
         for (suffix, _), m in zip(inlays, group[1:]):
             m.export(str(ROOT / "inlays" / f"{name}__{suffix}.stl"))
         area, span = printability(group[0])
@@ -283,3 +286,6 @@ if __name__ == "__main__":
     (ROOT / "plates" / "PLATES.txt").write_text("\n".join(summary) + "\n")
     print("\n".join(summary))
     print((ROOT / "PRINTABILITY.txt").read_text())
+    if bad_meshes:
+        print("MESH PROBLEMS:\n  " + "\n  ".join(bad_meshes))
+        sys.exit(1)

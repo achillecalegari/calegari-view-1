@@ -16,14 +16,14 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 ## 1. Set up
 
 1. **Clamp the camera.** The bottom plate for horizontal pictures, the side plate for vertical ones. Carry it by the top handle.
-2. **Level it.** Adjust the tripod until the bubble of the vial is centred: the vial on the handle for horizontal pictures, the one on the side of the body for vertical ones. A level camera keeps the vertical lines of a building vertical; this is the whole point of the camera, so do not skip it.
+2. **Level it.** Adjust the tripod head until the bubble is in the middle of its circle: the level on top of the handle for horizontal pictures, the one on the side of the body for vertical ones. Each reads both directions. The one that matters most is front to back: a camera tilted up or down makes the vertical lines of a building lean. This is the whole point of the camera, so do not skip it.
 3. **Set both movements to zero.** Turn each knob until it clicks.
 
 ## 2. Compose on the ground glass
 
 1. **Ground glass on.** If a back is mounted, check its dark slide is in, then take it off: loosen the wheel, slide the red blade down, lift the back off the bottom rail. Mount the ground glass the same way in reverse.
 2. **Open the shutter.** Set the speed dial to **T** or **B** and fire, or push the *press focus* lever. Turn the aperture to its largest opening.
-3. **Look.** Cloth over your head and the camera. The image is upside down and mirrored left to right: after ten minutes you will stop noticing.
+3. **Look.** Cloth over your head and the camera. The image is upside down and mirrored left to right: after ten minutes you will stop noticing. The glass shows a little more than the film: compose inside the 6x7 marks (the Mercury glass has them; with another glass, mark the 69.5 x 56 mm frame with a fine pen during calibration).
 4. **Use the movements instead of pointing the camera.** The top of the building is cut off? Do not tilt the camera up: turn the top knob to raise the lens (rise). Too much of the left side? Turn the side knob to shift the lens sideways. The picture slides across the glass while the verticals stay vertical.
 
 **Reading the movements.** Each knob turn moves the lens 1 mm; the red dot on the knob top helps count turns. For bigger moves, read the dots on the edges of the plates:
@@ -31,7 +31,7 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 - **rise and fall:** the dots on the right edge of the Y plate (as you stand behind the camera) pass a red dot on the body. Every dot is 5 mm; the big one is zero.
 - **shift:** the dots on the top edge of the lens panel pass a dot on the top edge of the Y plate, again 5 mm apart.
 
-**How far can you go?** 25 mm in every direction. With a lens with a smaller image circle, the corners go dark before that: see [the limits](calibration.md#9-limits-worth-knowing). To check, look into each corner of the ground glass from a hand's width away, toward the lens: if you see the whole round aperture, the corner is covered.
+**How far can you go?** 25 mm in every direction, one movement at a time. Rise and shift together reach about 22 + 22 at infinity, less when focused close, and less with a lens with a smaller image circle: see [the limits](calibration.md#9-limits-worth-knowing). To check, look into each corner of the ground glass from a hand's width away, toward the lens: if you see the whole round aperture, the corner is covered.
 
 ## 3. Focus
 
@@ -53,10 +53,11 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 Each lens stays on its own board; you change the board, not the lens.
 
 1. **Protect the film.** Close the shutter. If a back is on, its dark slide must be in.
-2. **Unlatch.** Push the red latch above the board up with your thumb.
-3. **Lift out.** Tilt the top of the board toward you and lift it out of the two lips at the bottom. Put the rear cap on it.
-4. **Put the other one in.** Rear cap off, bottom edge under the two lips, press the top in: the latch snaps down over it.
-5. **Check.** The board does not move when you push it.
+2. **Hold the lens.** Put one hand around the lens first: with the latch up, only the two bottom lips hold the board, and the lens's weight tips it forward.
+3. **Unlatch.** Push the red latch above the board up with your thumb.
+4. **Lift out.** Tilt the top of the board toward you and lift it out of the two lips at the bottom. Put the rear cap on it.
+5. **Put the other one in.** Rear cap off, bottom edge under the two lips, press the top in: it pushes the latch up and the latch snaps down over it.
+6. **Check.** The board does not move when you push it.
 
 If every board has its shim (see [calibration, section 4](calibration.md#4-more-lenses-one-stop-for-all-of-them)), infinity is still on the stop and the distance dots still read right. Without shims, focus on the ground glass.
 
@@ -65,10 +66,11 @@ If every board has its shim (see [calibration, section 4](calibration.md#4-more-
 - Movements back to zero (the knobs click), focus to infinity.
 - Dark slides in, backs off or on as you like.
 - Lens cap on, or the board out and capped.
+- The top handle is also where a strap and the dark cloth hang from.
 
 ## 7. Care
 
-- The two guide rails like a drop of light machine oil once a year, spread by running the plate end to end.
+- The dovetails like a light spray of dry PTFE once a year, spread by running each plate end to end. If a plate starts to rock, turn its three gib grub screws in a little, evenly.
 - Keep the velvet clean: a strip of tape lifts dust from it.
 - ASA does not mind a hot car or the sun, but do not clean it with acetone.
 - If a knob gets stiff or loose over time, see [calibration, section 8](calibration.md#8-if-something-is-wrong).
