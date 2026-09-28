@@ -556,6 +556,7 @@ def x_plate_part():
     # metal flange pocket, flush with the front; bore behind it
     p -= cyl_z(FLANGE_D / 2 + FIT, z1 - FLANGE_T, z1 + 1)
     p -= cyl_z(31.5, z0 - 1, z1)
+    p -= cyl_z(33.0, z1 - FLANGE_T - 0.6, z1 - FLANGE_T + 0.01)          # room for a helicoid stub up to 5.6 mm long
     # light trap: a groove in the pocket floor just inside the flange edge
     p -= cyl_z(38.6, z1 - FLANGE_T - 0.8, z1 - FLANGE_T + 0.01) - cyl_z(37.4, z1 - FLANGE_T - 1, z1)
     # flare lobes on the diagonals, between the flange screws: the corner rays at large combined shifts
@@ -1000,6 +1001,8 @@ def shrink_gauge():
 def helicoid_part(length):
     z0 = HELI_Z0
     core = cyl_z(HELI_OD / 2 - 4, z0, z0 + length) - cyl_z(HELI_BORE / 2, z0 - 1, z0 + length + 1)
+    # rear male stub: it screws into the flange and its 61 mm bore is the narrowest opening near the film side
+    core += cyl_z(M65 / 2 - 0.2, z0 - HELI_STUB, z0 + 0.01) - cyl_z(HELI_BORE / 2, z0 - HELI_STUB - 1, z0 + 1)
     grip = cyl_z(HELI_OD / 2, z0 + HELI_GRIP_Z[0], z0 + HELI_GRIP_Z[1]) - cyl_z(HELI_OD / 2 - 5, z0, z0 + 13)
     for i in range(72):
         grip -= Rot(0, 0, i * 5) * Pos(HELI_OD / 2 + 0.35, 0, z0 + 6.5) * Cylinder(0.8, 8.6)

@@ -31,7 +31,7 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 - **rise and fall:** the dots on the right edge of the Y plate (as you stand behind the camera) pass a red dot on the body. Every dot is 5 mm; the big one is zero.
 - **shift:** the dots on the top edge of the lens panel pass a dot on the top edge of the Y plate, again 5 mm apart.
 
-**How far can you go?** 25 mm in every direction, one movement at a time. Rise and shift together reach about 22 + 22 at infinity, less when focused close, and less with a lens with a smaller image circle: see [the limits](calibration.md#9-limits-worth-knowing). To check, look into each corner of the ground glass from a hand's width away, toward the lens: if you see the whole round aperture, the corner is covered.
+**How far can you go?** 25 mm in every direction, one movement at a time. Rise and shift together reach about 19 + 19 at infinity (17 + 17 at f/8), 13 + 13 when focused as close as the camera goes, and less with a lens with a smaller image circle: see [the limits](calibration.md#9-limits-worth-knowing). To check, look into each corner of the ground glass from a hand's width away, toward the lens: if you see the whole round aperture, the corner is covered.
 
 ## 3. Focus
 

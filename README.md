@@ -44,7 +44,7 @@ The design is complete and checked in software, not yet proven in the hand.
 
 - `cad/check.py`: no interference between any of the 142 components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
 - `cad/seal_check.py`: the velvet seal is at least 4.6 mm wide at both sliding interfaces, at every shift position in 5 mm steps.
-- `cad/optics_check.py`: a ray trace from the lens to the corners of the frame. Single movements up to 25 mm are clean at f/22 and f/8 from infinity to about 0.9 m; combined rise and shift up to 22 + 22 mm are clean at infinity.
+- `cad/optics_check.py`: a ray trace from the lens to the corners of the frame. Single movements up to 25 mm are clean at f/22 and f/8 at infinity. Combined rise and shift are clean up to 19 + 19 mm at infinity at f/22, 17 + 17 at f/8, and 13 + 13 at the closest focus (about 0.7 m): the 61 mm bore of the helicoid's rear stub is the limit.
 - `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation. No part needs supports.
 - Before the first print the design went through three rounds of independent review: mechanics, light and optics, printability, assembly and use. What changed is in the [design notes](docs/design.md).
 

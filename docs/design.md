@@ -50,7 +50,8 @@ The design went through three rounds of independent review before the first prin
 | Assembly | the board holder's screws were unreachable under the focus ring | they now go in from the front, under the board, into eight inserts in the adapter |
 | Mechanics | the Graflok wheel did not turn its screw; screws too long in six places; the detent balls never touched the plate | screw head glued in the wheel; every screw length checked against its hole; balls 1.0 mm proud with a 0.3 mm seat |
 | Mechanics | the shift hard stop loaded a glued joint | the turret sits in a 2.5 mm pocket |
-| Optics | the lens panel bore cut the corner at large combined shifts | flare lobes on the diagonals; single movements now reach 25 mm clean down to about 0.9 m |
+| Optics | the lens panel bore cut the corner at large combined shifts | flare lobes on the diagonals; single movements reach 25 mm clean at infinity |
+| Optics | the ray trace left out the helicoid's rear stub, whose 61 mm bore is the narrowest opening | stub modelled (5.2 mm, the lens panel relieved behind the flange); combined movements are clean to 19 + 19 at infinity (f/22), 17 + 17 at f/8, 13 + 13 at the closest focus |
 | Light | screw holes and a detent hole could carry light around the velvet | velvet discs over the turret screws, the detent moved outside both velvets, black paint in the flange's unused holes, light-trap grooves in the seat and the flange pocket |
 | Printing | knife edges, a hood printed in the air, thin walls under inserts | chamfers and lands on every bed edge that mates, a hood bridging rail to rail, thicker walls |
 | Use | tubular levels could not show the tilt that bends verticals | two bull's-eye levels |

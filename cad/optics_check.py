@@ -22,13 +22,19 @@ CORNERS = [(sx * FILM_W / 2, sy * FILM_H / 2) for sx in (-1, 1) for sy in (-1, 1
 SKIP = ("lens", "rb_", "velvet", "felt", "inlay", "oring", "knob", "rod", "grub", "screw", "insert", "nut", "vial",
         "bush", "plunger", "spring", "top_handle", "arca_", "way_", "gib_", "focus_ring")   # all outside the light path
 # (sx, sy, f-number, pupil z, minimum share of the pupil at the worst corner)
-# pupil 65 = infinity; 70 = about 5 mm of helicoid extension (about 0.9 m), and a lens whose pupil sits
-# 5 mm further forward. Combined shifts are an infinity figure: check the corners on the ground glass.
-REQUIRED = [(25, 0, 22, 65, 0.99), (-25, 0, 22, 65, 0.99), (0, 25, 22, 65, 0.99), (0, -25, 22, 65, 0.99),
-            (25, 0, 22, 70, 0.99), (0, 25, 22, 70, 0.99), (-25, 0, 22, 62, 0.99), (0, -25, 22, 62, 0.99),
-            (22, 22, 22, 65, 0.99), (-22, -22, 22, 65, 0.99), (22, -22, 22, 65, 0.99), (-22, 22, 22, 65, 0.99),
-            (25, 0, 8, 65, 0.95), (0, 25, 8, 65, 0.95), (20, 20, 8, 65, 0.95)]
-INFO = [(25, 25, 22, 65), (22, 22, 22, 70), (25, 0, 22, 75)]
+# pupil 65 = infinity; 70 = about 5 mm of helicoid extension (about 0.9 m); 72.5 = the closest focus
+# (about 0.7 m); 62 = a lens whose pupil sits 3 mm further back. The helicoid's rear stub (61 mm bore,
+# 5.2 mm behind the lens panel front) is the opening that limits combined movements.
+SIGNS = ((1, 1), (-1, -1), (1, -1), (-1, 1))
+REQUIRED = ([(25, 0, 22, 65, 0.99), (-25, 0, 22, 65, 0.99), (0, 25, 22, 65, 0.99), (0, -25, 22, 65, 0.99),
+             (25, 0, 8, 65, 0.95), (0, 25, 8, 65, 0.95), (-25, 0, 22, 62, 0.99), (0, -25, 22, 62, 0.99),
+             (24, 0, 22, 70, 0.99), (-24, 0, 22, 70, 0.99), (0, 25, 22, 70, 0.99), (0, -25, 22, 70, 0.99),
+             (20, 0, 22, 72.5, 0.99), (-20, 0, 22, 72.5, 0.99), (0, 24, 22, 72.5, 0.99), (0, -24, 22, 72.5, 0.99)]
+            + [(a * 19, b * 19, 22, 65, 0.99) for a, b in SIGNS]
+            + [(a * 17, b * 17, 8, 65, 0.95) for a, b in SIGNS]
+            + [(a * 14, b * 14, 22, 70, 0.99) for a, b in SIGNS]
+            + [(a * 13, b * 13, 22, 72.5, 0.99) for a, b in SIGNS])
+INFO = [(20, 20, 22, 65), (18, 18, 8, 65), (16, 16, 22, 70), (14, 14, 22, 72.5), (25, 0, 22, 70), (25, 0, 22, 72.5)]
 
 
 def mesh(shape):
@@ -117,8 +123,8 @@ if __name__ == "__main__":
         w = share(sx, sy, fnum, cache, pz)
         flag = "ok" if w >= need else "CLIPPED"
         fails += w < need
-        print(f"shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz}: worst corner gets {w * 100:5.1f} % of the pupil  {flag}")
+        print(f"shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz:4.1f}: worst corner gets {w * 100:5.1f} % of the pupil  {flag}")
     for sx, sy, fnum, pz in INFO:
         w = share(sx, sy, fnum, cache, pz)
-        print(f"(info) shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz}: worst corner {w * 100:5.1f} %")
+        print(f"(info) shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz:4.1f}: worst corner {w * 100:5.1f} %")
     sys.exit(1 if fails else 0)

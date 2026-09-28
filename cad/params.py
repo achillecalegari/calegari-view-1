@@ -41,6 +41,7 @@ ADAPTER_T = 2.5                      # printed M65 adapter flange: the calibrati
 REAR_CLEAR_D = 59.0                  # bore of adapter and holder: Nikkor-SW 65/4 rear cell is 54 mm
 HELI_MIN, HELI_MAX = 17.0, 31.0      # M65 helicoid 17-31
 HELI_OD, HELI_BORE = 78.0, 61.0
+HELI_STUB = 5.2                      # male M65 x 1 stub behind the shoulder, into the metal flange (bore 61 like the tube)
 HELI_ROT = 313.0                     # degrees for the full travel: MEASURE YOUR HELICOID
 HELI_TRAVEL = HELI_MAX - HELI_MIN
 FOCUS_DIR = 1
