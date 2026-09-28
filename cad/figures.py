@@ -263,6 +263,54 @@ fig("c_back_fit", "Test: the back on the rotator", (0.7, 1.0, 0.75), g("rotator"
             ("<Dark slide exit", [(-64.0, 0.0, GF_Z0 - 6)])], dist=4.4, **CAL)
 
 
+# ================================================================== using the camera
+USE = dict(doc="use", aspect=0.66)
+
+fig("u_setup", "Ready to shoot: clamp, level, zero", V_34, C8 + g("back"),
+    labels=[("Arca plate: into the tripod clamp", "arca_bottom"), ("Level: bubble in the circle", "vial_top"),
+            ("Carry it by the top handle", [(-50.0, H + HANDLE_H - 3, BODY_Z1)]),
+            ("Rise knob: turn to the click", "knob_y"), ("Shift knob: turn to the click", "knob_x")], dist=4.2, **USE)
+fig("u_landscape", "Landscape: red dot on the big white dot", (0.35, 1.0, 0.3), C8 + g("back"),
+    labels=[("Red index on the big white dot", [(0.0, P.ROT_R - 3.0, GF_Z0)]),
+            ("Dark slide comes out here", [(-64.0, 0.0, GF_Z0 - 6)]),
+            ("Turn the back by hand", "rb_back")], dist=3.9, **USE)
+fig("u_portrait", "Portrait: a quarter turn anticlockwise, seen from behind", (0.35, 1.0, 0.3), C8 + g("back"),
+    state=dict(rot=P.ROT_PORTRAIT),
+    labels=[("Red index on the small white dot", [(P.ROT_R - 3.0, 0.0, GF_Z0)]),
+            ("Dark slide comes out at the top", [(0.0, 64.0, GF_Z0 - 6)]),
+            ("Level, handle and knobs stay put", "vial_top")], dist=3.9, **USE)
+fig("u_back_on", "Back or ground glass on and off", V_OB_R, C8, state=dict(blade_locked=False),
+    new=[(g("back"), (0, 0, -70), ["rb_back"])],
+    labels=[("1  Wheel: anticlockwise frees the blade", "graflok_wheel"),
+            ("2  Blade: down to free, up to lock", [(32.0, 45.0, GF_Z0 - 1.1)]),
+            ("3  Hook the bottom lip under this rail", [(0.0, -63.0, -2.0)]),
+            ("4  Swing the back on, blade up, wheel tight", "rb_back")], dist=4.4, **USE)
+fig("u_rise", "Rise: 20 mm here, read on the side of the Y plate", (-1.0, -0.3, 0.2), C8, state=dict(sy=20.0),
+    labels=[("Rise scale: 5 mm per dot", [(-H, 20.0 + 15.0, 30.8)]), ("Zero: the big red dot", "inlay_yplate_red"),
+            ("Index on the body", "inlay_body_index")], dist=3.6, **USE)
+fig("u_shift", "Shift: 12 mm here, read under the lens panel", (-0.3, -1.0, 0.1), C8, state=dict(sx=-12.0),
+    labels=[("Shift scale: 5 mm per dot", [(-12.0 + 10.0, -73.0, 43.5)]), ("Zero: the big red dot", [(-12.0, -73.3, 43.5)]),
+            ("Index on the rail", [(0.0, -79.5, 43.5)]), ("Shift knob: 1 mm per turn", "knob_x"),
+            ("Rise knob: 1 mm per turn", "knob_y")], dist=4.3, **USE)
+fig("u_lens_change", "Changing the lens: latch up, tilt, lift", V_OB_F, C8, state=dict(latch_locked=False),
+    new=[(g("board"), (0, -12, 55), ["lensboard"])],
+    labels=[("1  Hold the lens, push the red latch up", "holder_latch"),
+            ("2  Tilt the top of the board toward you", mv([(0.0, BOARD_H / 2 - 4.0, BOARD_Z1 + 1.8)], (0, -12, 55))),
+            ("3  Lift it out of the two bottom lips", [(sx_ * 30, -BOARD_H / 2 + 1.0, BOARD_Z1 + 1.8) for sx_ in (-1, 1)])],
+    dist=4.6, **USE)
+
+
+# ================================================================== shopping list: what you buy, in place
+BOUGHT = ["rod_", "nut_", "washer_", "bush_", "plunger_", "oring_", "spring_", "insert_", "screw_", "grub_",
+          "stop_pin", "flange", "helicoid", "lensboard", "lens", "arca_", "vial_", "rb_"]
+fig("b_hardware", "What you buy, shown where it goes (the printed parts hidden)", V_34, BOUGHT,
+    labels=[("Rise rod, M6", [(Y_SCREW_X, 70.0, Y_SCREW_Z)]), ("Shift rod, M6", "rod_x"), ("Bronze bushings", ["bush_x_left"]),
+            ("Ball plunger", ["plunger_x"]), ("M65 flange", "flange"), ("Helicoid", "helicoid"),
+            ("Lens on its Technika board", "lensboard"), ("Arca plate", "arca_bottom"), ("Level", "vial_top"),
+            ("RB67 back", "rb_back"), ("Brass inserts and M3 screws", [(-P.WAY_SCREW_U, 23.0, BODY_Z1)])],
+    dist=4.2, doc="bom", aspect=0.72)
+
+
 def coupons():
     yp = P.y_plate_part()
     cut = lambda sh: sh & P.box_at(-80, 80, -20, 20, -50, 120)

@@ -1,12 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
 <rect width="210" height="297" fill="white"/>
 <text x="15" y="18" font-family="Helvetica, Arial" font-size="6" font-weight="bold">V1 - velvet, body front</text>
-<text x="15" y="26" font-family="Helvetica, Arial" font-size="3.6">Seen from the front. The narrow margin (right) goes next to the rise screw channel.</text>
+<text x="15" y="26" font-family="Helvetica, Arial" font-size="3.6">Seen from the front; the narrow margin (right) by the rise channel. Cut the two notches too.</text>
 <text x="15" y="31" font-family="Helvetica, Arial" font-size="3.6">Print at 100 % (no "fit to page"), then check the 100 mm bar with a ruler.</text>
 <g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
 <text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
 <g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
 <path d="M-57.5 -83.0H55.5V83.0H-57.5Z M-27.625 -39.625H27.625A12.0 12.0 0 0 1 39.625 -27.625V27.625A12.0 12.0 0 0 1 27.625 39.625H-27.625A12.0 12.0 0 0 1 -39.625 27.625V-27.625A12.0 12.0 0 0 1 -27.625 -39.625Z"/>
 <g font-family="Helvetica, Arial" stroke="none" fill="black" font-size="4"><text x="0" y="-73.0" text-anchor="middle">TOP</text><text transform="translate(-53.5 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>
+<circle cx="55.15" cy="55.15" r="2.6" fill="white" stroke="black" stroke-width="0.2"/>
+<circle cx="-57.13" cy="57.13" r="2.6" fill="white" stroke="black" stroke-width="0.2"/>
 </g>
 </svg>

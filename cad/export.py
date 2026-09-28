@@ -182,8 +182,10 @@ def templates():
     svg_page(d / "V1_velvet_body.svg", "V1 - velvet, body front",
              [f'<path d="{rect_path(x0, -e, x1, e)} {rect_path(-ob[0] - 0.3, -ob[1] - 0.3, ob[0] + 0.3, ob[1] + 0.3, P.WIN_R)}"/>',
               f'<g {txt} font-size="4"><text x="0" y="{-e + 10}" text-anchor="middle">TOP</text>'
-              f'<text transform="translate({x0 + 4} 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>'],
-             "Seen from the front. The narrow margin (right) goes next to the rise screw channel.")
+              f'<text transform="translate({x0 + 4} 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>']
+             + [f'<circle cx="{r * math.cos(math.radians(a)):.2f}" cy="{-r * math.sin(math.radians(a)):.2f}" r="2.6" '
+                f'fill="white" stroke="black" stroke-width="0.2"/>' for r, a in (ROT_DETENT, ROT_STOP)],
+             "Seen from the front; the narrow margin (right) by the rise channel. Cut the two notches too.")
     y0, y1 = P.V2_Y
     holes = " ".join(f"M{x + 3.5} {-y}A3.5 3.5 0 1 0 {x - 3.5} {-y}A3.5 3.5 0 1 0 {x + 3.5} {-y}Z"
                      for x, y in P.Y_TURRET_SCREWS)

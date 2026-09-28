@@ -27,7 +27,7 @@ This repository is the whole camera: the files to print, the parametric model th
 | Lens change | every lens on its own board: a spring latch, no tools, ten seconds; printed shims put every lens at infinity on the same stop |
 | Handle | one top handle with the engraved name, two ISO 518 accessory shoes and a bull's-eye level; the rise knob sits on the body top beside it |
 | Size | 185 x 247 mm front (170 mm body, handle and knobs included), 161 mm deep with back and lens |
-| Weight | about 1.2 kg without back and lens (about 810 g of printed ASA, 360 g of metal); about 2.1 kg ready to shoot (estimate) |
+| Weight | about 1.2 kg without back and lens (about 830 g of printed ASA, 360 g of metal); about 2.1 kg ready to shoot (estimate) |
 
 The body, the Y plate and the lens panel are flat slabs that slide face to face on printed dovetail ways, like the standards of a technical camera. Every plate covers the opening of the one behind it with at least 13 mm of black velvet at every shift position: that is how it stays light-tight without a bellows. The back sits on a round rotator that turns in the body's rear face, sealed by a labyrinth and a ring of velvet: for vertical pictures you turn the back, and the tripod, the level and the knobs stay where they are. No screw head shows on the front or the sides.
 
@@ -44,7 +44,7 @@ The design is complete and checked in software, not yet proven in the hand.
 
 - `cad/check.py`: no interference between any of the components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, with the back in landscape, in portrait and halfway between. Every printed part is a single solid.
 - `cad/seal_check.py`: the velvet seal is at least 13 mm wide at both sliding interfaces, at every shift position in 5 mm steps.
-- `cad/optics_check.py`: a ray trace from the lens to the corners of the frame, with the back in landscape and in portrait. Single movements up to 25 mm are clean at f/22 and f/8 at infinity. Combined rise and shift are clean up to 19 + 19 mm at infinity at f/22, 17 + 17 at f/8, and 13 + 13 at the closest focus (about 0.7 m): the 61 mm bore of the helicoid's rear stub is the limit.
+- `cad/optics_check.py`: a ray trace from the lens to the corners of the frame, with the back in landscape and in portrait. Single movements up to 25 mm are clean at f/22 and f/8 at infinity. Combined rise and shift are clean up to 19 + 19 mm at infinity at f/22, 17 + 17 at f/8, 13 + 13 at 0.7 m and 9 + 9 at the closest focus (0.47 m): the 61 mm bore of the helicoid's rear stub is the limit.
 - `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation. No part needs supports.
 - Before the first print the design went through three rounds of independent review: mechanics, light and optics, printability, assembly and use. What changed is in the [design notes](docs/design.md).
 
@@ -59,10 +59,11 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 cd cad
 ../.venv/bin/python check.py          # interference, single-solid and clamp checks
 ../.venv/bin/python seal_check.py     # velvet seal widths over the whole shift range
-../.venv/bin/python optics_check.py   # ray trace: vignetting at shift, aperture and focus (about 12 minutes)
+../.venv/bin/python optics_check.py   # ray trace: vignetting at shift, aperture and focus (about 15 minutes)
 ../.venv/bin/python export.py         # STEP, oriented STL, AMS inlays, P1S plates, test prints
 ../render/gen_all.sh                  # product and overview images in docs/img (needs Blender)
-../render/figures.sh                  # assembly and calibration figures, docs/img/asm and docs/img/cal (needs Blender)
+../render/figures.sh                  # figures for every guide, docs/img/asm, cal, use and bom (needs Blender)
+../.venv/bin/python plate_figs.py && ../render/figures.sh $(ls ../out/figs | grep ^p_)   # the print plates
 ../.venv/bin/python ../render/diagrams.py   # the flat calibration diagrams
 ```
 

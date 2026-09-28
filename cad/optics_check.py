@@ -24,25 +24,29 @@ def corners(rot):
 SKIP = ("lens", "rb_", "velvet", "felt", "inlay", "oring", "knob", "rod", "grub", "screw", "insert", "nut", "vial",
         "bush", "plunger", "spring", "top_handle", "arca_", "way_", "gib_", "focus_ring")   # all outside the light path
 # (sx, sy, f-number, pupil z, minimum share of the pupil at the worst corner)
-# pupil 65 = infinity; 70 = about 5 mm of helicoid extension (about 0.9 m); 72.5 = the closest focus
-# (about 0.7 m); 62 = a lens whose pupil sits 3 mm further back. The helicoid's rear stub (61 mm bore,
+# pupil 65 = infinity; 70 = about 5 mm of helicoid extension (about 0.9 m); 72.5 = about 0.7 m, the
+# closest mark on the focus ring; NEAR = the helicoid fully out (0.47 m); 62 = a lens whose pupil sits
+# 3 mm further back. The helicoid's rear stub (61 mm bore,
 # 5.2 mm behind the lens panel front) is the opening that limits combined movements.
 SIGNS = ((1, 1), (-1, -1), (1, -1), (-1, 1))
+NEAR = PUPIL + HELI_MAX - HELI_INF       # the helicoid fully out: the closest focus, about 0.47 m
 SINGLES = [(25, 0, 22, 65, 0.99), (-25, 0, 22, 65, 0.99), (0, 25, 22, 65, 0.99), (0, -25, 22, 65, 0.99),
            (25, 0, 8, 65, 0.95), (0, 25, 8, 65, 0.95), (-25, 0, 22, 62, 0.99), (0, -25, 22, 62, 0.99),
            (24, 0, 22, 70, 0.99), (-24, 0, 22, 70, 0.99), (0, 25, 22, 70, 0.99), (0, -25, 22, 70, 0.99),
-           (20, 0, 22, 72.5, 0.99), (-20, 0, 22, 72.5, 0.99), (0, 24, 22, 72.5, 0.99), (0, -24, 22, 72.5, 0.99)]
+           (20, 0, 22, 72.5, 0.99), (-20, 0, 22, 72.5, 0.99), (0, 24, 22, 72.5, 0.99), (0, -24, 22, 72.5, 0.99),
+           (16, 0, 22, NEAR, 0.99), (-16, 0, 22, NEAR, 0.99), (0, 18, 22, NEAR, 0.99), (0, -18, 22, NEAR, 0.99)]
 COMBINED = ([(a * 19, b * 19, 22, 65, 0.99) for a, b in SIGNS]
             + [(a * 17, b * 17, 8, 65, 0.95) for a, b in SIGNS]
             + [(a * 14, b * 14, 22, 70, 0.99) for a, b in SIGNS]
-            + [(a * 13, b * 13, 22, 72.5, 0.99) for a, b in SIGNS])
+            + [(a * 13, b * 13, 22, 72.5, 0.99) for a, b in SIGNS]
+            + [(a * 9, b * 9, 22, NEAR, 0.99) for a, b in SIGNS])
 # landscape, then portrait (the back turned -90): the frame stands up, so the long side of the frame
 # follows rise instead of shift and the single-movement limits swap axes; the combined ones are the same
 REQUIRED = ([c + (0.0,) for c in SINGLES + COMBINED]
             + [(sy, sx, f, pz, need, ROT_PORTRAIT) for sx, sy, f, pz, need in SINGLES]
             + [c + (ROT_PORTRAIT,) for c in COMBINED])
 INFO = [(20, 20, 22, 65, 0.0), (18, 18, 8, 65, 0.0), (16, 16, 22, 70, 0.0), (14, 14, 22, 72.5, 0.0),
-        (25, 0, 22, 70, 0.0), (25, 0, 22, 72.5, 0.0), (0, 25, 22, 70, ROT_PORTRAIT), (0, 25, 22, 72.5, ROT_PORTRAIT)]
+        (25, 0, 22, 70, 0.0), (25, 0, 22, 72.5, 0.0), (10, 10, 22, NEAR, 0.0), (18, 0, 22, NEAR, 0.0), (0, 25, 22, 70, ROT_PORTRAIT), (0, 25, 22, 72.5, ROT_PORTRAIT)]
 
 def mesh(shape):
     vs, fs = shape.tessellate(0.05, 0.2)

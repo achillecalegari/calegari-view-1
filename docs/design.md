@@ -6,12 +6,16 @@
 
 The camera is a stack of flat slabs on the optical axis, from the film forward:
 
+![Exploded view](img/09_exploded.jpg)
+
 1. **Rotator** (printed): the round seat of the back. The back's nose pocket, the fixed bottom rail that hooks the back and releases the Pro-S dark-slide interlock, and the red clamp blade with two tongues. It turns a quarter turn for portrait.
 2. **Rear frame** (printed): screwed to the body with four M3, it holds the rotator's flange over a ring of velvet.
 3. **Body** (printed, one piece, 170 mm square): the round seat of the rotator with a labyrinth ridge, the stepped gate, the two vertical dovetail rails, the rise screw, and the Arca plate underneath.
 4. **Y plate** (printed): rises and falls between the vertical rails, carries the two horizontal dovetail rails and the shift screw.
 5. **Lens panel** (printed): shifts left and right, carries a metal M65 flange.
 6. **Optics on the flange:** the helicoid, the printed adapter ring, the Technika board holder and the lens.
+
+![Section](img/06_section.jpg)
 
 The light seal is the flatness of these faces. Each plate covers the opening of the one behind it, and the band of black velvet between them is at least 13 mm wide at every shift position (`cad/seal_check.py`, swept every 5 mm). The thin flanges of the dovetail rails set the 0.8 mm gap and the velvet is compressed in it, so the velvet never carries load.
 
@@ -46,19 +50,21 @@ The design went through three rounds of independent review before the first prin
 
 | Area | Found | Fix |
 |---|---|---|
-| RB67 interface | the dark slide could not come out; the latch bars had no tongues; nothing released the Pro-S interlock | Graflok module rebuilt on the scheme of a body tested with Pro-S and Pro-SD, dark-slide passage open to the right |
+| RB67 interface | the dark slide could not come out; the latch bars had no tongues; nothing released the Pro-S interlock | Graflok seat rebuilt on the scheme of a body tested with Pro-S and Pro-SD, dark-slide passage open to the right |
 | Mechanics | industrial linear guides were overkill and made the build long | printed dovetail ways with gibs, test coupons |
 | Assembly | the Y plate could not go on once the rails were fixed; the rod nuts could not be tightened inside the camera | the plate slides in from the top; the rise end nut is fixed on the bench, the shift thrust nut before the lens panel goes on |
 | Assembly | the board holder's screws were unreachable under the focus ring | they now go in from the front, under the board, into eight inserts in the adapter |
 | Mechanics | the Graflok wheel did not turn its screw; screws too long in six places; the detent balls never touched the plate | screw head glued in the wheel; every screw length checked against its hole; balls 1.0 mm proud with a 0.3 mm seat |
 | Mechanics | the shift hard stop loaded a glued joint | the turret sits in a 2.5 mm pocket |
 | Optics | the lens panel bore cut the corner at large combined shifts | flare lobes on the diagonals; single movements reach 25 mm clean at infinity |
-| Optics | the ray trace left out the helicoid's rear stub, whose 61 mm bore is the narrowest opening | stub modelled (5.2 mm, the lens panel relieved behind the flange); combined movements are clean to 19 + 19 at infinity (f/22), 17 + 17 at f/8, 13 + 13 at the closest focus |
+| Optics | the ray trace left out the helicoid's rear stub, whose 61 mm bore is the narrowest opening | stub modelled (5.2 mm, the lens panel relieved behind the flange); combined movements are clean to 19 + 19 at infinity (f/22), 17 + 17 at f/8, 13 + 13 at 0.7 m, 9 + 9 at the closest focus (0.47 m) |
 | Light | screw holes and a detent hole could carry light around the velvet | velvet discs over the turret screws, the detent moved outside both velvets, black paint in the flange's unused holes, light-trap grooves in the seat and the flange pocket |
 | Printing | knife edges, a hood printed in the air, thin walls under inserts | chamfers and lands on every bed edge that mates, a hood bridging rail to rail, thicker walls |
-| Use | tubular levels could not show the tilt that bends verticals | two bull's-eye levels |
+| Use | tubular levels could not show the tilt that bends verticals | a bull's-eye level on the handle |
 
 ## Automated checks
+
+![Shift limits from the ray trace](img/cal/c_limits.jpg)
 
 | Script | What it proves |
 |---|---|

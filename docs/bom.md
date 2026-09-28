@@ -6,6 +6,8 @@ Everything to buy for one camera, with links (checked on 2026-09-27 and 28; pric
 
 Most items come in packs: the quantities below are what the camera uses.
 
+![What you buy, shown where it goes](img/bom/b_hardware.jpg)
+
 The AliExpress column is a cheaper second source, found on 28/09/2026. AliExpress blocks automated page checks, so those links were matched from the listing titles, not from the product pages: open each one and pick the variant written next to it before ordering. The inserts' outer diameter matters most (the holes are drawn for the sizes in the Spec column).
 
 ## Drive
@@ -72,10 +74,10 @@ The ground glass is sold out at Mercury at the time of writing. Any Graflok 23 g
 
 | Item | Spec | Qty | Link | AliExpress | Price seen | Notes |
 |---|---|---|---|---|---|---|
-| Filament | Bambu Lab ASA, 1 kg: black, plus red and white | 1 or 2 black, small amounts of red and white | [Bambu Lab EU](https://eu.store.bambulab.com/products/asa-filament) | | 24.99 EUR each | about 750 g black plus 120 g of tests; a few grams of red and white |
+| Filament | Bambu Lab ASA, 1 kg: black, plus red and white | 1 or 2 black, small amounts of red and white | [Bambu Lab EU](https://eu.store.bambulab.com/products/asa-filament) | | 24.99 EUR each | about 830 g black plus 120 g of tests; a few grams of red and white |
 | Threadlocker | Loctite 243, medium, 10 ml | 1 | [Amazon.it](https://www.amazon.it/dp/B0D8L2RR6S) | buy locally: fakes are common | 15.15 EUR | the two nuts that end the rods; metal to metal only: anaerobic threadlockers can crack ASA |
-| Epoxy | UHU Plus Endfest 300, 2 parts | 1 | [Amazon.it](https://www.amazon.it/dp/B000KJP0QK) | buy locally | 10.90 EUR | bonds the shift nut turret, the level and the wheel screw |
-| Threadlocker, low strength | Loctite 222 | 1 | [Amazon.it](https://www.amazon.it/dp/B00AGG6Y30) | buy locally: fakes are common | 10 ml | helicoid into the flange, Graflok blade guide screws (into brass inserts) |
+| Epoxy | UHU Plus Endfest 300, 2 parts | 1 | [Amazon.it](https://www.amazon.it/dp/B000KJP0QK) | buy locally | 10.90 EUR | bonds the shift nut turret, the level and the wheel screw; seals the rise and shift plungers |
+| Threadlocker, low strength | Loctite 222 | 1 | [Amazon.it](https://www.amazon.it/dp/B00AGG6Y30) | buy locally: fakes are common | 10 ml | helicoid into the flange, Graflok blade guide screws (into brass inserts), the infinity stop pin |
 
 ## Cost
 

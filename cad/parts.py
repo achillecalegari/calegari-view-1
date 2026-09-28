@@ -944,7 +944,10 @@ def velvet_body_outline():
     op = opening_body(BODY_Z1)
     outer = Pos((V1_X[0] + V1_X[1]) / 2, 0) * Rectangle(V1_X[1] - V1_X[0], BODY - 4.0)
     hole = RectangleRounded(2 * (op[0] + 0.3), 2 * (op[1] + 0.3), WIN_R)
-    return outer - hole
+    face = outer - hole
+    for r, a in (ROT_DETENT, ROT_STOP):            # the rotator's plunger and stop stay reachable from the front
+        face -= Pos(r * math.cos(math.radians(a)), r * math.sin(math.radians(a))) * Circle(2.6)
+    return face
 
 
 def velvet_yplate_outline():

@@ -48,9 +48,9 @@ Allow a day for the first build: about five hours of work, plus waiting for epox
 5. While the plastic is still soft, press a cold flat steel part (the side of a spanner) on the insert for five seconds: it comes out square and never proud.
 6. Check: lay the straightedge across the hole. It must rock on nothing. An insert standing proud of a sliding face or of the back's seat leaks light or tilts the back.
 
-Every insert in the camera is the same M3 x 3 x 5, 29 of them, plus two of 1/4" for the tripod plates. The 1/4" ones take 15 to 20 seconds: go slowly and keep the iron vertical.
+Every insert in the camera is the same M3 x 3 x 5, 29 of them, plus one of 1/4" for the Arca plate. The 1/4" ones take 15 to 20 seconds: go slowly and keep the iron vertical.
 
-**2. Tapping a thread into the plastic.** Used for the two ball plungers (M5) and for every M3 hole without an insert: the grub holes, the eight holes in the base of the horizontal rails and the two latch holes of the board holder. The holes are printed at the right size.
+**2. Tapping a thread into the plastic.** Used for the three ball plungers (M5) and for every M3 hole without an insert: the grub holes, the stop of the rotating back, the eight holes in the base of the horizontal rails and the two latch holes of the board holder. The holes are printed at the right size.
 
 1. Put the tap in the wrench and start it straight, looking from two sides.
 2. Turn half a turn in, a quarter turn back, and repeat. The plastic chips must break off.
@@ -60,7 +60,7 @@ Every insert in the camera is the same M3 x 3 x 5, 29 of them, plus two of 1/4" 
 
 **4. Threadlocker.** Anaerobic threadlockers attack ASA and can crack it. Use them only where metal meets metal: Loctite 243 on the two nuts that end the rods (steel on steel), Loctite 222 on the helicoid thread and on the Graflok blade screws (steel into brass inserts). One small drop, never on the plastic.
 
-**5. Velvet and felt.** The camera has no bellows: light is kept out by sliding faces 0.8 mm apart with self-adhesive velvet between them. The pieces are V1, V2 (with two small discs) and the felt rings V3 and V4.
+**5. Velvet and felt.** The camera has no bellows: light is kept out by sliding faces 0.8 mm apart with self-adhesive velvet between them. The pieces are V1, V2 (with two small discs), the ring V5 of the rotating back, and the felt rings V3 and V4.
 
 1. Print the templates in `print/templates/` at 100 %. Measure the 100 mm bar on the sheet: if it is not 100 mm, fix the printer scaling first.
 2. Tape the template on the back of the velvet (the paper side), and cut through both with scissors for the outer edge and a craft blade against a ruler for the window.
@@ -72,7 +72,7 @@ Every insert in the camera is the same M3 x 3 x 5, 29 of them, plus two of 1/4" 
 
 ## 1. Body
 
-**You need:** the body, 15 M3 inserts, one 1/4"-20 insert, one M5 ball plunger, two 6 x 8 x 6 bushings, the M5 tap, epoxy.
+**You need:** the body, 15 M3 inserts, one 1/4"-20 insert, one M5 ball plunger, two 6 x 8 x 6 bushings, the M3 and M5 taps, epoxy.
 
 ### 1a. Inserts in the rear face
 
@@ -106,8 +106,9 @@ Turn the body over and press the nine inserts E. They carry the vertical rails i
 | **F** | M5 ball plunger (POM ball) | 1 | tap M5 through, screw in from the front, set from behind (D) |
 | **G** | bronze bushing 6 x 8 x 6 | 2 | one in each end wall of the screw channel |
 
-1. **F.** Tap M5 through the small hole beside the window. Screw the plunger in from the front, ball toward you, until its hex is inside. From behind (D), turn it with a hex key until the ball stands **1.0 mm** proud of the front face: lay the feeler gauge on the face next to it and a ruler across both, and stop when the ball touches the ruler. A small drop of epoxy on the thread at the back, scraped flush with the rear face, locks the plunger and seals the hole.
+1. **F.** Tap M5 through the small hole beside the window. Screw the plunger in from the front, ball toward you, until its hex is inside. From behind (D), turn it with a hex key until the ball stands **1.0 mm** proud of the front face: lay the feeler gauge on the face next to it and a ruler across both, and stop when the ball touches the ruler. A small drop of epoxy on the thread at the back, scraped flush with the floor of the curved pocket C (the back's hooks sweep over it), locks the plunger and seals the hole.
 2. **G.** Ream the two bushing seats with the 8 mm drill turned by hand. Drop a bushing into the screw channel and push it sideways into the round seat in the end wall until it is flush; a 6 mm bolt through its bore keeps it square. Do the other one the same way.
+3. **For step 2.** Near the bottom corners of the front face are two more holes that go through to the rear: tap M5 through the one on the photographer's left (right as you look at the front), and M3 into the narrow rear end of the one on the photographer's right, reaching through its wide bore. They take the click and the stop of the rotating back in 2d; the rotator will cover their rear ends.
 
 ### 1d. Handle inserts on top
 
@@ -135,7 +136,7 @@ The 1/4" insert takes 15 to 20 seconds: go slowly and keep the iron vertical.
 
 The film back does not sit on the body: it sits on the **rotator**, a round plate that turns a quarter turn in the body's rear face. For vertical pictures you turn the back, not the camera, and the tripod, the handle and the level stay where they are. A **rear frame** screwed to the body holds the rotator's flange over a ring of velvet; a ball plunger clicks at the two positions and a grub screw stops it past them.
 
-**You need:** the rotator, the blade, the wheel, the rear frame, 3 M3 inserts, 4 M3 x 10 socket heads, 2 M3 x 6 countersunk, 1 M3 x 8 countersunk, 1 M3 x 6 grub, one M5 ball plunger, velvet ring V5, the M3 and M5 taps, a long hex key, Loctite 222, epoxy, dry PTFE.
+**You need:** the rotator, the blade, the wheel, the rear frame, 3 M3 inserts, 4 M3 x 10 socket heads, 2 M3 x 6 countersunk, 1 M3 x 8 countersunk, 1 M3 x 6 grub, one M5 ball plunger, velvet ring V5, a long hex key, Loctite 222, epoxy, dry PTFE.
 
 If the rotator from the test plate fitted your back, use that one.
 
@@ -191,8 +192,8 @@ If the rotator from the test plate fitted your back, use that one.
 
 Stand the body on its bottom, front toward you. Both holes go through to the rotator.
 
-1. **L.** Tap M5 through the hole. Screw the plunger in from the front, ball first, with the rotator at landscape (red dot at the top). When the ball touches the rotator, give it half a turn more. Turn the rotator: it clicks into place at landscape and at portrait. Firmer click: a quarter turn more; lighter: a quarter turn back.
-2. **M.** Tap M3 into the narrow end of the other hole, reaching through the wide bore in front of it. Drive the grub in from the front with the long hex key until it touches the bottom of the groove in the rotator, then back it half a turn.
+1. **L.** Screw the plunger into its hole (tapped in 1c) from the front, ball first, with the rotator at landscape (red dot at the top). When the ball touches the rotator, give it half a turn more. Turn the rotator: it clicks into place at landscape and at portrait. Firmer click: a quarter turn more; lighter: a quarter turn back.
+2. **M.** Drive the grub from the front with the long hex key until it touches the bottom of the groove in the rotator, then back it half a turn.
 
 **Check.** Seen from behind, the back turns a quarter turn anticlockwise from landscape (red dot on the big white dot at the top) to portrait (red dot on the small white dot on the photographer's left), clicks at both, and stops hard just past each. The dark slide then comes out at the top.
 
@@ -230,7 +231,7 @@ Tighten firmly: this handle carries the camera. A strap attaches to the bar betw
 |---|---|---|---|
 | **F** | 15 mm bull's-eye level | 1 | glued in the pocket on top of the handle |
 
-Put the camera on a tripod on its Arca plate and level it with a phone level laid on top of the body, in both directions. Put a drop of epoxy in the pocket on top of the handle, press the bull's-eye in, and let the glue set without touching the camera. The same level serves both orientations, since the camera no longer turns.
+Put the camera on a tripod on its Arca plate and level it with a phone level laid on top of the body, in both directions. Put a drop of epoxy in the pocket on top of the handle, press the bull's-eye in, and let the glue set without touching the camera. The same level serves both orientations: the camera never turns, the back does.
 
 ## 4. Vertical ways and body velvet
 
@@ -256,6 +257,7 @@ Tap M3 into the three small holes of Q first. The rails' round ends go to the to
 |---|---|---|---|
 | **V1** | velvet, cut from its template | 1 | around the window, between the rails |
 | **F** | the plunger ball | | stays uncovered: the side of V1 marked *ball plunger side* goes toward it |
+| **L, M** | the click and the stop of the rotating back (2d) | | stay uncovered: the two notches in the bottom corners of V1 go around them |
 
 The velvet window is 0.3 mm larger than the body's window all round.
 
@@ -263,7 +265,7 @@ The velvet window is 0.3 mm larger than the body's window all round.
 
 ## 5. Front standard, on the bench
 
-**You need:** the Y plate, the lens panel, the two horizontal rails, the X gib strip, the shift nut turret, the metal M65 flange, 1 M3 insert, 1 brass M6 nut, 2 bushings, 1 M5 ball plunger, 4 M3 x 6 countersunk, 8 M3 x 16 socket heads, 4 M3 x 6 grubs, the 127 mm rod, an M6 washer and a stainless M6 nut (the thrust nut), O-ring, knob with its M6 nut, velvet V2, epoxy, Loctite 243, black paint.
+**You need:** the Y plate, the lens panel, the two horizontal rails, the X gib strip, the shift nut turret, the metal M65 flange, 1 M3 insert, 1 brass M6 nut, 2 bushings, 1 M5 ball plunger, 4 M3 x 6 countersunk, 8 M3 x 16 socket heads, 4 M3 x 6 grubs (three for the gib, one for the knob), the 138 mm rod, an M6 washer and a stainless M6 nut (the thrust nut), O-ring, knob with its M6 nut, velvet V2, epoxy, Loctite 243, black paint.
 
 The front standard is built as one unit on a clean flat table, then slides into the body in step 6.
 
@@ -336,7 +338,7 @@ Put a thin layer of epoxy on the top of the turret J, press it into its pocket a
 
 | | What | Qty | How |
 |---|---|---|---|
-| **T** | 127 mm rod | 1 | pushed in from the Y plate's **right** edge (photographer's right, H) |
+| **T** | 138 mm rod | 1 | pushed in from the Y plate's **right** edge (photographer's right, H) |
 | **U** | M6 washer | 1 | onto the rod inside the channel, first |
 | **W** | stainless M6 nut (thrust nut) | 1 | next, with Loctite 243 |
 | **X** | brass M6 nut (drive nut) | 1 | last |
@@ -393,7 +395,7 @@ Press a stainless M6 nut into the knob's hex pocket with the vice and tap M3 int
 
 ## 6. Front standard into the body, rise screw and knob
 
-**You need:** the body from step 4, the front standard from step 5, the rise nut turret, 2 M3 inserts, 1 brass M6 nut, 2 M3 x 10 socket heads, the two 7 mm velvet discs, the Y gib strip, 3 M3 x 6 grubs, the 178 mm rod with a stainless M6 nut and an M6 washer (its end nut), O-ring, knob with its M6 nut and grub, Loctite 243, dry PTFE.
+**You need:** the body from step 4, the front standard from step 5, the rise nut turret, 2 M3 inserts, 1 brass M6 nut, 2 M3 x 10 socket heads, the two 7 mm velvet discs, the Y gib strip, 4 M3 x 6 grubs (three for the gib, one for the knob), the 178 mm rod with a stainless M6 nut and an M6 washer (its end nut), O-ring, knob with its M6 nut and grub, Loctite 243, dry PTFE.
 
 ### 6a. Rise nut turret
 
@@ -414,7 +416,7 @@ Press a stainless M6 nut into the knob's hex pocket with the vice and tap M3 int
 | **D** | 178 mm rod with its washer and end nut | 1 | pushed up from below, through the bushings and the turret nut |
 | **N** | the end nut | | sits in its recess under the body, the washer against the top of the recess |
 
-On the bench, slip the washer onto one end of the rod and screw the nut on behind it with a drop of Loctite 243, about 1 mm of rod beyond the nut; let it set. Stand the body on its bottom plate, put the turret in the channel, and push the rod up from below through the bottom bushing, the turret nut (turn the rod to thread it through) and the top bushing, until the washer sits against the top of its recess. Turn the rod until the turret is in the middle of the channel.
+On the bench, slip the washer onto one end of the rod and screw the nut on behind it with a drop of Loctite 243, about 1 mm of rod beyond the nut; let it set. Hold the body upright at the edge of the table, the corner under the rise channel overhanging (the end nut's recess opens in the bottom there), put the turret in the channel, and push the rod up from below through the bottom bushing, the turret nut (turn the rod to thread it through) and the top bushing, until the washer sits against the top of its recess. Turn the rod until the turret is in the middle of the channel.
 
 ### 6c. The front standard slides in from the top
 
@@ -585,13 +587,13 @@ The ground glass goes on the same way. Now go to [calibration](calibration.md), 
 
 | Step | Inserts | Screws | Other |
 |---|---|---|---|
-| 1 | M3 x 15, 1/4" x 1 | | M5 plunger, 2 bushings, epoxy |
-| 2 | M3 x 3 | M3 x 10 socket x 4, M3 x 6 countersunk x 2, M3 x 8 countersunk x 1, M3 x 6 grub x 1 | M5 plunger, V5, Loctite 222, epoxy, dry PTFE |
+| 1 | M3 insert x 15, 1/4" insert x 1 | | M5 plunger, 2 bushings, epoxy |
+| 2 | M3 insert x 3 | M3 x 10 socket x 4, M3 x 6 countersunk x 2, M3 x 8 countersunk x 1, M3 x 6 grub x 1 | M5 plunger, V5, Loctite 222, epoxy, dry PTFE |
 | 3 | | M3 x 20 socket x 2, 1/4"-20 x 1/2" x 1 | bull's-eye level, epoxy |
 | 4 | | M3 x 8 countersunk x 9 | V1 |
-| 5 | M3 x 1 | M3 x 6 countersunk x 4, M3 x 16 socket x 8, M3 x 6 grub x 4 | flange, brass nut, 2 bushings, M5 plunger, rod 127 + M6 washer + M6 nut, O-ring, knob + M6 nut, V2, epoxy, Loctite 243, paint |
-| 6 | M3 x 2 | M3 x 10 socket x 2, M3 x 6 grub x 4 | brass nut, rod 178 + M6 washer + M6 nut, O-ring, knob + M6 nut, 2 velvet discs, Loctite 243 |
+| 5 | M3 insert x 1 | M3 x 6 countersunk x 4, M3 x 16 socket x 8, M3 x 6 grub x 4 | flange, brass nut, 2 bushings, M5 plunger, rod 138 + M6 washer + M6 nut, O-ring, knob + M6 nut, V2, epoxy, Loctite 243, paint |
+| 6 | M3 insert x 2 | M3 x 10 socket x 2, M3 x 6 grub x 4 | brass nut, rod 178 + M6 washer + M6 nut, O-ring, knob + M6 nut, 2 velvet discs, Loctite 243 |
 | 7 | | M3 x 6 grub x 5 | helicoid, Loctite 222 |
-| 8 | M3 x 8 | M3 x 8 countersunk x 4, M3 x 6 grub x 2 | spring, V3, V4 |
+| 8 | M3 insert x 8 | M3 x 8 countersunk x 4, M3 x 6 grub x 2 | spring, V3, V4 |
 
 All the small hardware is M3 stainless: socket heads in three lengths (10, 16, 20), countersunk in two (6, 8), one grub (6) and one insert. One assortment of each covers the camera.

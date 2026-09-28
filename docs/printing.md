@@ -28,6 +28,8 @@ ASA shrinks about 0.5 to 0.7 % as it cools. Uncompensated, that is 0.5 mm on the
 4. In Bambu Studio, open the filament (three dots next to it, *Edit*), set *Shrinkage* to that value and save the profile as "ASA - Calegari View".
 5. Use that profile for every part. Reprint the gauge once: it should now measure 100.0 +/- 0.1 mm.
 
+![Plate 00a](img/print/p_plate_00a_shrink_gauge.jpg)
+
 ## Material
 
 **ASA.** It does not warp in a hot car, it resists UV, and printed on the textured plate it has a matte finish that reads like black paint. PLA is fine for fit tests, not for the camera. No fibre-filled filaments.
@@ -69,13 +71,41 @@ Let each plate cool in the closed printer for ten minutes before opening the doo
 | `plate_00c_test_thread_0.12mm_layers` | M65 thread coupon | 0.12 mm layers, like the adapter |
 | `plate_01_black` | body with its tripod base | alone on the plate: about 20 hours |
 | `plate_02_black` | rear frame, the four dovetail rails, the X gib strip, the shift nut turret, Graflok wheel | |
-| `plate_03_black` | Y plate, top handle, one knob, rise nut turret | |
-| `plate_04_black` | lens panel, Y gib strip, the other knob | |
+| `plate_03_black` | Y plate, Y gib strip, top handle, both knobs, rise nut turret | |
+| `plate_04_black` | lens panel | |
 | `plate_05_black` | rotator | skip it if the test rotator fits |
 | `plate_06_black` | board holder | |
 | `plate_07_black_0.12mm_layers` | focus ring, adapter ring | 0.12 mm layers for the M65 thread |
 | `plate_red_1` | Graflok blade, board latch | red ASA |
 | `plate_07_shims_0.2mm_layers` | five lens shims, 0.4 to 1.2 mm | 0.2 mm layers; only for more than one lens ([calibration, section 4](calibration.md#4-more-lenses-one-stop-for-all-of-them)) |
+
+### What each plate looks like
+
+The parts as `export.py` placed them on the 256 x 256 mm bed, already in their print orientation.
+
+![plate_00b_test_1](img/print/p_plate_00b_test_1.jpg)
+
+![plate_00b_test_2](img/print/p_plate_00b_test_2.jpg)
+
+![plate_00c_test_thread_0_12mm_layers](img/print/p_plate_00c_test_thread_0_12mm_layers.jpg)
+
+![plate_01_black](img/print/p_plate_01_black.jpg)
+
+![plate_02_black](img/print/p_plate_02_black.jpg)
+
+![plate_03_black](img/print/p_plate_03_black.jpg)
+
+![plate_04_black](img/print/p_plate_04_black.jpg)
+
+![plate_05_black](img/print/p_plate_05_black.jpg)
+
+![plate_06_black](img/print/p_plate_06_black.jpg)
+
+![plate_07_black_0_12mm_layers](img/print/p_plate_07_black_0_12mm_layers.jpg)
+
+![plate_red_1](img/print/p_plate_red_1.jpg)
+
+![plate_07_shims_0_2mm_layers](img/print/p_plate_07_shims_0_2mm_layers.jpg)
 
 Single parts, oriented and dropped on the bed, are in `print/stl`; the same parts in assembly coordinates are in `print/step` for editing. The cutting templates for the velvet and felt (V1 to V5, and two 7 mm discs) are A4 SVG files in `print/templates`: print them at 100 %.
 

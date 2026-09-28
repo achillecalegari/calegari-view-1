@@ -15,26 +15,40 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 
 ## 1. Set up
 
+![Ready to shoot](img/use/u_setup.jpg)
+
 1. **Clamp the camera** by its Arca plate. It stays upright for vertical pictures too: you turn the back, not the camera. Carry it by the top handle.
 2. **Level it.** Adjust the tripod head until the bubble on top of the handle is in the middle of its circle. It reads both directions, and it stays right when you turn the back. The one that matters most is front to back: a camera tilted up or down makes the vertical lines of a building lean. This is the whole point of the camera, so do not skip it.
 3. **Set both movements to zero.** Turn each knob until it clicks.
 4. **Horizontal or vertical.** Take hold of the back (or the ground glass) with both hands and turn it a quarter turn: anticlockwise from landscape to portrait, as you look at it from behind. It clicks at both ends and stops just past them. The red dot on the back's rim sits on the big white dot at the top for landscape, on the small one on your left for portrait. The rise knob still raises the lens, whichever way the picture is.
 
+![Landscape](img/use/u_landscape.jpg)
+
+![Portrait](img/use/u_portrait.jpg)
+
 ## 2. Compose on the ground glass
+
+![Back or ground glass on and off](img/use/u_back_on.jpg)
 
 1. **Ground glass on.** If a back is mounted, check its dark slide is in, then take it off: loosen the wheel, slide the red blade down, lift the back off the bottom rail. Mount the ground glass the same way in reverse.
 2. **Open the shutter.** Set the speed dial to **T** or **B** and fire, or push the *press focus* lever. Turn the aperture to its largest opening.
 3. **Look.** Cloth over your head and the camera. The image is upside down and mirrored left to right: after ten minutes you will stop noticing. The glass shows a little more than the film: compose inside the 6x7 marks (the Mercury glass has them; with another glass, mark the 69.5 x 56 mm frame with a fine pen during calibration).
 4. **Use the movements instead of pointing the camera.** The top of the building is cut off? Do not tilt the camera up: turn the top knob to raise the lens (rise). Too much of the left side? Turn the side knob to shift the lens sideways. The picture slides across the glass while the verticals stay vertical.
 
-**Reading the movements.** Each knob turn moves the lens 1 mm; the red dot on the knob top helps count turns. For bigger moves, read the dots on the edges of the plates:
+**Reading the movements.** Each knob turn moves the lens 1 mm; the red dot on the knob top helps count turns. For bigger moves, read the dots on the plates:
+
+![Rise](img/use/u_rise.jpg)
+
+![Shift](img/use/u_shift.jpg)
 
 - **rise and fall:** the dots on the right edge of the Y plate (as you stand behind the camera) pass a red dot on the body. Every dot is 5 mm; the big one is zero.
-- **shift:** the dots on the top edge of the lens panel pass a dot on the top edge of the Y plate, again 5 mm apart.
+- **shift:** the dots along the bottom of the lens panel's front pass a red dot on the bottom rail, again 5 mm apart; the big red one is zero.
 
-**How far can you go?** 25 mm in every direction, one movement at a time. Rise and shift together reach about 19 + 19 at infinity (17 + 17 at f/8), 13 + 13 when focused as close as the camera goes, and less with a lens with a smaller image circle: see [the limits](calibration.md#9-limits-worth-knowing). To check, look into each corner of the ground glass from a hand's width away, toward the lens: if you see the whole round aperture, the corner is covered.
+**How far can you go?** 25 mm in every direction, one movement at a time. Rise and shift together reach about 19 + 19 at infinity (17 + 17 at f/8), 13 + 13 at 0.7 m, 9 + 9 at the closest focus (0.47 m), and less with a lens with a smaller image circle: see [the limits](calibration.md#9-limits-worth-knowing). To check, look into each corner of the ground glass from a hand's width away, toward the lens: if you see the whole round aperture, the corner is covered.
 
 ## 3. Focus
+
+![Focus ring and marks](img/cal/c_infinity_front.jpg)
 
 - **With the ground glass.** Put the loupe on the glass over the part that matters most and move the focus lever until it is sharp. Go past and come back.
 - **Without it.** Move the lever until the white distance dot you want faces the red dot on the lens panel (the big red dot is infinity; the white ones are 5, 3, 2, 1.5, 1 and 0.7 m). The pairs of white dots either side of the red one show what is sharp: the small pair at f/11, the big pair at f/22.
@@ -52,6 +66,8 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 ## 5. Change the lens (ten seconds)
 
 Each lens stays on its own board; you change the board, not the lens.
+
+![Changing the lens](img/use/u_lens_change.jpg)
 
 1. **Protect the film.** Close the shutter. If a back is on, its dark slide must be in.
 2. **Hold the lens.** Put one hand around the lens first: with the latch up, only the two bottom lips hold the board, and the lens's weight tips it forward.
