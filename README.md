@@ -19,17 +19,17 @@ This repository is the whole camera: the files to print, the parametric model th
 | | |
 |---|---|
 | Format | 6x7 (56 x 69.5 mm); the gate also clears 6x8 |
-| Back | Mamiya RB67 Pro, Pro-S, Pro-SD on a Graflok-type interface; Mercury Works Graflok 23 ground glass |
+| Back | Mamiya RB67 Pro, Pro-S, Pro-SD on a Graflok-type interface; Mercury Works Graflok 23 ground glass. The back turns a quarter turn for portrait, with a click at both positions |
 | Lens | 65 mm large-format wide angle in Copal 0 (Super-Angulon 65/8, Nikkor-SW 65/4, Grandagon-N 65/4.5) on a Linhof Technika 99 x 96 board |
 | Movements | rise and fall +/-25 mm, lateral shift +/-25 mm, on printed dovetail ways with gibs; M6 lead screws, 1 mm per turn, hard stops, zero detents |
 | Focus | M65 helicoid 17-31 on a metal flange, 116 mm focus ring with a tab and a hidden infinity stop, infinity to 0.47 m |
-| Tripod | integrated L bracket with two Arca-Swiss plates: under the body (landscape) and on the side leg (portrait) |
+| Tripod | one Arca-Swiss plate under the body; the camera stays upright for portrait, only the back turns |
 | Lens change | every lens on its own board: a spring latch, no tools, ten seconds; printed shims put every lens at infinity on the same stop |
-| Handle | one top handle with the engraved name, two ISO 518 accessory shoes and a bull's-eye level; a second bull's-eye on the side for portrait |
-| Size | 197 x 225 mm front, 161 mm deep with back and lens |
-| Weight | about 1.1 kg without back and lens (about 730 g of printed ASA, 400 g of metal); about 2 kg ready to shoot (estimate) |
+| Handle | one top handle with the engraved name, two ISO 518 accessory shoes and a bull's-eye level; the rise knob sits on the body top beside it |
+| Size | 185 x 247 mm front (170 mm body, handle and knobs included), 161 mm deep with back and lens |
+| Weight | about 1.2 kg without back and lens (about 810 g of printed ASA, 360 g of metal); about 2.1 kg ready to shoot (estimate) |
 
-The body, the Y plate and the lens panel are flat slabs that slide face to face on printed dovetail ways, like the standards of a technical camera. Every plate covers the opening of the one behind it with at least 4.6 mm of black velvet at every shift position: that is how it stays light-tight without a bellows. The rise knob is on top; turned onto the side leg for portrait, the knob that ends up on top is again the one that raises the lens.
+The body, the Y plate and the lens panel are flat slabs that slide face to face on printed dovetail ways, like the standards of a technical camera. Every plate covers the opening of the one behind it with at least 13 mm of black velvet at every shift position: that is how it stays light-tight without a bellows. The back sits on a round rotator that turns in the body's rear face, sealed by a labyrinth and a ring of velvet: for vertical pictures you turn the back, and the tripod, the level and the knobs stay where they are. No screw head shows on the front or the sides.
 
 | | | |
 |---|---|---|
@@ -42,13 +42,13 @@ The body, the Y plate and the lens panel are flat slabs that slide face to face 
 
 The design is complete and checked in software, not yet proven in the hand.
 
-- `cad/check.py`: no interference between any of the 142 components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
-- `cad/seal_check.py`: the velvet seal is at least 4.6 mm wide at both sliding interfaces, at every shift position in 5 mm steps.
-- `cad/optics_check.py`: a ray trace from the lens to the corners of the frame. Single movements up to 25 mm are clean at f/22 and f/8 at infinity. Combined rise and shift are clean up to 19 + 19 mm at infinity at f/22, 17 + 17 at f/8, and 13 + 13 at the closest focus (about 0.7 m): the 61 mm bore of the helicoid's rear stub is the limit.
+- `cad/check.py`: no interference between any of the components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, with the back in landscape, in portrait and halfway between. Every printed part is a single solid.
+- `cad/seal_check.py`: the velvet seal is at least 13 mm wide at both sliding interfaces, at every shift position in 5 mm steps.
+- `cad/optics_check.py`: a ray trace from the lens to the corners of the frame, with the back in landscape and in portrait. Single movements up to 25 mm are clean at f/22 and f/8 at infinity. Combined rise and shift are clean up to 19 + 19 mm at infinity at f/22, 17 + 17 at f/8, and 13 + 13 at the closest focus (about 0.7 m): the 61 mm bore of the helicoid's rear stub is the limit.
 - `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation. No part needs supports.
 - Before the first print the design went through three rounds of independent review: mechanics, light and optics, printability, assembly and use. What changed is in the [design notes](docs/design.md).
 
-What only the first physical build can prove is listed in [calibration and tests](docs/calibration.md). It starts with about four hours of test prints: the shrinkage of your ASA, the Graflok module on your RB67 back, and slices of the dovetail ways to slide by hand. They come before the body.
+What only the first physical build can prove is listed in [calibration and tests](docs/calibration.md). It starts with about four hours of test prints: the shrinkage of your ASA, the rotator on your RB67 back, and slices of the dovetail ways to slide by hand. They come before the body.
 
 ## The model
 
@@ -59,7 +59,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 cd cad
 ../.venv/bin/python check.py          # interference, single-solid and clamp checks
 ../.venv/bin/python seal_check.py     # velvet seal widths over the whole shift range
-../.venv/bin/python optics_check.py   # ray trace: vignetting at shift, aperture and focus (about 6 minutes)
+../.venv/bin/python optics_check.py   # ray trace: vignetting at shift, aperture and focus (about 12 minutes)
 ../.venv/bin/python export.py         # STEP, oriented STL, AMS inlays, P1S plates, test prints
 ../render/gen_all.sh                  # product and overview images in docs/img (needs Blender)
 ../render/figures.sh                  # assembly and calibration figures, docs/img/asm and docs/img/cal (needs Blender)

@@ -1,10 +1,9 @@
 """Calegari View 1: automatic design checks. Exit code 1 if anything fails.
 
 1. every printed part is ONE solid (no floating islands in the print files)
-2. no interference between any two parts, at home and at the four shift extremes,
-   with the Graflok blade and the board latch both locked and open
-3. tripod clamp envelopes (landscape on the bottom plate, portrait on the side handle)
-   stay clear of every moving part
+2. no interference between any two parts, at home and at the four shift extremes, with the back in
+   landscape, in portrait and half way round, and with the Graflok blade and the board latch open
+3. the tripod clamp envelope under the plinth stays clear of every moving part
 """
 import itertools, sys, time
 from build123d import *
@@ -17,7 +16,7 @@ THRESHOLD = 0.3  # mm3
 # pairs that touch or nest by design (prefix pairs)
 EXPECTED = [
     # heat-set inserts sit in their hosts (interference fit) and carry their screws
-    ("insert_", "body"), ("insert_", "y_plate"), ("insert_", "x_plate"), ("insert_", "graflok_module"),
+    ("insert_", "body"), ("insert_", "y_plate"), ("insert_", "x_plate"), ("insert_", "rotator"),
     ("insert_", "board_holder"), ("insert_", "adapter_ring"), ("insert_", "way_"), ("insert_", "y_turret"),
     ("insert_", "screw_"), ("insert_", "stop_pin"),
     # threads cut or formed in the plastic: grubs in the gib rails, latch screws, ball plungers
@@ -37,11 +36,15 @@ EXPECTED = [
     ("lens", "lensboard"), ("lens", "lens_glass"), ("spring_latch", "holder_latch"), ("spring_latch", "board_holder"),
     ("rb_", "rb_"),
     # countersunk heads seat in their cones
-    ("screw_gf", "graflok_module"), ("screw_blade", "graflok_blade"), ("screw_flange", "x_plate"), ("screw_yway", "way_y"),
+    ("screw_blade", "graflok_blade"), ("screw_flange", "x_plate"), ("screw_yway", "way_y"),
     ("screw_flange", "flange"),                 # M3 threads in the metal flange
     # The RB67 envelope has no lips or Graflok slots: the back-to-module fit is verified on the
     # real back with the printed module (docs/calibration.md), not here.
-    ("rb_", "graflok_"), ("rb_", "screw_blade"), ("rb_", "screw_wheel"),
+    ("rb_", "rotator"), ("rb_", "graflok_"), ("rb_", "screw_blade"), ("rb_", "screw_wheel"),
+    # the rotator: its plunger rides on the rotator's front face and clicks into two dimples; the stop grub
+    # is tapped into the body; the velvet ring is squeezed between the frame and the flange
+    ("plunger_rot", "body"), ("plunger_rot", "rotator"), ("grub_rot", "body"),
+    ("velvet_rot", "bezel"), ("velvet_rot", "rotator"), ("inlay_", "bezel"), ("inlay_", "rotator"),
 ]
 
 
@@ -61,10 +64,7 @@ def clamp_envelopes():
     """65 x 65 mm Arca clamp with jaws reaching 4 mm above the plate's clamp face."""
     y_face = -BODY / 2 - PLINTH + ARCA_POCKET - ARCA_T
     landscape = P.box_at(-32.5, 32.5, y_face - 25, y_face + 4.0, ARCA_ZC - 32.5, ARCA_ZC + 32.5)
-    x_face = BODY / 2 + SIDE_T - ARCA_POCKET + ARCA_T
-    yc = SIDE_ARCA_YC
-    portrait = P.box_at(x_face - 4.0, x_face + 25, yc - 32.5, yc + 32.5, ARCA_ZC - 32.5, ARCA_ZC + 32.5)
-    return [Item("clamp_landscape", landscape, "clamp"), Item("clamp_portrait", portrait, "clamp")]
+    return [Item("clamp_landscape", landscape, "clamp")]
 
 
 CLAMP_OK = ("arca_", "body")
@@ -106,15 +106,18 @@ if __name__ == "__main__":
     for n, k in bad:
         print(f"   {n}: {k} solids")
     fails += len(bad)
-    cases = [(0, 0, True, True), (SHIFT_X, RISE, True, True), (-SHIFT_X, -FALL, True, True),
-             (SHIFT_X, -FALL, True, True), (-SHIFT_X, RISE, True, True), (0, 0, False, False)]
+    P_ = ROT_PORTRAIT
+    cases = [(0, 0, True, True, 0.0), (SHIFT_X, RISE, True, True, 0.0), (-SHIFT_X, -FALL, True, True, 0.0),
+             (SHIFT_X, -FALL, True, True, 0.0), (-SHIFT_X, RISE, True, True, 0.0), (0, 0, False, False, 0.0),
+             (0, 0, True, True, P_), (SHIFT_X, RISE, True, True, P_), (-SHIFT_X, -FALL, True, True, P_),
+             (0, 0, False, True, P_), (0, 0, True, True, P_ / 2)]
     if len(sys.argv) > 1:
         cases = cases[: int(sys.argv[1])]
-    for sx, sy, bl, ll in cases:
+    for sx, sy, bl, ll, rot in cases:
         t = time.time()
-        items = assemble(sx, sy, 0.0, blade_locked=bl, latch_locked=ll) + clamp_envelopes()
+        items = assemble(sx, sy, 0.0, blade_locked=bl, latch_locked=ll, rot=rot) + clamp_envelopes()
         r = interferences(items)
-        state = "" if bl else " (blade and latch open)"
+        state = ("" if bl else " (blade open)") + ("" if ll else " (latch open)") + ({0.0: "", P_: " portrait"}.get(rot, f" back at {rot:.0f} deg"))
         print(f"shift x={sx:+.0f} y={sy:+.0f}{state}: {len(r)} interferences ({time.time() - t:.0f}s)")
         for a, b, v in r:
             print(f"   {a:30s} x {b:30s} {v} mm3")

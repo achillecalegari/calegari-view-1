@@ -1,6 +1,6 @@
 """Write render meshes + manifest for Blender (render/white.py).
 
-python render_meshes.py --tag home [--sx 0 --sy 0 --explode 0 --section --step N]
+python render_meshes.py --tag home [--sx 0 --sy 0 --explode 0 --section --step N --rot 0]
 """
 import argparse, json, pathlib
 from build123d import *
@@ -15,6 +15,7 @@ ap.add_argument("--sy", type=float, default=0.0)
 ap.add_argument("--explode", type=float, default=0.0)
 ap.add_argument("--section", action="store_true")
 ap.add_argument("--step", type=int, default=0)
+ap.add_argument("--rot", type=float, default=0.0)
 a = ap.parse_args()
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "out" / f"mesh_{a.tag}"
@@ -22,9 +23,9 @@ OUT.mkdir(parents=True, exist_ok=True)
 for f in OUT.glob("*.stl"):
     f.unlink()
 
-items = assemble(a.sx, a.sy, a.explode)
+items = assemble(a.sx, a.sy, a.explode, rot=a.rot)
 if a.step:
-    exploded = {i.name: i.shape for i in assemble(a.sx, a.sy, 26.0)}
+    exploded = {i.name: i.shape for i in assemble(a.sx, a.sy, 26.0, rot=a.rot)}
     items = [i for i in items if step_of(i.name) <= a.step]
     for i in items:
         if step_of(i.name) == a.step:

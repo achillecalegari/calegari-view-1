@@ -6,13 +6,14 @@
 
 The camera is a stack of flat slabs on the optical axis, from the film forward:
 
-1. **Graflok module** (printed, separate): the back's nose pocket, the fixed bottom rail that hooks the back and releases the Pro-S dark-slide interlock, and the red clamp blade with two tongues.
-2. **Body** (printed, one piece): the seat for the back, the stepped gate, the two vertical dovetail rails, the rise screw, and an L bracket (bottom plinth and side leg) carrying the two Arca plates.
-3. **Y plate** (printed): rises and falls between the vertical rails, carries the two horizontal dovetail rails and the shift screw.
-4. **Lens panel** (printed): shifts left and right, carries a metal M65 flange.
-5. **Optics on the flange:** the helicoid, the printed adapter ring, the Technika board holder and the lens.
+1. **Rotator** (printed): the round seat of the back. The back's nose pocket, the fixed bottom rail that hooks the back and releases the Pro-S dark-slide interlock, and the red clamp blade with two tongues. It turns a quarter turn for portrait.
+2. **Rear frame** (printed): screwed to the body with four M3, it holds the rotator's flange over a ring of velvet.
+3. **Body** (printed, one piece, 170 mm square): the round seat of the rotator with a labyrinth ridge, the stepped gate, the two vertical dovetail rails, the rise screw, and the Arca plate underneath.
+4. **Y plate** (printed): rises and falls between the vertical rails, carries the two horizontal dovetail rails and the shift screw.
+5. **Lens panel** (printed): shifts left and right, carries a metal M65 flange.
+6. **Optics on the flange:** the helicoid, the printed adapter ring, the Technika board holder and the lens.
 
-The light seal is the flatness of these faces. Each plate covers the opening of the one behind it, and the band of black velvet between them is at least 4.6 mm wide at every shift position (`cad/seal_check.py`, swept every 5 mm). The thin flanges of the dovetail rails set the 0.8 mm gap and the velvet is compressed in it, so the velvet never carries load.
+The light seal is the flatness of these faces. Each plate covers the opening of the one behind it, and the band of black velvet between them is at least 13 mm wide at every shift position (`cad/seal_check.py`, swept every 5 mm). The thin flanges of the dovetail rails set the 0.8 mm gap and the velvet is compressed in it, so the velvet never carries load.
 
 ## Choices and why
 
@@ -27,14 +28,15 @@ The light seal is the flatness of these faces. Each plate covers the opening of 
 | Printed dovetail ways with a gib | the way view cameras have always done it: nothing to buy, nothing to align, play taken up by three grub screws. The rails print as separate parts, so the sliding flanks come from the printer's perimeters, not from stair-stepped layers; test coupons prove the fit on your printer before the big parts |
 | Front standard assembled on the bench, then slid in from the top | the Y plate's front overhangs the vertical rails (the shift screw passes over them), so it goes in like a drawer; the rise nut turret is screwed on afterwards through the plate |
 | M6 threaded rod and brass nut, 1 mm per turn | fine control, self-locking under gravity, parts from any hardware shop; the nut floats 0.5 mm so the rod never binds. The rise rod ends in a plain M6 nut and washer, fixed on the bench and hidden under the camera. The shift rod shows nothing on the left: it ends in a blind seat, and a washer and a nut locked inside the channel hold it against the knob side. No hardware in sight on the front or the sides |
-| All small hardware in M3 | one insert size (M3 x 3 x 5) for every insert, socket heads in four lengths, countersunk in two (only where a head must sit flush: the flange, the Graflok blade, the thin vertical rails and the board holder), one grub size. Four assortments and an M6 set buy the whole camera; three hex keys build it |
+| All small hardware in M3 | one insert size (M3 x 3 x 5) for every insert, socket heads in three lengths, countersunk in two (only where a head must sit flush: the flange, the Graflok blade, the thin vertical rails and the board holder), one grub size. Four assortments and an M6 set buy the whole camera; three hex keys build it |
 | Shift nut turret keyed into the lens panel | the hard stops push on the pocket walls, not on the glue |
 | O-ring drag instead of lock wheels | lock wheels moved the composition as you tightened them; constant drag holds the plate and never shifts it |
-| Ball-plunger zero detents | you feel zero without looking; the plungers sit in through holes, so they are set from behind and then sealed |
-| Rise and fall +/-25, the same as lateral shift | the base of the L bracket is 25 mm tall so that at full fall the Y plate stays 4 mm above a clamp's jaws; the two scales read the same way |
-| L bracket printed with the body, side leg on the photographer's left | one continuous outline with the body's R9 corners, no joints to loosen; the RB67 dark slide comes out on the right, so nothing protrudes there; in portrait the shifted lens panel stays clear of the clamp |
-| One top handle, bolted, as deep as the body | feet flared into the body, nothing overhangs the film back's advance lever; room on top for two ISO 518 accessory shoes and a bull's-eye level, and on its front for the engraved name |
-| Bull's-eye levels | a tubular vial reads one direction only; the one that keeps verticals vertical is front to back |
+| Ball-plunger detents | you feel zero without looking; the rise and shift plungers sit in through holes, so they are set from behind and then sealed; the third one clicks the back at landscape and portrait |
+| Rise and fall +/-25, the same as lateral shift | the base under the body is 25 mm tall so that at full fall the Y plate stays clear of a clamp's jaws; the two scales read the same way |
+| Rotating back instead of an L bracket | for portrait the camera stays on its plate: the level, the handle and the knobs keep their meaning and the tripod head does not have to flop over. The rotator turns in the body's rear face on a velvet ring held by a screwed rear frame; a labyrinth (a ridge on the body in a groove of the rotator) keeps light out while it turns; a POM ball plunger clicks at landscape and portrait, and a grub screw in an arc groove stops it just past both. Plunger and grub go in from the front, under the Y plate, so nothing shows |
+| Square body, 170 mm | the rotator needs a circle of 165 mm around the back, and a square body is the calmest shape around a circle; the window gets 12 mm corners so the labyrinth fits around it |
+| One top handle, bolted, as deep as the body | feet flared into the body, 9 mm of finger room to the rise knob beside it; nothing overhangs the film back's advance lever; room on top for two ISO 518 accessory shoes and a bull's-eye level, and on its front for the engraved name |
+| One bull's-eye level | a tubular vial reads one direction only; the one that keeps verticals vertical is front to back. The camera never goes on its side, so one level serves both orientations |
 | Hidden infinity stop | a pin on the lens panel runs in a groove under the focus ring and meets one solid block at infinity; you set it by turning the ring on the helicoid, no adjusting screw |
 | Recessed dot scales, red only for zeros, infinity and release controls | print cleanly in multi-material; red means "this is the reference" or "this lets go" |
 
@@ -60,14 +62,14 @@ The design went through three rounds of independent review before the first prin
 
 | Script | What it proves |
 |---|---|
-| `cad/check.py` | every printed part is one solid; no two parts intersect (threshold 0.3 mm3) at home and at the four shift extremes, with the blade and the board latch closed and open, including every screw against the bottom of its hole; the 65 mm clamp envelopes in landscape and portrait touch nothing that moves |
+| `cad/check.py` | every printed part is one solid; no two parts intersect (threshold 0.3 mm3) at home and at the four shift extremes, with the blade and the board latch closed and open, with the back in landscape, in portrait and halfway, including every screw against the bottom of its hole |
 | `cad/seal_check.py` | minimum width of the velvet band around the light path at both sliding interfaces, at every shift position in 5 mm steps |
-| `cad/optics_check.py` | rays from the lens pupil to the four corners of the frame, through every part, at the shift, aperture and pupil positions listed in the script |
+| `cad/optics_check.py` | rays from the lens pupil to the four corners of the frame, through every part, at the shift, aperture and pupil positions listed in the script, with the back in landscape and in portrait |
 | `cad/export.py` | `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation |
 
 ## Open points
 
-- **RB67 interface.** It is derived from reference designs and has not yet been fitted on a real back. The RB67 model used by the checks has no lips or slots, so the back-to-module fit is not part of the automated check: it is test print #1 ([calibration](calibration.md#1-before-printing-the-body-test-prints)).
-- **Wind-stop coupling.** Not implemented: after each frame, press the back's own release lever, as on the Mamiya Press. A plunger at the top-left corner of the module is the planned v2 feature (M7 in the calibration list).
+- **RB67 interface.** It is derived from reference designs and has not yet been fitted on a real back. The RB67 model used by the checks has no lips or slots, so the back-to-rotator fit is not part of the automated check: it is test print #1 ([calibration](calibration.md#1-before-printing-the-body-test-prints)).
+- **Wind-stop coupling.** Not implemented: after each frame, press the back's own release lever, as on the Mamiya Press. A plunger at the top-left corner of the rotator is the planned v2 feature (M7 in the calibration list).
 - **Lens tilt.** The board can be squared in rotation through the holder's arc slots, but it cannot be adjusted in tilt. Parallelism relies on flat prints: check it with the procedure in calibration.
 - **Focus scale.** It is correct only once `HELI_ROT` and `FOCUS_DIR` are measured on your helicoid.

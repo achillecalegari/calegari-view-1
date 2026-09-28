@@ -18,7 +18,9 @@ from params import *
 from assembly import assemble
 
 PUPIL = 65.0
-CORNERS = [(sx * FILM_W / 2, sy * FILM_H / 2) for sx in (-1, 1) for sy in (-1, 1)]
+def corners(rot):
+    w, h = (FILM_W, FILM_H) if rot == 0 else (FILM_H, FILM_W)      # portrait: the frame stands up
+    return [(sx * w / 2, sy * h / 2) for sx in (-1, 1) for sy in (-1, 1)]
 SKIP = ("lens", "rb_", "velvet", "felt", "inlay", "oring", "knob", "rod", "grub", "screw", "insert", "nut", "vial",
         "bush", "plunger", "spring", "top_handle", "arca_", "way_", "gib_", "focus_ring")   # all outside the light path
 # (sx, sy, f-number, pupil z, minimum share of the pupil at the worst corner)
@@ -26,16 +28,21 @@ SKIP = ("lens", "rb_", "velvet", "felt", "inlay", "oring", "knob", "rod", "grub"
 # (about 0.7 m); 62 = a lens whose pupil sits 3 mm further back. The helicoid's rear stub (61 mm bore,
 # 5.2 mm behind the lens panel front) is the opening that limits combined movements.
 SIGNS = ((1, 1), (-1, -1), (1, -1), (-1, 1))
-REQUIRED = ([(25, 0, 22, 65, 0.99), (-25, 0, 22, 65, 0.99), (0, 25, 22, 65, 0.99), (0, -25, 22, 65, 0.99),
-             (25, 0, 8, 65, 0.95), (0, 25, 8, 65, 0.95), (-25, 0, 22, 62, 0.99), (0, -25, 22, 62, 0.99),
-             (24, 0, 22, 70, 0.99), (-24, 0, 22, 70, 0.99), (0, 25, 22, 70, 0.99), (0, -25, 22, 70, 0.99),
-             (20, 0, 22, 72.5, 0.99), (-20, 0, 22, 72.5, 0.99), (0, 24, 22, 72.5, 0.99), (0, -24, 22, 72.5, 0.99)]
-            + [(a * 19, b * 19, 22, 65, 0.99) for a, b in SIGNS]
+SINGLES = [(25, 0, 22, 65, 0.99), (-25, 0, 22, 65, 0.99), (0, 25, 22, 65, 0.99), (0, -25, 22, 65, 0.99),
+           (25, 0, 8, 65, 0.95), (0, 25, 8, 65, 0.95), (-25, 0, 22, 62, 0.99), (0, -25, 22, 62, 0.99),
+           (24, 0, 22, 70, 0.99), (-24, 0, 22, 70, 0.99), (0, 25, 22, 70, 0.99), (0, -25, 22, 70, 0.99),
+           (20, 0, 22, 72.5, 0.99), (-20, 0, 22, 72.5, 0.99), (0, 24, 22, 72.5, 0.99), (0, -24, 22, 72.5, 0.99)]
+COMBINED = ([(a * 19, b * 19, 22, 65, 0.99) for a, b in SIGNS]
             + [(a * 17, b * 17, 8, 65, 0.95) for a, b in SIGNS]
             + [(a * 14, b * 14, 22, 70, 0.99) for a, b in SIGNS]
             + [(a * 13, b * 13, 22, 72.5, 0.99) for a, b in SIGNS])
-INFO = [(20, 20, 22, 65), (18, 18, 8, 65), (16, 16, 22, 70), (14, 14, 22, 72.5), (25, 0, 22, 70), (25, 0, 22, 72.5)]
-
+# landscape, then portrait (the back turned -90): the frame stands up, so the long side of the frame
+# follows rise instead of shift and the single-movement limits swap axes; the combined ones are the same
+REQUIRED = ([c + (0.0,) for c in SINGLES + COMBINED]
+            + [(sy, sx, f, pz, need, ROT_PORTRAIT) for sx, sy, f, pz, need in SINGLES]
+            + [c + (ROT_PORTRAIT,) for c in COMBINED])
+INFO = [(20, 20, 22, 65, 0.0), (18, 18, 8, 65, 0.0), (16, 16, 22, 70, 0.0), (14, 14, 22, 72.5, 0.0),
+        (25, 0, 22, 70, 0.0), (25, 0, 22, 72.5, 0.0), (0, 25, 22, 70, ROT_PORTRAIT), (0, 25, 22, 72.5, ROT_PORTRAIT)]
 
 def mesh(shape):
     vs, fs = shape.tessellate(0.05, 0.2)
@@ -86,17 +93,17 @@ def pupil_points(radius, n=9):
     return pts
 
 
-def share(sx, sy, fnum, cache, pupil=PUPIL):
-    key = (sx, sy)
+def share(sx, sy, fnum, cache, pupil=PUPIL, rot=0.0):
+    key = (sx, sy, rot)
     if key not in cache:
-        items = [i for i in assemble(sx, sy, back=False) if not i.name.startswith(SKIP)]
+        items = [i for i in assemble(sx, sy, back=False, rot=rot) if not i.name.startswith(SKIP)]
         zs = np.concatenate([np.arange(1.01, 34.0, 1.0), np.arange(34.01, 36.1, 0.25), np.arange(36.11, 39.0, 0.1),
                              np.arange(39.01, 47.0, 0.25), np.arange(47.01, 62.0, 1.0)])   # off the flat faces
         cache[key] = (slices([mesh(i.shape) for i in items], zs), zs)
     sl, zs = cache[key]
     pts = pupil_points(F_LENS / fnum / 2)
     worst = 1.0
-    for cx, cy in CORNERS:
+    for cx, cy in corners(rot):
         ok = 0
         for px, py in pts:
             x0, y0 = sx + px, sy + py
@@ -119,12 +126,14 @@ def share(sx, sy, fnum, cache, pupil=PUPIL):
 
 if __name__ == "__main__":
     cache, fails = {}, 0
-    for sx, sy, fnum, pz, need in REQUIRED:
-        w = share(sx, sy, fnum, cache, pz)
+    for sx, sy, fnum, pz, need, rot in REQUIRED:
+        w = share(sx, sy, fnum, cache, pz, rot)
         flag = "ok" if w >= need else "CLIPPED"
         fails += w < need
-        print(f"shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz:4.1f}: worst corner gets {w * 100:5.1f} % of the pupil  {flag}")
-    for sx, sy, fnum, pz in INFO:
-        w = share(sx, sy, fnum, cache, pz)
-        print(f"(info) shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz:4.1f}: worst corner {w * 100:5.1f} %")
+        print(f"{'portrait ' if rot else 'landscape'} shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz:4.1f}: "
+              f"worst corner gets {w * 100:5.1f} % of the pupil  {flag}")
+    for sx, sy, fnum, pz, rot in INFO:
+        w = share(sx, sy, fnum, cache, pz, rot)
+        print(f"(info) {'portrait ' if rot else 'landscape'} shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz:4.1f}: "
+              f"worst corner {w * 100:5.1f} %")
     sys.exit(1 if fails else 0)

@@ -20,6 +20,9 @@ If you have used only digital or 35 mm cameras, these are the pieces that are ne
 - **Infinity.** Anything far away: mountains, buildings across a square. At infinity the lens is as close to the film as it will ever be. The **stop** is a pin on the lens panel that makes the focus ring stop exactly there, so you can find infinity without looking.
 - **Film back.** A Mamiya RB67 roll film holder: it holds a 120 roll and takes ten 6 x 7 cm pictures. The **dark slide** is the thin metal sheet you pull out before exposing and push back afterwards; while it is in, the back can come off in daylight.
 - **Graflok.** The standard way the back clamps to the camera: a hook at the bottom, a sliding blade with two tongues at the top.
+- **Rotating back.** The back clamps to a round plate, the rotator, that turns a quarter turn in the body: landscape or portrait without turning the camera.
+
+![Portrait: the back turned a quarter](img/cal/c_overview_portrait.jpg)
 - **Ground glass.** A frosted glass in a frame, with the same shape as the film back. You clamp it on instead of the back to see the image, check the composition and focus. The image on it is upside down and mirrored: that is normal. A **loupe** (4x to 8x magnifier) laid on the glass shows fine focus, and a **dark cloth** over your head and the camera makes the dim image visible.
 - **Shift.** Moving the lens up, down or sideways instead of pointing the camera. Keeping the camera level and moving the lens up (**rise**) is how architecture photographers keep vertical lines vertical. **Fall** is the opposite of rise. The **image circle** is how much picture the lens draws: the more it covers, the further you can shift.
 
@@ -29,14 +32,14 @@ Software cannot check your own back, your ground glass, or how your printer make
 
 ### Does my back fit?
 
-![The back on the test module](img/cal/c_back_fit.jpg)
+![The back on the test rotator](img/cal/c_back_fit.jpg)
 
-1. Assemble the test module as in [assembly step 2](assembly.md#2-graflok-module-clamp-blade-and-wheel), with its inserts: if it fits, it is the module you will use.
-2. Lay the module seat face down on a sheet of glass or a mirror. The glass plays the part of the camera body.
-3. **Mount the back.** Turn the wheel loose and slide the red blade down. Hook the bottom lip of the back under the bottom rail of the module, swing the back down onto the glass, slide the blade up into the two slots on top of the back, and tighten the wheel.
+1. Assemble the test rotator as in [assembly, 2a and 2b](assembly.md#2a-inserts-in-the-rotator), with its inserts: if it fits, it is the rotator you will use.
+2. Lay it on the table, front face down. Cut four strips of thin paper, 1 cm wide, and lay one across the seat on each side of the gate (the seat is the floor the back's nose will sit on).
+3. **Mount the back.** Turn the wheel loose and slide the red blade down. Hook the bottom lip of the back under the bottom rail of the rotator, swing the back down onto the seat, slide the blade up into the two slots on top of the back, and tighten the wheel.
 4. **Look for four things:**
-   - the back's raised nose (the rectangle around its opening) touches the glass all round: try to slide a sheet of paper under it at the four sides, it must not go in;
-   - the back's top and bottom lips sit in the cut-outs of the module without touching;
+   - the back's raised nose (the rectangle around its opening) presses on the seat all round: pull each paper strip, all four must be held;
+   - the back's top and bottom lips sit in the cut-outs of the rotator without touching;
    - both tongues of the blade are inside the back's slots;
    - pushing the back with your hand, it does not move.
 5. **Dark slide.** With the back locked, pull the dark slide out toward the right as you look at the back. It must slide out freely. On a Pro-S back this also proves that the bottom rail releases the safety catch that otherwise locks the slide.
@@ -108,8 +111,8 @@ A single pinhole of light ruins a roll. This test takes ten minutes and finds it
 ![Light test](img/cal/c_light_test.jpg)
 
 1. **From inside.** In a dark room, remove the lens board. Wait two minutes for your eyes to adapt. Shine a strong torch into the camera through the lens opening, and look from behind through the window of the body (no back mounted). You should see the torch only through the window, never around the plates.
-2. **From outside.** Put a white sheet of paper behind the body window and move the torch around every edge and gap of the plates, the knobs and the Graflok module. The paper must stay black.
-3. **Repeat at the four corners of the movements:** both knobs at +25 and at -25 mm, in the four combinations.
+2. **From outside.** Put a white sheet of paper behind the body window and move the torch around every edge and gap of the plates, the knobs and the rear frame, where the rotator turns. The paper must stay black.
+3. **Repeat at the four corners of the movements:** both knobs at +25 and at -25 mm, in the four combinations. Then turn the back to portrait and do the rear frame again.
 4. **Film test.** Load a roll, put the lens cap on, leave the camera in the sun for ten minutes at maximum shift, then develop. The film must come out clear.
 
 **If there is a leak:** it is almost always a velvet edge that lifts, a velvet disc missing over a rise-turret screw, or an insert standing proud. Press the velvet down, put the disc back, or file the insert flush.
@@ -183,9 +186,9 @@ If the lens is not parallel to the film, one side of the picture is sharper than
 
 ![Lens board parallel to the film](img/cal/c_parallel.jpg)
 
-1. With the caliper's depth rod, measure from the back face of the Graflok module to the front face of the lens board, at the four corners of the board.
+1. With the caliper's depth rod, measure from the rear face of the rear frame to the front face of the lens board, at the four corners of the board.
 2. The four readings must agree within 0.1 mm.
-3. Repeat at the four corners of the movements, and with the camera on each Arca plate.
+3. Repeat at the four corners of the movements.
 
 If one corner is always off, check the plates for flatness with the straightedge and the gib strips for play before anything else.
 
@@ -210,6 +213,8 @@ If one corner is always off, check the plates for flatness with the straightedge
 | A plate rocks or clicks when pushed | gib too loose | turn its three grub screws in a little, evenly |
 | A plate is hard to move over part of its travel | gib too tight, or a layer sticking out on a flank | back the grubs off an eighth of a turn; file the flank and add dry PTFE |
 | The board rattles | latch not down | pull the latch and let it snap down; check the spring |
+| The back turns too easily or does not click | the rotator's ball plunger is not pressing enough | it sits under the Y plate: take the front standard off (step 6 backwards), screw the plunger in a quarter turn, and put it back |
+| The back is hard to turn | velvet ring V5 too thick, or the rear frame screwed down unevenly | loosen the four frame screws and tighten them again in a cross; if still hard, a thinner ring |
 
 ## 9. Limits worth knowing
 
@@ -217,9 +222,8 @@ The camera's own openings were checked with a ray trace (`cad/optics_check.py`) 
 
 ![Shift limits](img/cal/c_limits.jpg)
 
-- **One movement at a time.** At infinity, rise, fall or shift up to the full 25 mm leave the corners clean at f/22 and at f/8. Focusing closer moves the lens forward: rise and fall stay clean to 25 mm down to about 0.9 m and to 24 mm at the closest focus (about 0.7 m); shift stays clean to 24 mm at 0.9 m and 20 mm at 0.7 m.
-- **Rise and shift together.** Up to 19 + 19 mm are clean at infinity at f/22, and 17 + 17 at f/8. Focusing closer, the limit drops to 14 + 14 at about 0.9 m and 13 + 13 at the closest focus. The opening that cuts the far corner is the 61 mm bore of the helicoid's rear stub, just behind the lens panel, so large combined movements are an infinity setting. The ground glass shows it: look into each corner from a hand's width away, toward the lens. If you see the whole round aperture, the corner is covered.
+- **One movement at a time.** At infinity, rise, fall or shift up to the full 25 mm leave the corners clean at f/22 and at f/8, with the back in landscape or in portrait. Focusing closer moves the lens forward, and the movement along the long side of the frame suffers first. In landscape, rise and fall stay clean to 25 mm down to about 0.9 m and to 24 mm at the closest focus (about 0.7 m); shift stays clean to 24 mm at 0.9 m and 20 mm at 0.7 m. In portrait the two swap: shift 25 and 24, rise and fall 24 and 20.
+- **Rise and shift together.** In both orientations, up to 19 + 19 mm are clean at infinity at f/22, and 17 + 17 at f/8. Focusing closer, the limit drops to 14 + 14 at about 0.9 m and 13 + 13 at the closest focus. The opening that cuts the far corner is the 61 mm bore of the helicoid's rear stub, just behind the lens panel, so large combined movements are an infinity setting. The ground glass shows it: look into each corner from a hand's width away, toward the lens. If you see the whole round aperture, the corner is covered.
 - **The lens's image circle.** The Super-Angulon 65/8 (153.5 mm) would cover about 22 + 22 mm, and the Nikkor-SW 65/4 and Grandagon-N 65/4.5 (170 mm) even more: with all three, the camera's own openings (19 + 19 at infinity) are the tighter limit. Measure a lens's rear cell before buying. The adapter and the board holder leave a 59 mm bore: the Nikkor-SW's 54 mm rear cell clears it by 2.5 mm all round. A cell wider than about 58 mm, or longer than about 33 mm behind the shutter flange, can touch the openings at big shifts.
 - **Flange focal distance.** The camera is drawn for 70.5 mm from the shutter flange to the film at infinity (the Super-Angulon 65/8). A lens that needs more, such as a Nikkor-SW quoted at 70.8 to 71 mm, simply runs the helicoid out a little further: 14 mm of travel, about 7 used to focus at 0.7 m. A lens that needs up to 1 mm less uses the helicoid's margin; beyond that, reprint the adapter ring thinner (section 3).
-- **Portrait on the side plate.** The model checks a 65 x 65 mm clamp; much larger clamps may touch the lens panel at full shift toward the clamp.
 - **Fall.** At full fall the Y plate clears a 65 mm clamp's jaws by about 4 mm.

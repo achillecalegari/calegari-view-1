@@ -3,11 +3,12 @@
 STEPS = [
     # (number, title, render view, name prefixes)
     (1, "Body: inserts, rise plunger, rise bushings", "w_34",
-     ["body", "inlay_body", "insert_gf", "insert_top", "insert_arca", "insert_yway", "plunger_y", "bush_y"]),
-    (2, "Graflok module, clamp blade and wheel", "w_rear",
-     ["graflok_", "screw_gf", "screw_blade", "screw_wheel", "insert_blade"]),
-    (3, "Arca plates, top handle and levels", "w_rear",
-     ["arca_", "top_handle", "vial_top", "screw_top", "vial_side", "inlay_handle"]),
+     ["body", "inlay_body", "insert_bezel", "insert_top", "insert_arca", "insert_yway", "plunger_y", "bush_y"]),
+    (2, "Rotator and rear frame: the back turns for portrait", "w_rear",
+     ["rotator", "inlay_rotator", "graflok_", "screw_blade", "screw_wheel", "insert_blade", "velvet_rot", "bezel",
+      "inlay_bezel", "screw_bezel", "plunger_rot", "grub_rot"]),
+    (3, "Arca plate, top handle and level", "w_rear",
+     ["arca_", "top_handle", "vial_top", "screw_top", "inlay_handle"]),
     (4, "Vertical ways and body velvet", "w_34",
      ["way_y", "screw_yway", "velvet_body"]),
     (5, "Front standard on the bench: Y plate, lens panel, horizontal ways, shift screw", "w_34",

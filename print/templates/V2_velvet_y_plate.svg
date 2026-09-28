@@ -6,7 +6,7 @@
 <g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
 <text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
 <g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
-<path d="M-72 -45.5H72V45.5H-72Z M-39.545 -34.0H39.545A3 3 0 0 1 42.545 -31.0V31.0A3 3 0 0 1 39.545 34.0H-39.545A3 3 0 0 1 -42.545 31.0V-31.0A3 3 0 0 1 -39.545 -34.0Z M57.5 6.5A3.5 3.5 0 1 0 50.5 6.5A3.5 3.5 0 1 0 57.5 6.5Z M57.5 -6.5A3.5 3.5 0 1 0 50.5 -6.5A3.5 3.5 0 1 0 57.5 -6.5Z"/>
-<text x="0" y="-37.5" font-family="Helvetica, Arial" stroke="none" fill="black" font-size="4" text-anchor="middle">TOP</text>
+<path d="M-83.0 -55.5H83.0V57.5H-83.0Z M-29.845 -34.754090909090905H29.845A12.0 12.0 0 0 1 41.845 -22.754090909090905V22.754090909090905A12.0 12.0 0 0 1 29.845 34.754090909090905H-29.845A12.0 12.0 0 0 1 -41.845 22.754090909090905V-22.754090909090905A12.0 12.0 0 0 1 -29.845 -34.754090909090905Z M67.5 6.5A3.5 3.5 0 1 0 60.5 6.5A3.5 3.5 0 1 0 67.5 6.5Z M67.5 -6.5A3.5 3.5 0 1 0 60.5 -6.5A3.5 3.5 0 1 0 67.5 -6.5Z"/>
+<text x="0" y="-47.5" font-family="Helvetica, Arial" stroke="none" fill="black" font-size="4" text-anchor="middle">TOP</text>
 </g>
 </svg>

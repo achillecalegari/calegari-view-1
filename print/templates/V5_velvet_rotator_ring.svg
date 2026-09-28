@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<rect width="210" height="297" fill="white"/>
+<text x="15" y="18" font-family="Helvetica, Arial" font-size="6" font-weight="bold">V5 - velvet ring, rear frame</text>
+<text x="15" y="26" font-family="Helvetica, Arial" font-size="3.6">1 mm adhesive velvet, pile up. It lies on the floor of the rear frame's round counterbore: the rotator's flange turns on it.</text>
+<text x="15" y="31" font-family="Helvetica, Arial" font-size="3.6">Print at 100 % (no "fit to page"), then check the 100 mm bar with a ruler.</text>
+<g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
+<text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
+<g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
+<path d="M82.3 0A82.3 82.3 0 1 0 -82.3 0A82.3 82.3 0 1 0 82.3 0ZM80.6 0A80.6 80.6 0 1 1 -80.6 0A80.6 80.6 0 1 1 80.6 0Z"/><text y="1.5" font-family="Helvetica, Arial" stroke="none" fill="black" font-size="5" text-anchor="middle">V5</text>
+</g>
+</svg>

@@ -84,37 +84,50 @@ def hexagon(af):
 # --------------------------------------------------------------------------
 # BODY: one print, front face on the bed
 # --------------------------------------------------------------------------
-GF_HALF = 65.0                      # Graflok module is 130 x 130
-GF_SCREWS = ((-52.0, -58.0), (47.5, -58.0), (-52.0, 58.0), (47.5, 58.0))
-ARCA_SCREWS = (0.0,)                   # one 1/4"-20 per Arca plate, in the middle
+GF_HALF = 65.0                      # extent of the Graflok seat features (130 x 130), inside the rotator
+WIN_R = 12.0                        # corner radius of the square windows: the corners serve no ray that is clean anyway
+ARCA_SCREWS = (0.0,)                   # one 1/4"-20 in the Arca plate, in the middle
 Y_CHAN = (-(FALL + 10.3), RISE + 10.3)   # screw channel = hard stops for the nut turret (+/-10)
-Y_DETENT = (-52.0, -10.0)
+Y_DETENT = (-(H - 22.0), -10.0)
 TOP_POSTS_X = (TOP_HANDLE_X[0] + HANDLE_POST / 2 + 1.5, TOP_HANDLE_X[1] - HANDLE_POST / 2 - 1.5)
 HANDLE_INSERT_Z_TOP = 10.0
+BEZEL_SCREWS = ((-H + 11.0, -H + 11.0), (H - 11.0, -H + 11.0), (-H + 11.0, H - 11.0), (H - 11.0, H - 11.0))
+
+
+def body_slab(z0, z1):
+    """Square block: the handle sits on its top, the plinth under it; only the front and rear edges are softened."""
+    b = box_at(-H, H, -H, H, z0, z1)
+    return sfillet(b, [e for e in b.edges().filter_by(Plane.XY) if abs(e.center().Y) < H - 0.5], EDGE)
 
 
 def body_part():
-    b = slab(BODY, BODY, BODY_Z0, BODY_Z1)
-    # L bracket first: every cut below goes through it too
-    b += l_bracket()
+    """Front body: from the rotator's front face to the ways. The plinth is part of it."""
+    b = body_slab(ROT_Z1, BODY_Z1)
+    b += plinth()
 
-    # Graflok module recess; the seat is the floor of this recess (z = SEAT_Z)
-    b -= box_at(-GF_HALF - 0.2, GF_HALF + 0.2, -GF_HALF - 0.2, GF_HALF + 0.2, BODY_Z0 - 1, SEAT_Z)
-    # light-trap groove in the seat, closed at both ends (it takes the back's ridge)
-    b -= box_at(TRAP_X[0], TRAP_X[1], TRAP_Y[0], TRAP_Y[1], SEAT_Z - 0.01, SEAT_Z + TRAP_D)
-    # and a closed loop around the gate: light that creeps along the seat has to turn two corners
-    loop = (Rectangle(2 * LOOP_X + 1.2, 2 * LOOP_Y + 1.2) - Rectangle(2 * LOOP_X - 1.2, 2 * LOOP_Y - 1.2))
-    b -= Pos(0, 0, SEAT_Z - 0.01) * extrude(loop, amount=1.0)
-    # dark-slide handle relief: open to the photographer's right side
-    b -= box_at(-H - 1, SLIDE_RELIEF_X, -SLIDE_RELIEF_Y, SLIDE_RELIEF_Y, BODY_Z0 - 1, SLIDE_RELIEF_Z)
-
-    # gate, stepped against flare
-    h0 = opening_body(SEAT_Z)
-    h0 = (max(h0[0], GATE_W / 2), max(h0[1], GATE_H / 2))
-    b -= rect_loft(SEAT_Z - 0.5, h0, BODY_Z1 + 0.5, opening_body(BODY_Z1))
-    for z in (8.5, 12.5, 16.5):
+    # window: square with round corners, it passes the 6x7 frame in both orientations; stepped against flare
+    b -= rect_loft(ROT_Z1 - 0.5, opening_body(ROT_Z1), BODY_Z1 + 0.5, opening_body(BODY_Z1), r=WIN_R)
+    for z in (9.5, 13.5, 17.5):
         hz = opening_body(z)
         b -= box_at(-hz[0] - 1.6, hz[0] + 1.6, -hz[1] - 1.6, hz[1] + 1.6, z, z + 2.0)
+
+    # rear face: the rotator bears on it. A ridge runs in a groove of the rotator (a labyrinth); a groove
+    # the dark-slide hooks over the arc they sweep between landscape and portrait
+    b += Pos(0, 0, ROT_Z1 - LAB_H) * extrude(Circle(LAB_R[1]) - Circle(LAB_R[0]), amount=LAB_H + 0.01)
+    hook = (Circle(HOOK_R[1]) - Circle(HOOK_R[0])) & make_face(Polyline(
+        (0, 0), *[(200 * math.cos(math.radians(a)), 200 * math.sin(math.radians(a)))
+                  for a in [HOOK_ARC[0] + i * (HOOK_ARC[1] - HOOK_ARC[0]) / 12 for i in range(13)]], close=True))
+    b -= Pos(0, 0, ROT_Z1 - 0.01) * extrude(hook, amount=SLIDE_RELIEF_Z + 0.3 - ROT_Z1)
+    # rotator detent (M5 ball plunger, set from the front) and stop (M3 grub, driven in from the front:
+    # tapped only in the rear 7 mm, a clearance bore for the key in front of it)
+    for (r, a), d in ((ROT_DETENT, 4.2), (ROT_STOP, 2.5)):
+        x, y = r * math.cos(math.radians(a)), r * math.sin(math.radians(a))
+        b -= cyl_z(d / 2, ROT_Z1 - 1, BODY_Z1 + 1, x, y)
+        if d < 3:
+            b -= cyl_z(1.6, ROT_Z1 + 7.0, BODY_Z1 + 1, x, y)
+    # the rear frame's four screws
+    for x, y in BEZEL_SCREWS:
+        b -= insert_hole(x, y, ROT_Z1, "-z", depth=6.5)
 
     # dovetail ways: two printed rails along the side edges of the front face, M3 countersunk screws
     # from the front into M3 inserts (the rails go on first, the Y plate slides in from the top like a drawer)
@@ -122,62 +135,34 @@ def body_part():
         for yy in Y_WAY_SCREWS[s]:
             b -= insert_hole(s * WAY_SCREW_U, yy, BODY_Z1, "+z", depth=6.0, d=4.1)
 
-    # vertical screw channel (photographer's left); its ends are the hard stops
+    # vertical screw channel (photographer's left), in front of the rotator; its ends are the hard stops
     b -= box_at(Y_SCREW_X - CHAN_W / 2, Y_SCREW_X + CHAN_W / 2, Y_CHAN[0], Y_CHAN[1], CHAN_FLOOR_Y, BODY_Z1 + 1)
     b -= cyl_y(BUSH_OD / 2 + 0.05, Y_CHAN[1] - 0.1, Y_CHAN[1] + BUSH_L, Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(BUSH_OD / 2 + 0.05, Y_CHAN[0] - BUSH_L, Y_CHAN[0] + 0.1, Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(ROD_D / 2 + 0.4, Y_CHAN[1], H + 1, Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(ROD_D / 2 + 0.4, -H - 1, Y_CHAN[0], Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(4.6, H - ORING_SEAT, H + 1, Y_SCREW_X, Y_SCREW_Z)         # O-ring seat, top
-    b -= cyl_y(6.3, -H - PLINTH - 1, Y_CAP_TOP, Y_SCREW_X, Y_SCREW_Z)    # recess of the end nut and washer (11.55 over corners)
+    b -= cyl_y(6.3, -H - PLINTH - 1, Y_CAP_TOP, Y_SCREW_X, Y_SCREW_Z)    # recess of the end nut and washer
 
-    # zero detent (M5 ball plunger): a through hole, so the plunger can be set from behind
-    b -= Pos(*Y_DETENT, BODY_Z1) * dot(4.2, BODY_Z1 - SEAT_Z + 1.0, "+z")
+    # zero detent (M5 ball plunger): a through hole, set from behind before the rotator goes in
+    b -= Pos(*Y_DETENT, BODY_Z1) * dot(4.2, BODY_Z1 - ROT_Z1 + 1.0, "+z")
 
-    # Graflok module screws (short inserts in the seat plane)
-    for x, y in GF_SCREWS:
-        b -= insert_hole(x, y, SEAT_Z, "-z", depth=6.5)
-
-    # handle inserts (M3, like every other insert in the camera)
+    # handle inserts
     for x in TOP_POSTS_X:
         b -= insert_hole(x, H, HANDLE_INSERT_Z_TOP, "+y", depth=6.5)
 
-    # Arca pockets in the L bracket: bottom (landscape) and side leg (portrait)
+    # Arca pocket under the plinth
     b -= box_at(-ARCA_L / 2 - FIT, ARCA_L / 2 + FIT, -H - PLINTH - 1, -H - PLINTH + ARCA_POCKET,
                 ARCA_ZC - ARCA_W / 2 - FIT, ARCA_ZC + ARCA_W / 2 + FIT)
-    for x in ARCA_SCREWS:                            # one 1/4" screw per plate: the pocket stops it turning
+    for x in ARCA_SCREWS:
         b -= Pos(x, -H - PLINTH + ARCA_POCKET, ARCA_ZC) * dot(8.2, 10.0, "-y", lift=0.2)
-    xf = H + SIDE_T
-    b -= box_at(xf - ARCA_POCKET, xf + 1, SIDE_ARCA_YC - ARCA_L / 2 - FIT, SIDE_ARCA_YC + ARCA_L / 2 + FIT,
-                ARCA_ZC - ARCA_W / 2 - FIT, ARCA_ZC + ARCA_W / 2 + FIT)
-    for y in ARCA_SCREWS:
-        b -= Pos(xf - ARCA_POCKET, SIDE_ARCA_YC + y, ARCA_ZC) * dot(8.2, 10.0, "+x", lift=0.2)
 
-    # portrait level: bull's-eye vial in the photographer's right side face (reads both axes)
-    b -= level_pocket((-H, SIDE_LEVEL[0], SIDE_LEVEL[1]), "-x", depth=LEVEL_H - 0.4)
     # Y scale index (red dot) on the right side face
     b -= Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x")
-    # grip texture on the side leg, above and below the Arca plate: fine flutes along the depth.
-    # They print as walls (the body lies on its front), so they come out crisp, no extra parts.
-    flutes = []
-    for y0, y1 in GRIP_Y:
-        n = int((y1 - y0 - GRIP_W) / GRIP_PITCH) + 1
-        off = (y1 - y0 - GRIP_W - (n - 1) * GRIP_PITCH) / 2
-        for i in range(n):
-            yc = y0 + off + GRIP_W / 2 + i * GRIP_PITCH
-            flutes.append(box_at(H + SIDE_T - GRIP_D, H + SIDE_T + 1, yc - GRIP_W / 2, yc + GRIP_W / 2, *GRIP_Z))
-    b -= Compound(flutes)
     return b
 
 
-GRIP_Y = ((34.0, 71.0), (-93.0, -34.0))
-GRIP_Z = (L_Z0 + 4.0, BODY_Z1 - 4.0)
-GRIP_W, GRIP_PITCH, GRIP_D = 1.0, 2.2, 0.6
-
-
 LOOP_X, LOOP_Y = 43.0, 34.5            # light-trap loop in the seat (inside the back's nose)
-Y_CAP_TOP = -62.5                      # the rise rod's end washer and nut sit under this shoulder
-SIDE_LEVEL = (55.0, 10.0)              # (y, z) of the portrait level on the -X face
 
 
 def level_pocket(c, axis, depth=None):
@@ -200,20 +185,38 @@ def level_pocket(c, axis, depth=None):
     return Pos(*c) * rot * (Pos(0, 0, -1) * sol)
 
 
-def l_bracket():
-    """Bottom plinth + side leg as one L around the body, same R9 corners as the body."""
-    x0, x1 = -H, H + SIDE_T
-    y0, y1 = -H - PLINTH, H
-    outer = Pos((x0 + x1) / 2, (y0 + y1) / 2) * RectangleRounded(x1 - x0, y1 - y0, CORNER_R)
-    inner = Pos((x0 - 1 + H - 0.5) / 2, (-H + 0.5 + y1 + 1) / 2) * Rectangle(H - 0.5 - (x0 - 1), y1 + 1 - (-H + 0.5))
-    band = Pos(0, 0, L_Z0) * extrude(outer - inner, amount=BODY_Z1 - L_Z0)
-    band = sfillet(band, band.edges().filter_by(Plane.XY), EDGE)
-    # fill the body's rounded corners where they meet the L (no cusps)
-    for cx, cy in ((H - CORNER_R, -H + CORNER_R), (-H + CORNER_R, -H + CORNER_R), (H - CORNER_R, H - CORNER_R)):
-        sx = 1 if cx > 0 else -1
-        sy = 1 if cy > 0 else -1
-        band += box_at(cx, cx + sx * CORNER_R, cy, cy + sy * CORNER_R, BODY_Z0, BODY_Z1)
-    return band
+def plinth():
+    """The plinth under the body: Arca pocket underneath, reaching back under the film back."""
+    y0, y1 = -H - PLINTH, -H + CORNER_R
+    face = Pos(0, (y0 + y1) / 2) * RectangleRounded(BODY, y1 - y0, CORNER_R)
+    p = Pos(0, 0, L_Z0) * extrude(face, amount=BODY_Z1 - L_Z0)
+    p = p & box_at(-H - 1, H + 1, y0 - 1, -H, L_Z0 - 1, BODY_Z1 + 1)
+    return sfillet(p, [e for e in p.edges().filter_by(Plane.XY) if e.center().Y < -H - 0.5], EDGE)
+
+
+def bezel_part():
+    """Rear frame: the back of the body, screwed on with four M3. It holds the rotator's flange over a
+    ring of velvet; the rotator's body turns in its round hole."""
+    b = body_slab(BODY_Z0, ROT_Z1)
+    b -= cyl_z(ROT_R + ROT_C, BODY_Z0 - 1, ROT_Z1 + 1)
+    b -= cyl_z(ROT_FL_R + ROT_C, BEZEL_CB_Z, ROT_Z1 + 1)
+    for x, y in BEZEL_SCREWS:
+        b -= cyl_z(1.7, BODY_Z0 - 1, ROT_Z1 + 1, x, y)
+        b -= cyl_z(2.95, BODY_Z0 - 0.01, BODY_Z0 + 3.2, x, y)
+    # landscape and portrait marks, read against the rotator's red index
+    for a, d in ((90.0, 2.6), (0.0, 2.0)):
+        b -= Pos((ROT_R + 3.2) * math.cos(math.radians(a)), (ROT_R + 3.2) * math.sin(math.radians(a)), BODY_Z0) * dot(d, 0.6, "-z")
+    return b
+
+
+def bezel_inlays():
+    return Compound([Pos((ROT_R + 3.2) * math.cos(math.radians(a)), (ROT_R + 3.2) * math.sin(math.radians(a)), BODY_Z0)
+                     * dot(d, 0.6, "-z", lift=0) for a, d in ((90.0, 2.6), (0.0, 2.0))])
+
+
+def velvet_rotator():
+    """Velvet ring V5 on the floor of the frame's counterbore: the rotator's flange slides on it."""
+    return Pos(0, 0, BEZEL_CB_Z) * extrude(Circle(ROT_FL_R - 0.2) - Circle(ROT_R + 0.6), amount=ROT_VEL)
 
 
 WORDMARK = "CALEGARI VIEW 1"
@@ -248,11 +251,6 @@ def brand_dot(lift=None):
     return Pos(dx, WORDMARK_Y, BODY_Z1) * dot(BRAND_DOT_D, 0.6, lift=lift)
 
 
-def body_vial():
-    """Bull's-eye vial in the -X face (portrait level)."""
-    return bullseye((-H, SIDE_LEVEL[0], SIDE_LEVEL[1]), "-x")
-
-
 def body_index_inlay():
     return Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x", lift=0)
 
@@ -269,32 +267,51 @@ WHEEL_XY = (0.0, 48.0)
 BLADE_GUIDES_X = (-37.0, 37.0)
 
 
-def graflok_module():
-    z0, z1 = GF_Z0, SEAT_Z
-    g = extrude(Pos(0, 0, z0) * RectangleRounded(2 * GF_HALF, 2 * GF_HALF, 6), amount=z1 - z0)
-    g = sfillet(g, g.edges().group_by(Axis.Z)[0], 0.8)
-    # nose pocket, open toward the dark slide
-    g -= box_at(-GF_HALF - 1, POCKET_WALL_X, POCKET_Y0, POCKET_Y1, z0 - 1, z1 + 1)
-    g -= box_at(-GF_HALF - 1, SLIDE_RELIEF_X, -SLIDE_RELIEF_Y, SLIDE_RELIEF_Y, z0 - 1, z1 + 1)
+ROT_INDEX_R = ROT_R - 3.0
+
+
+def rotator_part():
+    """The rotating Graflok seat: the back's nose sits on its floor (seat, light trap, gate), its bottom
+    rail and top blade hold the back. It turns in the rear frame, its front face on the front body."""
+    z0, zs, z1 = GF_Z0, SEAT_Z, ROT_Z1
+    # rear rim chamfered 0.8 (a cone, not a fillet: the pocket and relief cuts then mesh cleanly)
+    g = cyl_z(ROT_R, z0 + 0.8, z1) + cyl_z(ROT_FL_R, z1 - ROT_FL_T, z1)
+    g += Pos(0, 0, z0) * Cone(ROT_R - 0.8, ROT_R, 0.8, align=(Align.CENTER, Align.CENTER, Align.MIN))
+    # nose pocket, open toward the dark slide; the seat is the floor at z = SEAT_Z
+    g -= box_at(-ROT_FL_R - 1, POCKET_WALL_X, POCKET_Y0, POCKET_Y1, z0 - 1, zs)
+    # dark-slide handle and its hooks (the hooks stand 3.5 mm ahead of the nose face, into the body's groove)
+    g -= box_at(-ROT_FL_R - 1, SLIDE_RELIEF_X, -SLIDE_RELIEF_Y, SLIDE_RELIEF_Y, z0 - 1, z1 + 1)
     # reliefs for the back's top and bottom lips
-    for s in (1, -1):
-        g -= box_at(-LIP_RELIEF_X, LIP_RELIEF_X, s * LIP_RELIEF_Y[0], s * LIP_RELIEF_Y[1], z0 - 1, z0 + LIP_RELIEF_D)
+    for s_ in (1, -1):
+        g -= box_at(-LIP_RELIEF_X, LIP_RELIEF_X, s_ * LIP_RELIEF_Y[0], s_ * LIP_RELIEF_Y[1], z0 - 1, z0 + LIP_RELIEF_D)
     # bottom hinge rail: engages the back's bottom lip and presses the dark-slide interlock
     rail = box_at(-56.0, 47.0, -43.0, POCKET_Y0, SEAT_Z - 6.6, z0 + 0.01)
     rail += box_at(-56.0, 47.0, -51.0, -43.0, SEAT_Z - 8.4, z0 + 0.01)
     rail = sfillet(rail, rail.edges().filter_by(Axis.X).group_by(Axis.Z)[0], 0.8)
     g += rail
-    # top blade: guide screws and the clamp wheel stud (M3 inserts, 3 mm)
+    # top blade: guide screws and the clamp wheel (M3 inserts, 3 mm)
     for x in BLADE_GUIDES_X:                         # M3 x 6 countersunk, Loctite 222 into the brass
         g -= insert_hole(x, BLADE_Y0 + 4.0, z0, "-z", depth=4.2)
     g -= insert_hole(*WHEEL_XY, z0, "-z", depth=3.6)
-    # module screws: M3 x 6 socket heads, sunk in counterbores in the rear face
-    for x, y in GF_SCREWS:
-        g -= cyl_z(1.7, z0 - 1, z1 + 1, x, y)
-        g -= cyl_z(2.95, z0 - 0.01, z0 + 3.1, x, y)
-    # 0.3 mm chamfer on the seat-face edges (they print on the bed: no elephant foot where the back seats)
-    g = schamfer(g, [e for e in g.edges() if abs(e.center().Z - z1) < 0.01], 0.3)
+    # the seat: light-trap groove for the back's ridge, a closed loop around the gate, the gate itself
+    g -= box_at(TRAP_X[0], TRAP_X[1], TRAP_Y[0], TRAP_Y[1], zs - 0.01, zs + TRAP_D)
+    loop = (Rectangle(2 * LOOP_X + 1.2, 2 * LOOP_Y + 1.2) - Rectangle(2 * LOOP_X - 1.2, 2 * LOOP_Y - 1.2))
+    g -= Pos(0, 0, zs - 0.01) * extrude(loop, amount=1.0)
+    g -= box_at(-GATE_W / 2, GATE_W / 2, -GATE_H / 2, GATE_H / 2, zs - 0.5, z1 + 0.5)
+    # front face: the groove of the labyrinth, the stop groove in the flange, the two detent dimples
+    g -= Pos(0, 0, z1 - LAB_H - 0.3) * extrude(Circle(LAB_R[1] + 0.3) - Circle(LAB_R[0] - 0.3), amount=LAB_H + 1.0)
+    r, a0 = ROT_STOP
+    g -= arc_slot(r, a0 + 45.0, 45.0, 1.7, z1 - 1.3, z1 + 1.0)
+    for a in (ROT_DETENT[1], ROT_DETENT[1] + 90.0):
+        x, y = ROT_DETENT[0] * math.cos(math.radians(a)), ROT_DETENT[0] * math.sin(math.radians(a))
+        g -= Pos(x, y, z1 + 0.01) * Rot(180, 0, 0) * Cone(0.9, 0.25, 0.37, align=Z_UP)
+    # red index on the rear face, read against the frame's landscape and portrait dots
+    g -= Pos(0, ROT_INDEX_R, z0) * dot(2.6, 0.6, "-z")
     return g
+
+
+def rotator_inlay():
+    return Pos(0, ROT_INDEX_R, GF_Z0) * dot(2.6, 0.6, "-z", lift=0)
 
 
 def graflok_blade(locked=True):
@@ -340,7 +357,7 @@ def graflok_wheel():
 # --------------------------------------------------------------------------
 X_CHAN = (-(SHIFT_X + 9.3) - X_THRUST, SHIFT_X + 9.3)   # turret travel = hard stops (the thrust nut on the right)
 X_FLOOR = X_SCREW_Z - NUT_AF / 2 - NUT_FLOAT - 0.8   # channel floor: 0.8 under the drive nut
-X_DETENT = (-50.0, -52.0)            # off to the side: its through hole stays outside both velvets
+X_DETENT = (-(H - 24.0), -(H - 22.0))   # off to the side: its through hole stays outside both velvets
 Y_TURRET_SCREWS = ((Y_SCREW_X, -6.5), (Y_SCREW_X, 6.5))
 
 
@@ -457,8 +474,8 @@ def gib_strip(stage, side):
 def y_plate_part():
     p = slab(PLATE, PLATE, YP_Z0, YP_Z1)
     h0, h1 = opening_yplate(YP_Z0), opening_yplate(YP_Z1)
-    p -= rect_loft(YP_Z0 - 0.5, h0, YP_Z1 + 0.5, (h1[0], max(h1[1], 33.0)))
-    for z in (25.0, 29.0):
+    p -= rect_loft(YP_Z0 - 0.5, h0, YP_Z1 + 0.5, h1, r=WIN_R)
+    for z in (YP_Z0 + 3.2, YP_Z0 + 7.2):
         hz = opening_yplate(z)
         p -= box_at(-hz[0] - 1.4, hz[0] + 1.4, -hz[1] - 1.4, hz[1] + 1.4, z, z + 2.0)
     # dovetail lips on both side edges; the front part overhangs the rails
@@ -535,8 +552,8 @@ TURRET_KEY = 2.5                      # depth of the shift-turret pocket in the 
 STOP_R = 52.0                         # the stop pin runs in a groove under the focus ring: nothing shows
 STOP_PIN = (-STOP_R * math.sqrt(0.5), -STOP_R * math.sqrt(0.5))   # at 225 deg
 INDEX_R = FOCUS_OD / 2 + 2.2          # focus index and depth-of-field dots
-X_SCALE_Y = -61.0                     # shift dots on the lens panel front; the index is on the bottom rail
-X_INDEX = (0.0, -68.5)
+X_SCALE_Y = -(H - 13.0)               # shift dots on the lens panel front; the index is on the bottom rail
+X_INDEX = (0.0, -(H - 5.5))
 TURRET_SCREWS = ((-5.5, X_SCREW_Y + 5.0), (5.5, X_SCREW_Y + 5.0))
 
 
@@ -824,7 +841,7 @@ def knob_part():
 # --------------------------------------------------------------------------
 # HANDLES (printed on their side, bolted with M3 x 20 down the posts)
 # --------------------------------------------------------------------------
-def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POST, flare=HANDLE_FLARE):
+def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POST, flare=HANDLE_FLARE, outer_flares=True):
     """Loop handle, profile in XY (u = X, protrusion +Y), extruded along Z. The feet flare into the
     body with concave fillets, so the handle reads as part of the camera."""
     outer = Pos(0, height / 2, 0) * Rectangle(length, height)
@@ -840,7 +857,8 @@ def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POS
         return make_face(Polyline(*pts, close=True))
 
     for s in (-1, 1):
-        prof += flare_face(s * length / 2, s)                 # outside of the post
+        if outer_flares:
+            prof += flare_face(s * length / 2, s)             # outside of the post
         prof += flare_face(s * (length / 2 - post), -s)       # inside of the post
     h = Pos(0, 0, z0) * extrude(prof, amount=z1 - z0)
     h = sfillet(h, h.edges().filter_by(Axis.Z).group_by(Axis.Y)[-1], 6.0)
@@ -862,21 +880,23 @@ def handle_screw_holes(length, zc, height=HANDLE_H, post=HANDLE_POST):
 
 
 def top_handle():
+    """Loop handle over the flat of the body top, feet flared into it; two M3 x 20 down the posts. The rise
+    knob sits on the body top beside it, 9 mm of finger room away."""
     x0, x1 = TOP_HANDLE_X
     z0, z1 = TOP_HANDLE_Z
+    xc = (x0 + x1) / 2
     h = handle_loop(x1 - x0, z0, z1)
     for c in handle_screw_holes(x1 - x0, HANDLE_INSERT_Z_TOP):
         h -= c
-    # landscape level: 15 mm bull's-eye in the top of the bar, between the shoes (reads pitch and roll)
-    h -= level_pocket((LEVEL_TOP_X - (x0 + x1) / 2, HANDLE_H, LEVEL_Z), "+y")
+    # the level: 15 mm bull's-eye in the top of the bar (reads pitch and roll; the camera never turns)
+    h -= level_pocket((LEVEL_TOP_X - xc, HANDLE_H, LEVEL_Z), "+y")
     # two ISO 518 accessory shoes, open to the rear (layers follow the slot: the lips print as walls)
     for xs in SHOES_X:
-        u = xs - (x0 + x1) / 2
+        u = xs - xc
         h -= box_at(u - SHOE_OPEN / 2, u + SHOE_OPEN / 2, HANDLE_H - SHOE_LIP - 0.1, HANDLE_H + 1, z0 - 1, z0 + SHOE_L)
         h -= box_at(u - SHOE_W / 2, u + SHOE_W / 2, HANDLE_H - SHOE_LIP - SHOE_D, HANDLE_H - SHOE_LIP, z0 - 1, z0 + SHOE_L)
-        lead = Pos(u, HANDLE_H - SHOE_LIP - SHOE_D / 2, z0) * Rot(0, 0, 0) * Box(SHOE_W + 2, SHOE_D + 1.2, 2.0)
-        h -= lead
-    h = Pos((x0 + x1) / 2, H, 0) * h
+        h -= Pos(u, HANDLE_H - SHOE_LIP - SHOE_D / 2, z0) * Box(SHOE_W + 2, SHOE_D + 1.2, 2.0)
+    h = Pos(xc, H, 0) * h
     text, _ = wordmark()
     return h - text - brand_dot()
 
@@ -911,36 +931,28 @@ def arca_plate():
     return plate
 
 
-def side_arca_plate():
-    """Same plate on the side leg of the L bracket (portrait)."""
-    base = arca_plate()
-    y_top = -H - PLINTH + ARCA_POCKET
-    x_face = H + SIDE_T - ARCA_POCKET
-    return Pos(x_face, SIDE_ARCA_YC, 0) * Rot(0, 0, 90) * Pos(0, -y_top, 0) * base
-
-
 # --------------------------------------------------------------------------
 # LIGHT SEAL MATERIALS (cut from velvet / felt sheet; see docs/templates)
 # --------------------------------------------------------------------------
 VELVET_T = GAP
-V1_X = (-46.5, 45.5)                   # body velvet: from the plunger strip to the screw channel
-V2_Y = (-45.5, 45.5)                   # Y plate velvet: from the detent to the shift channel
+V1_X = (Y_DETENT[0] + 5.5, Y_SCREW_X - CHAN_W / 2 - 0.5)   # body velvet: from the plunger strip to the screw channel
+V2_Y = (X_DETENT[1] + 5.5, X_SCREW_Y - CHAN_W / 2 - 0.5)   # Y plate velvet: from the detent to the shift channel
 
 
 def velvet_body_outline():
     """Velvet on the body front face: a frame around the gate, clear of the channels and the pads."""
     op = opening_body(BODY_Z1)
-    outer = Pos((V1_X[0] + V1_X[1]) / 2, 0) * Rectangle(V1_X[1] - V1_X[0], 144.0)
-    hole = RectangleRounded(2 * (op[0] + 0.3), 2 * (op[1] + 0.3), 3.0)
+    outer = Pos((V1_X[0] + V1_X[1]) / 2, 0) * Rectangle(V1_X[1] - V1_X[0], BODY - 4.0)
+    hole = RectangleRounded(2 * (op[0] + 0.3), 2 * (op[1] + 0.3), WIN_R)
     return outer - hole
 
 
 def velvet_yplate_outline():
     """Velvet on the Y plate front face: a band around the opening, between the guide channel and the pads."""
     op = opening_yplate(YP_Z1)
-    hy = max(op[1], 33.0)
-    outer = Pos(0, (V2_Y[0] + V2_Y[1]) / 2) * Rectangle(144.0, V2_Y[1] - V2_Y[0])
-    hole = RectangleRounded(2 * (op[0] + 0.3), 2 * (hy + 0.3), 3.0)
+    hy = op[1]
+    outer = Pos(0, (V2_Y[0] + V2_Y[1]) / 2) * Rectangle(BODY - 4.0, V2_Y[1] - V2_Y[0])
+    hole = RectangleRounded(2 * (op[0] + 0.3), 2 * (hy + 0.3), WIN_R)
     face = outer - hole
     for x, y in Y_TURRET_SCREWS:                  # the turret screws go in through these; a disc then closes each
         face -= Pos(x, y) * Circle(3.5)

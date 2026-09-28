@@ -24,7 +24,7 @@ class Item:
 
 # explode directions per group (unit vectors times E)
 EXPLODE = {
-    "body": (0, 0, 0), "graflok": (0, 0, -1.2), "blade": (0, 0, -1.7), "back": (0, 0, -3.0),
+    "body": (0, 0, 0), "bezel": (0, 0, -0.8), "graflok": (0, 0, -1.4), "blade": (0, 0, -1.9), "back": (0, 0, -3.2),
     "arca_b": (0, -0.9, 0), "arca_s": (0.9, 0, 0), "top_handle": (0, 1.1, 0), "side_handle": (1.1, 0, 0),
     "y_rail": (0, 0, 0.45), "y_block": (0, 0, 0.7), "y_drive": (0, 0, 0.3), "y_knob": (0, 0.9, 0),
     "y_plate": (0, 0, 1.0), "x_rail": (0, 0, 1.45), "x_block": (0, 0, 1.7), "x_drive": (0, 0, 1.3),
@@ -34,32 +34,44 @@ EXPLODE = {
 }
 
 
-def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locked=True, back=True):
+def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locked=True, back=True, rot=0.0):
+    """rot: the back's orientation, 0 landscape, ROT_PORTRAIT (-90) portrait."""
     items = []
+    turn = Rot(0, 0, rot)
 
     def add(name, shape, mat, group, printed=False, extra=(0, 0, 0)):
+        if group in ("graflok", "blade", "back"):          # everything on the rotator turns with it
+            shape = turn * shape
         d = EXPLODE[group]
         if E:
             shape = Pos(d[0] * E + extra[0] * E, d[1] * E + extra[1] * E, d[2] * E + extra[2] * E) * shape
         items.append(Item(name, shape, mat, printed))
 
-    # ---------------- body ----------------
+    # ---------------- body, rear frame ----------------
     add("body", P.body_part(), "body_black", "body", True)
-    add("vial_side", P.body_vial(), "vial", "body")
     add("inlay_body_index", P.body_index_inlay(), "red", "body")
-    for x, y in P.GF_SCREWS:
-        add(f"insert_gf_{x}_{y}", Pos(x, y, SEAT_Z) * hw.heat_insert(3, 3.0), "brass", "body")
     for x in P.TOP_POSTS_X:
         add(f"insert_top_{x}", Pos(x, H, P.HANDLE_INSERT_Z_TOP) * orient(hw.heat_insert(3, 3.0), "-y"), "brass", "body")
+    for x, y in P.BEZEL_SCREWS:
+        add(f"insert_bezel_{x}_{y}", Pos(x, y, ROT_Z1) * hw.heat_insert(3, 3.0), "brass", "body")
+        add(f"screw_bezel_{x}_{y}", Pos(x, y, BODY_Z0 + 3.2) * orient(hw.socket_cap(3, 10), "-z"), "black_steel", "bezel", extra=(0, 0, -0.6))
+    r_, a_ = ROT_DETENT
+    xd, yd = r_ * math.cos(math.radians(a_)), r_ * math.sin(math.radians(a_))
+    add("plunger_rot", Pos(xd, yd, ROT_Z1 - 0.35 + 12.0) * Rot(180, 0, 0) * (Cylinder(2.5, 10.5, align=hw.Z_UP) + Pos(0, 0, 10.5) * Sphere(1.5)), "steel", "body")
+    r_, a_ = ROT_STOP
+    xs, ys = r_ * math.cos(math.radians(a_)), r_ * math.sin(math.radians(a_))
+    add("grub_rot", Pos(xs, ys, ROT_Z1 - 1.0 + 6.0) * hw.grub(3, 6), "black_steel", "body")
+    add("bezel", P.bezel_part(), "body_black", "bezel", True)
+    add("inlay_bezel", P.bezel_inlays(), "white_ink", "bezel")
+    add("velvet_rot", P.velvet_rotator(), "velvet", "bezel")
 
-    # ---------------- Graflok module and back ----------------
-    add("graflok_module", P.graflok_module(), "body_black", "graflok", True)
-    for x, y in P.GF_SCREWS:
-        add(f"screw_gf_{x}_{y}", Pos(x, y, GF_Z0 + 3.1) * orient(hw.socket_cap(3, 6), "-z"), "black_steel", "graflok", extra=(0, 0, -0.6))
+    # ---------------- rotator (the Graflok seat) and back ----------------
+    add("rotator", P.rotator_part(), "body_black", "graflok", True)
+    add("inlay_rotator", P.rotator_inlay(), "red", "graflok")
     add("graflok_blade", P.graflok_blade(blade_locked), "red", "blade", True)
     add("graflok_wheel", P.graflok_wheel(), "body_black", "blade", True, extra=(0, 0, -0.6))
     for x in P.BLADE_GUIDES_X:
-        yb = P.BLADE_Y0 + 4.0 + (0 if blade_locked else 0)
+        yb = P.BLADE_Y0 + 4.0
         add(f"screw_blade_{x}", Pos(x, yb, GF_Z0 - 2.2) * orient(hw.countersunk(3, 6), "-z"), "black_steel", "blade", extra=(0, 0, -0.4))
     add("screw_wheel", Pos(*P.WHEEL_XY, GF_Z0 - 2.2 - 3.0) * orient(hw.countersunk(3, 8), "-z"), "black_steel", "blade", extra=(0, 0, -1.0))
     for x in P.BLADE_GUIDES_X + (P.WHEEL_XY[0],):
@@ -76,10 +88,6 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     y_in = -H - PLINTH + ARCA_POCKET
     for x in P.ARCA_SCREWS:
         add(f"insert_arca_b_{x}", Pos(x, y_in, ARCA_ZC) * orient(hw.heat_insert(4, 6.4), "+y"), "brass", "body")
-    x_in = H + SIDE_T - ARCA_POCKET
-    for y in P.ARCA_SCREWS:
-        add(f"insert_arca_s_{y}", Pos(x_in, SIDE_ARCA_YC + y, ARCA_ZC) * orient(hw.heat_insert(4, 6.4), "-x"), "brass", "body")
-    add("arca_side", P.side_arca_plate(), "alu_black", "arca_s")
     add("top_handle", P.top_handle(), "body_black", "top_handle", True)
     add("vial_top", P.top_vial(), "vial", "top_handle")
     add("inlay_handle_dot", P.brand_dot(lift=0), "red", "top_handle")
@@ -111,10 +119,11 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
 
     add("washer_y_end", Pos(Y_SCREW_X, P.Y_CAP_TOP, Y_SCREW_Z) * orient(hw.washer(6, 12.0, 1.6), "-y"), "steel", "y_drive", extra=(0, -0.4, 0))
     add("nut_y_end", Pos(Y_SCREW_X, P.Y_CAP_TOP - 1.6, Y_SCREW_Z) * orient(hw.hex_nut(6, h=5.0), "-y"), "steel", "y_drive", extra=(0, -0.4, 0))
-    add("oring_y", Pos(Y_SCREW_X, H - ORING_SEAT + 0.75, Y_SCREW_Z) * Rot(90, 0, 0) * Torus(3.75, 0.75), "rubber", "y_knob")
+    yk = H                                              # the rise knob sits on the body top
+    add("oring_y", Pos(Y_SCREW_X, yk - ORING_SEAT + 0.75, Y_SCREW_Z) * Rot(90, 0, 0) * Torus(3.75, 0.75), "rubber", "y_knob")
     kn, kidx = P.knob_part()
-    add("knob_y", Pos(Y_SCREW_X, H + KNOB_GAP, Y_SCREW_Z) * orient(kn, "+y"), "body_black", "y_knob", True)
-    add("inlay_knob_y", Pos(Y_SCREW_X, H + KNOB_GAP, Y_SCREW_Z) * orient(kidx, "+y"), "red", "y_knob")
+    add("knob_y", Pos(Y_SCREW_X, yk + KNOB_GAP, Y_SCREW_Z) * orient(kn, "+y"), "body_black", "y_knob", True)
+    add("inlay_knob_y", Pos(Y_SCREW_X, yk + KNOB_GAP, Y_SCREW_Z) * orient(kidx, "+y"), "red", "y_knob")
     add("plunger_y", Pos(*P.Y_DETENT, BODY_Z1 + 1.0 - 1.5 - 10.5) * (Cylinder(2.5, 10.5, align=hw.Z_UP) + Pos(0, 0, 10.5) * Sphere(1.5)), "steel", "body")
 
     # ---------------- Y plate ----------------

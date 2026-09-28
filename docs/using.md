@@ -15,9 +15,10 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 
 ## 1. Set up
 
-1. **Clamp the camera.** The bottom plate for horizontal pictures, the side plate for vertical ones. Carry it by the top handle.
-2. **Level it.** Adjust the tripod head until the bubble is in the middle of its circle: the level on top of the handle for horizontal pictures, the one on the side of the body for vertical ones. Each reads both directions. The one that matters most is front to back: a camera tilted up or down makes the vertical lines of a building lean. This is the whole point of the camera, so do not skip it.
+1. **Clamp the camera** by its Arca plate. It stays upright for vertical pictures too: you turn the back, not the camera. Carry it by the top handle.
+2. **Level it.** Adjust the tripod head until the bubble on top of the handle is in the middle of its circle. It reads both directions, and it stays right when you turn the back. The one that matters most is front to back: a camera tilted up or down makes the vertical lines of a building lean. This is the whole point of the camera, so do not skip it.
 3. **Set both movements to zero.** Turn each knob until it clicks.
+4. **Horizontal or vertical.** Take hold of the back (or the ground glass) with both hands and turn it a quarter turn: anticlockwise from landscape to portrait, as you look at it from behind. It clicks at both ends and stops just past them. The red dot on the back's rim sits on the big white dot at the top for landscape, on the small one on your left for portrait. The rise knob still raises the lens, whichever way the picture is.
 
 ## 2. Compose on the ground glass
 
@@ -43,7 +44,7 @@ A first-timer's guide, from the bag to the negative. If a word is new, [the came
 1. **Close the shutter.** Set the speed you metered (out of T or B), and release the press-focus lever if you used it. The shutter must be closed before the next step.
 2. **Set the aperture** you metered, **cock** the shutter lever, screw in the cable release.
 3. **Swap the ground glass for the back.** Wheel loose, blade down, glass off. Hook the back under the bottom rail, swing it on, blade up, wheel tight. Push the back with your hand: it must not move.
-4. **Pull the dark slide** out toward the right. Keep it in a pocket, not on the ground.
+4. **Pull the dark slide** out: toward the right in landscape, upward in portrait. Keep it in a pocket, not on the ground.
 5. **Fire** with the cable release, without touching the camera.
 6. **Push the dark slide back in.** Only now can the back come off.
 7. **Advance the film.** Press the back's wind-stop release by hand, then turn its advance lever until it stops. The camera does not do this for you.

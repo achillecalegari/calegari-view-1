@@ -119,6 +119,7 @@ def limits():
     ax.text(-12.4, -12.4, "13 + 13", fontsize=10, color=INK)
     kw = dict(fontsize=12, va="center")
     f.text(0.62, 0.8, "One movement at a time:\nclean to 25 mm at infinity,\nat f/8 and f/22", **kw)
+    f.text(0.62, 0.12, "The same with the back\nin landscape and in portrait", **kw)
     f.text(0.62, 0.64, "Grey square: rise and shift\ntogether, clean at infinity, f/22", **kw)
     f.text(0.62, 0.51, "Red dashed square: the same\nat f/8", color=RED, **kw)
     f.text(0.62, 0.39, "Dotted square: at the closest\nfocus (about 0.7 m), f/22", **kw)

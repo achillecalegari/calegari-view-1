@@ -20,12 +20,13 @@ H = BODY / 2
 
 # every component belongs to one group; the groups follow the order of assembly
 G = {
-    "body": ["body", "inlay_body"], "ins_gf": ["insert_gf"], "ins_yway": ["insert_yway"],
+    "body": ["body", "inlay_body"], "ins_bezel": ["insert_bezel"], "ins_yway": ["insert_yway"],
     "plunger_y": ["plunger_y"], "bush_y": ["bush_y"], "ins_top": ["insert_top"], "ins_arca": ["insert_arca"],
-    "gf_module": ["graflok_module"], "ins_blade": ["insert_blade"], "screw_gf": ["screw_gf"],
+    "rotator": ["rotator", "inlay_rotator"], "ins_blade": ["insert_blade"], "velvet_rot": ["velvet_rot"],
+    "bezel": ["bezel", "inlay_bezel"], "screw_bezel": ["screw_bezel"], "rot_det": ["plunger_rot", "grub_rot"],
     "blade": ["graflok_blade", "screw_blade"], "wheel": ["graflok_wheel", "screw_wheel"],
     "arca": ["arca_"], "handle": ["top_handle", "screw_top", "inlay_handle"], "vial_top": ["vial_top"],
-    "vial_side": ["vial_side"], "ways_y": ["way_y", "screw_yway"], "velvet_body": ["velvet_body"],
+    "ways_y": ["way_y", "screw_yway"], "velvet_body": ["velvet_body"],
     "yplate": ["y_plate", "inlay_yplate"], "bush_x": ["bush_x"], "plunger_x": ["plunger_x"],
     "velvet_y": ["velvet_yplate"], "xplate": ["x_plate", "inlay_xplate"], "flange": ["flange", "screw_flange"],
     "ins_stop": ["insert_stop"], "x_turret": ["x_turret"], "ways_x": ["way_x", "inlay_xway"],
@@ -44,9 +45,10 @@ def g(*keys):
     return [p for k in keys for p in G[k]]
 
 
-BODY_DONE = g("body", "ins_gf", "ins_yway", "plunger_y", "bush_y", "ins_top", "ins_arca")
-C2 = BODY_DONE + g("gf_module", "ins_blade", "screw_gf", "blade", "wheel")
-C3 = C2 + g("arca", "handle", "vial_top", "vial_side")
+BODY_DONE = g("body", "ins_bezel", "ins_yway", "plunger_y", "bush_y", "ins_top", "ins_arca")
+ROT_DONE = g("rotator", "ins_blade", "blade", "wheel")
+C2 = BODY_DONE + ROT_DONE + g("velvet_rot", "bezel", "screw_bezel", "rot_det")
+C3 = C2 + g("arca", "handle", "vial_top")
 C4 = C3 + g("ways_y", "velvet_body")
 FRONT = g("yplate", "bush_x", "plunger_x", "velvet_y", "xplate", "flange", "ins_stop", "x_turret", "ways_x",
           "screw_xway", "gib_x", "rod_x", "knob_x")
@@ -85,45 +87,47 @@ def fig(name, title, view, show, new=(), labels=(), lines=(), state=None, extra=
 
 
 # ------------------------------------------------------------------ assembly: 1 body
-fig("1a_seat_inserts", "1a  Inserts in the Graflok seat", V_REAR, g("body"),
-    new=[(g("ins_gf"), (0, 0, -30))],
-    labels=[("A", "insert_gf"), ("B", [(sum(TRAP_X) / 2, 0.0, SEAT_Z), (P.LOOP_X, 20.0, SEAT_Z)]),
-            ("C", [(-60.0, 20.0, 2.0)]), ("D", [(P.Y_DETENT[0], P.Y_DETENT[1], SEAT_Z)])])
-fig("1b_front_inserts", "1b  Inserts along the front edges", V_FRONT, g("body", "ins_gf"),
+fig("1a_rear_inserts", "1a  Inserts in the body's rear face", V_OB_R, g("body"),
+    new=[(g("ins_bezel"), (0, 0, -30))],
+    labels=[("A", "insert_bezel"), ("B", [(0.0, -P.LAB_R[1], ROT_Z1 - LAB_H)]),
+            ("C", [(-(P.HOOK_R[0] + P.HOOK_R[1]) / 2, 0.0, ROT_Z1)]), ("D", [(P.Y_DETENT[0], P.Y_DETENT[1], ROT_Z1)])])
+fig("1b_front_inserts", "1b  Inserts along the front edges", V_FRONT, g("body", "ins_bezel"),
     new=[(g("ins_yway"), (0, 0, 30))], labels=[("E", "insert_yway")])
-fig("1c_plunger_bushings", "1c  Rise plunger and bushings", V_FRONT, g("body", "ins_gf", "ins_yway"),
+fig("1c_plunger_bushings", "1c  Rise plunger and bushings", V_FRONT, g("body", "ins_bezel", "ins_yway"),
     new=[(["plunger_y"], (0, 0, 35)), (["bush_y_top"], (0, -14, 30)), (["bush_y_bot"], (0, 14, 30))],
     labels=[("F", "plunger_y"), ("G", "bush_y")])
-fig("1d_top_inserts", "1d  Handle inserts on top", (-1.0, -0.45, 0.85), BODY_DONE[:0] + g("body", "ins_gf", "ins_yway", "plunger_y", "bush_y"),
+fig("1d_top_inserts", "1d  Handle inserts on top", (-1.0, -0.45, 0.85), g("body", "ins_bezel", "ins_yway", "plunger_y", "bush_y"),
     new=[(g("ins_top"), (0, 30, 0))],
-    labels=[("H", "insert_top"), ("J", [tuple(P.body_vial().bounding_box().center())]), ("K", [(Y_SCREW_X, H, Y_SCREW_Z)])],
-    dist=5.0)
-fig("1e_arca_inserts", "1e  Tripod inserts underneath", (0.9, -0.55, -0.75),
-    g("body", "ins_gf", "ins_yway", "plunger_y", "bush_y", "ins_top"),
-    new=[(["insert_arca_b"], (0, -30, 0)), (["insert_arca_s"], ("out", 0, 30))],
-    labels=[("L", "insert_arca_b"), ("M", "insert_arca_s"), ("N", [(Y_SCREW_X, -H - PLINTH, Y_SCREW_Z)])], dist=5.0)
+    labels=[("H", "insert_top"), ("K", [(Y_SCREW_X, H, Y_SCREW_Z)])], dist=5.0)
+fig("1e_arca_insert", "1e  Tripod insert underneath", (0.9, -0.55, -0.75),
+    g("body", "ins_bezel", "ins_yway", "plunger_y", "bush_y", "ins_top"),
+    new=[(["insert_arca_b"], (0, -30, 0))],
+    labels=[("L", "insert_arca_b"), ("N", [(Y_SCREW_X, -H - PLINTH, Y_SCREW_Z)])], dist=5.0)
 
-# ------------------------------------------------------------------ 2 Graflok
-fig("2a_module_inserts", "2a  Inserts in the Graflok module", (0.2, 1.0, 0.3), g("gf_module"),
+# ------------------------------------------------------------------ 2 rotator and rear frame
+fig("2a_rotator_inserts", "2a  Inserts in the rotator", (0.2, 1.0, 0.3), g("rotator"),
     new=[(g("ins_blade"), (0, 0, -25))], labels=[("A", "insert_blade")])
-fig("2b_module_on", "2b  Module into the body", V_OB_R, BODY_DONE,
-    new=[(g("gf_module", "ins_blade"), (0, 0, -45), ["graflok_module"]), (g("screw_gf"), (0, 0, -85))],
-    labels=[("B", "screw_gf"), ("C", [(-60.0, 20.0, 2.0)])])
-fig("2c_blade_wheel", "2c  Blade and wheel", V_OB_R, BODY_DONE + g("gf_module", "ins_blade", "screw_gf"),
+fig("2b_blade_wheel", "2b  Blade and wheel on the rotator", V_OB_R, g("rotator", "ins_blade"),
     new=[(["graflok_blade"], (0, 0, -30)), (["screw_blade"], (0, 0, -60)), (g("wheel"), (0, 0, -45), ["graflok_wheel"])],
     labels=[("D", "graflok_blade"), ("E", "screw_blade"), ("F", "graflok_wheel"), ("G", [(0.0, -63.0, -2.0)])])
+fig("2c_rotator_on", "2c  Rotator, velvet ring and rear frame", V_OB_R, BODY_DONE,
+    new=[(ROT_DONE, (0, 0, -40), ["rotator"]), (g("velvet_rot"), (0, 0, -75)), (g("bezel"), (0, 0, -100), ["bezel"]),
+         (g("screw_bezel"), (0, 0, -135))],
+    labels=[("H", "rotator"),
+            ("V5", mv([(-0.68 * (P.ROT_R + P.ROT_FL_R) / 2, 0.73 * (P.ROT_R + P.ROT_FL_R) / 2, P.BEZEL_CB_Z)], (0, 0, -75))), ("J", mv([(-H + 6.0, 30.0, BODY_Z0)], (0, 0, -100))), ("K", "screw_bezel")], dist=4.8)
+fig("2d_rotator_detent", "2d  Click and stop, from the front", V_FRONT, BODY_DONE + ROT_DONE + g("velvet_rot", "bezel", "screw_bezel"),
+    new=[(["plunger_rot"], (0, 0, 32)), (["grub_rot"], (0, 0, 28))],
+    labels=[("L", "plunger_rot"), ("M", "grub_rot")])
 
-# ------------------------------------------------------------------ 3 tripod plates, handle, levels
-fig("3a_arca", "3a  Arca plates", (0.9, -0.55, -0.75), C2,
-    new=[(["arca_bottom"], (0, -35, 0)), (["arca_side"], ("out", 0, 35))],
-    labels=[("A", ["arca_bottom"]), ("B", ["arca_side"])], dist=5.0)
+# ------------------------------------------------------------------ 3 tripod plate, handle, level
+fig("3a_arca", "3a  Arca plate", (0.9, -0.55, -0.75), C2,
+    new=[(["arca_bottom"], (0, -35, 0))], labels=[("A", ["arca_bottom"])], dist=5.0)
 fig("3b_handle", "3b  Top handle", (-0.45, -1.0, 0.8), C2 + g("arca"),
     new=[(["top_handle", "inlay_handle"], (0, 40, 0), ["top_handle"]), (["screw_top"], (0, 95, 0))],
     labels=[("C", "top_handle"), ("D", "screw_top"),
-            ("E", mv([(x, H + HANDLE_H, TOP_HANDLE_Z[0] + 8.0) for x in SHOES_X], (0, 40, 0)))], dist=4.6)
-fig("3c_levels", "3c  The two levels", (-1.0, -0.45, 0.85), C2 + g("arca", "handle"),
-    new=[(["vial_top"], (0, 30, 0)), (["vial_side"], ("out", 0, 30))],
-    labels=[("F", "vial_top"), ("J", "vial_side")], dist=5.0)
+            ("E", mv([(x, H + HANDLE_H, TOP_HANDLE_Z[0] + 8.0) for x in SHOES_X], (0, 40, 0)))], dist=4.8)
+fig("3c_level", "3c  The level", (-0.6, -0.45, 0.9), C2 + g("arca", "handle"),
+    new=[(["vial_top"], (0, 30, 0))], labels=[("F", "vial_top")], dist=4.6)
 
 # ------------------------------------------------------------------ 4 vertical ways, body velvet
 fig("4a_ways_y", "4a  Vertical rails", V_OB_F, C3,
@@ -249,12 +253,13 @@ fig("c_overview_front", "The camera from the front", (-0.62, -1.0, 0.25), C8 + g
             ("Arca plate", "arca_bottom")], dist=4.2, **CAL)
 fig("c_overview_rear", "The camera from behind", (-0.62, 1.0, 0.25), C8 + g("back"),
     labels=[("Film back (RB67)", "rb_back"), ("Graflok blade", "graflok_blade"), ("Clamp wheel", "graflok_wheel"),
-            ("Dark slide exit", [(-64.0, 0.0, GF_Z0 - 6)]), ("Level (landscape)", "vial_top"),
-            ("Level (portrait)", "vial_side")], dist=4.2, **CAL)
-fig("c_back_fit", "Test: the back on the test module", (0.7, 1.0, 0.75), g("gf_module", "ins_blade", "blade", "wheel", "back"),
-    extra=[("glass", ext_glass(), "grey")],
-    labels=[(">Glass sheet", [(80.0, -70.0, SEAT_Z + 3)]), (">Bottom rail", [(0.0, -63.0, -2.0)]),
-            (">Blade tongues", "graflok_blade"), (">Wheel", "graflok_wheel"),
+            ("Dark slide exit", [(-64.0, 0.0, GF_Z0 - 6)]), ("Level", "vial_top"),
+            ("Rotating back", "rotator"), ("Rear frame", "bezel")], dist=4.2, **CAL)
+fig("c_overview_portrait", "Portrait: the back turned a quarter", (-0.62, 1.0, 0.25), C8 + g("back"), state=dict(rot=P.ROT_PORTRAIT),
+    labels=[("Dark slide exit", [(0.0, 64.0, GF_Z0 - 6)]), ("Frame counter window", "rb_window"),
+            ("Rotating back", [(-P.ROT_R + 6.0, -40.0, GF_Z0)])], dist=4.2, **CAL)
+fig("c_back_fit", "Test: the back on the rotator", (0.7, 1.0, 0.75), g("rotator", "ins_blade", "blade", "wheel", "back"),
+    labels=[(">Bottom rail", [(0.0, -63.0, -2.0)]), (">Blade tongues", "graflok_blade"), (">Wheel", "graflok_wheel"),
             ("<Dark slide exit", [(-64.0, 0.0, GF_Z0 - 6)])], dist=4.4, **CAL)
 
 

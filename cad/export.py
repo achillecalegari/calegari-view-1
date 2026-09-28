@@ -6,7 +6,7 @@ print/inlays/   coloured dot inlays for AMS printing, only for dots on a top or 
                 side walls are filled with paint: dozens of colour changes are not worth it)
 print/plates/   Bambu P1S build plates (256 x 256), one material per plate, as 3MF
 print/test/     the test prints to run before anything else
-print/templates/ 1:1 SVG cutting templates for the velvet and felt (V1 to V4)
+print/templates/ 1:1 SVG cutting templates for the velvet and felt (V1 to V5)
 print/PRINTABILITY.txt  overhang and bridge report for every part in its print orientation
 
 python export.py [--fast]    (--fast skips the printed threads)
@@ -45,7 +45,8 @@ def catalogue():
     fm = P.focus_ring_marks(0.6, lift=0)
     return [
         ("body", P.body_part(), FLIP, 1, "blackbody", []),
-        ("graflok_module", P.graflok_module(), FLIP, 1, "black", []),
+        ("bezel", P.bezel_part(), EYE, 1, "black", [("white", P.bezel_inlays())]),
+        ("rotator", P.rotator_part(), FLIP, 1, "black", [("red", P.rotator_inlay())]),
         ("graflok_blade", P.graflok_blade(), FLIP, 1, "red", []),
         ("graflok_wheel", P.graflok_wheel(), EYE, 1, "black", []),
         ("y_plate", P.y_plate_part(), FLIP, 1, "black", []),
@@ -174,25 +175,29 @@ def ring_path(r0, r1):
 def templates():
     d = ROOT / "templates"
     ob, oy = opening_body(BODY_Z1), opening_yplate(YP_Z1)
-    hy = max(oy[1], 33.0)
+    hy = oy[1]
+    e = P.H - 2.0
     txt = 'font-family="Helvetica, Arial" stroke="none" fill="black"'
     x0, x1 = P.V1_X
     svg_page(d / "V1_velvet_body.svg", "V1 - velvet, body front",
-             [f'<path d="{rect_path(x0, -72, x1, 72)} {rect_path(-ob[0] - 0.3, -ob[1] - 0.3, ob[0] + 0.3, ob[1] + 0.3, 3)}"/>',
-              f'<g {txt} font-size="4"><text x="0" y="-62" text-anchor="middle">TOP</text>'
+             [f'<path d="{rect_path(x0, -e, x1, e)} {rect_path(-ob[0] - 0.3, -ob[1] - 0.3, ob[0] + 0.3, ob[1] + 0.3, P.WIN_R)}"/>',
+              f'<g {txt} font-size="4"><text x="0" y="{-e + 10}" text-anchor="middle">TOP</text>'
               f'<text transform="translate({x0 + 4} 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>'],
              "Seen from the front. The narrow margin (right) goes next to the rise screw channel.")
     y0, y1 = P.V2_Y
     holes = " ".join(f"M{x + 3.5} {-y}A3.5 3.5 0 1 0 {x - 3.5} {-y}A3.5 3.5 0 1 0 {x + 3.5} {-y}Z"
                      for x, y in P.Y_TURRET_SCREWS)
     svg_page(d / "V2_velvet_y_plate.svg", "V2 - velvet, Y plate front",
-             [f'<path d="{rect_path(-72, y0, 72, y1)} {rect_path(-oy[0] - 1, -hy - 1, oy[0] + 1, hy + 1, 3)} {holes}"/>',
+             [f'<path d="{rect_path(-e, y0, e, y1)} {rect_path(-oy[0] - 0.3, -hy - 0.3, oy[0] + 0.3, hy + 0.3, P.WIN_R)} {holes}"/>',
               f'<text x="0" y="{-y1 + 8}" {txt} font-size="4" text-anchor="middle">TOP</text>'],
              "Seen from the front. The two small holes go over the rise-nut screws (photographer's left).")
     svg_page(d / "V3_V4_felt_rings.svg", "V3 and V4 - felt rings, board holder",
              [f'<g transform="translate(0 -65)"><path d="{ring_path(30.2, 36.3)}"/><text y="1.5" {txt} font-size="5" text-anchor="middle">V3</text></g>',
               f'<g transform="translate(0 45)"><path d="{ring_path(REAR_CLEAR_D / 2 + 3.6, 44.8)}"/><text y="1.5" {txt} font-size="5" text-anchor="middle">V4</text></g>'],
              "1 mm adhesive felt. V3: groove on the back of the holder. V4: shallow seat under the lens board.")
+    svg_page(d / "V5_velvet_rotator_ring.svg", "V5 - velvet ring, rear frame",
+             [f'<path d="{ring_path(ROT_R + 0.6, ROT_FL_R - 0.2)}"/><text y="1.5" {txt} font-size="5" text-anchor="middle">V5</text>'],
+             "1 mm adhesive velvet, pile up. It lies on the floor of the rear frame's round counterbore: the rotator's flange turns on it.")
 
 
 if __name__ == "__main__":
@@ -234,7 +239,7 @@ if __name__ == "__main__":
             summary.append(f"{path.name}: " + ", ".join(g[0] for g in pl["groups"]))
     # test prints: Graflok module with blade and wheel; M65 thread coupons
     gauge = [("shrink_gauge_100mm", [drop([oriented(mesh(P.shrink_gauge()), EYE)])[0]])]
-    test = [("graflok_module", [drop([oriented(mesh(P.graflok_module()), FLIP)])[0]]),
+    test = [("rotator", [drop([oriented(mesh(P.rotator_part()), FLIP)])[0]]),
             ("graflok_blade", [drop([oriented(mesh(P.graflok_blade()), FLIP)])[0]]),
             ("graflok_wheel", [drop([oriented(mesh(P.graflok_wheel()), EYE)])[0]])]
     # dovetail coupons: 40 mm slices of the real rails, gib strips and plate edges (slide them by hand)

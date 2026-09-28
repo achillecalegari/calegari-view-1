@@ -6,7 +6,7 @@
 <g stroke="black" stroke-width="0.25"><line x1="55" y1="282" x2="155" y2="282"/><line x1="55" y1="279" x2="55" y2="285"/><line x1="155" y1="279" x2="155" y2="285"/></g>
 <text x="105" y="278" font-family="Helvetica, Arial" font-size="3.6" text-anchor="middle">100 mm</text>
 <g transform="translate(105 152)" fill="#e6e6e6" fill-rule="evenodd" stroke="black" stroke-width="0.3">
-<path d="M-46.5 -72H45.5V72H-46.5Z M-36.55 -35.25454545454545H36.55A3 3 0 0 1 39.55 -32.25454545454545V32.25454545454545A3 3 0 0 1 36.55 35.25454545454545H-36.55A3 3 0 0 1 -39.55 32.25454545454545V-32.25454545454545A3 3 0 0 1 -36.55 -35.25454545454545Z"/>
-<g font-family="Helvetica, Arial" stroke="none" fill="black" font-size="4"><text x="0" y="-62" text-anchor="middle">TOP</text><text transform="translate(-42.5 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>
+<path d="M-57.5 -83.0H55.5V83.0H-57.5Z M-27.625 -39.625H27.625A12.0 12.0 0 0 1 39.625 -27.625V27.625A12.0 12.0 0 0 1 27.625 39.625H-27.625A12.0 12.0 0 0 1 -39.625 27.625V-27.625A12.0 12.0 0 0 1 -27.625 -39.625Z"/>
+<g font-family="Helvetica, Arial" stroke="none" fill="black" font-size="4"><text x="0" y="-73.0" text-anchor="middle">TOP</text><text transform="translate(-53.5 0) rotate(-90)" text-anchor="middle">ball plunger side</text></g>
 </g>
 </svg>

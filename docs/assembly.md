@@ -72,20 +72,20 @@ Every insert in the camera is the same M3 x 3 x 5, 29 of them, plus two of 1/4" 
 
 ## 1. Body
 
-**You need:** the body, 15 M3 inserts, 2 inserts 1/4"-20, one M5 ball plunger, two 6 x 8 x 6 bushings, the M5 tap, epoxy.
+**You need:** the body, 15 M3 inserts, one 1/4"-20 insert, one M5 ball plunger, two 6 x 8 x 6 bushings, the M5 tap, epoxy.
 
-### 1a. Inserts in the Graflok seat
+### 1a. Inserts in the rear face
 
-![1a](img/asm/1a_seat_inserts.jpg)
+![1a](img/asm/1a_rear_inserts.jpg)
 
 | | What | Qty | How |
 |---|---|---|---|
-| **A** | M3 x 3 insert | 4 | in the floor of the big rear recess (the Graflok seat), pressed from behind |
-| **B** | nothing | | light-trap grooves in the seat: keep them clean |
-| **C** | nothing | | passage for the dark-slide handle |
+| **A** | M3 x 3 insert | 4 | in the four corners of the rear face, for the rear frame |
+| **B** | nothing | | the round ridge of the light trap: the rotator's groove runs over it. Keep it clean and sharp |
+| **C** | nothing | | the curved pocket on the photographer's right: the dark-slide handle and the back's hooks turn in it |
 | **D** | the back of the rise plunger | | you set its height from here in 1c |
 
-Lay the body front face down on a towel and press the four inserts A. Check with the straightedge: this floor is where the film sits, so no insert may stand proud.
+Lay the body front face down on a towel and press the four inserts A. Check with the straightedge: the rear face is the reference for the film plane, so no insert may stand proud.
 
 ### 1b. Inserts along the front edges
 
@@ -106,7 +106,7 @@ Turn the body over and press the nine inserts E. They carry the vertical rails i
 | **F** | M5 ball plunger (POM ball) | 1 | tap M5 through, screw in from the front, set from behind (D) |
 | **G** | bronze bushing 6 x 8 x 6 | 2 | one in each end wall of the screw channel |
 
-1. **F.** Tap M5 through the small hole beside the window. Screw the plunger in from the front, ball toward you, until its hex is inside. From behind (D), turn it with a hex key until the ball stands **1.0 mm** proud of the front face: lay the feeler gauge on the face next to it and a ruler across both, and stop when the ball touches the ruler. A small drop of epoxy on the thread at the back, scraped flush with the seat, locks the plunger and seals the hole.
+1. **F.** Tap M5 through the small hole beside the window. Screw the plunger in from the front, ball toward you, until its hex is inside. From behind (D), turn it with a hex key until the ball stands **1.0 mm** proud of the front face: lay the feeler gauge on the face next to it and a ruler across both, and stop when the ball touches the ruler. A small drop of epoxy on the thread at the back, scraped flush with the rear face, locks the plunger and seals the hole.
 2. **G.** Ream the two bushing seats with the 8 mm drill turned by hand. Drop a bushing into the screw channel and push it sideways into the round seat in the end wall until it is flush; a 6 mm bolt through its bore keeps it square. Do the other one the same way.
 
 ### 1d. Handle inserts on top
@@ -116,51 +116,40 @@ Turn the body over and press the nine inserts E. They carry the vertical rails i
 | | What | Qty | How |
 |---|---|---|---|
 | **H** | M3 insert | 2 | in the top face, for the top handle |
-| **J** | nothing yet | | the pocket of the portrait level (3c) |
 | **K** | nothing yet | | the rise rod comes out here (6f) |
 
-### 1e. Tripod inserts underneath
+### 1e. Tripod insert underneath
 
-![1e](img/asm/1e_arca_inserts.jpg)
+![1e](img/asm/1e_arca_insert.jpg)
 
 | | What | Qty | How |
 |---|---|---|---|
-| **L** | 1/4"-20 insert | 1 | in the middle of the bottom Arca pocket |
-| **M** | 1/4"-20 insert | 1 | in the middle of the side leg's Arca pocket |
+| **L** | 1/4"-20 insert | 1 | in the middle of the Arca pocket |
 | **N** | nothing yet | | the recess of the rise rod's end nut (6b) |
 
-The 1/4" inserts take 15 to 20 seconds each: go slowly and keep the iron vertical.
+The 1/4" insert takes 15 to 20 seconds: go slowly and keep the iron vertical.
 
 **Check.** No insert is proud on any face. Press the plunger ball with a fingertip: it springs back.
 
-## 2. Graflok module, clamp blade and wheel
+## 2. Rotating back and rear frame
 
-**You need:** the Graflok module, the blade, the wheel, 3 M3 inserts, 4 M3 x 6 socket heads, 2 M3 x 6 countersunk, 1 M3 x 8 countersunk, Loctite 222, epoxy.
+The film back does not sit on the body: it sits on the **rotator**, a round plate that turns a quarter turn in the body's rear face. For vertical pictures you turn the back, not the camera, and the tripod, the handle and the level stay where they are. A **rear frame** screwed to the body holds the rotator's flange over a ring of velvet; a ball plunger clicks at the two positions and a grub screw stops it past them.
 
-If the module from the test plate fitted your back, use that one.
+**You need:** the rotator, the blade, the wheel, the rear frame, 3 M3 inserts, 4 M3 x 10 socket heads, 2 M3 x 6 countersunk, 1 M3 x 8 countersunk, 1 M3 x 6 grub, one M5 ball plunger, velvet ring V5, the M3 and M5 taps, a long hex key, Loctite 222, epoxy, dry PTFE.
 
-### 2a. Inserts in the module
+If the rotator from the test plate fitted your back, use that one.
 
-![2a](img/asm/2a_module_inserts.jpg)
+### 2a. Inserts in the rotator
+
+![2a](img/asm/2a_rotator_inserts.jpg)
 
 | | What | Qty | How |
 |---|---|---|---|
 | **A** | M3 x 3 insert | 3 | in the shallow recess along the top of the rear face: two for the blade, the middle one for the wheel |
 
-### 2b. Module into the body
+### 2b. Blade and wheel on the rotator
 
-![2b](img/asm/2b_module_on.jpg)
-
-| | What | Qty | How |
-|---|---|---|---|
-| **B** | M3 x 6 socket head | 4 | through the module into the body inserts A of 1a, heads sunk in the counterbores |
-| **C** | the open side of the module | | goes over the body's dark-slide passage, on the photographer's right |
-
-Drop the module into the rear recess, open side over the passage C, and fix it with the four screws B: snug, not tight.
-
-### 2c. Blade and wheel
-
-![2c](img/asm/2c_blade_wheel.jpg)
+![2b](img/asm/2b_blade_wheel.jpg)
 
 | | What | Qty | How |
 |---|---|---|---|
@@ -174,20 +163,52 @@ Drop the module into the rear recess, open side over the passage C, and fix it w
 
 **Check.** With the wheel loose, the blade slides the full length of its slots. With the wheel tight, it does not move.
 
-## 3. Arca plates, top handle and levels
+### 2c. Rotator, velvet ring and rear frame
 
-**You need:** the two Arca plates, 2 screws 1/4"-20 x 1/2" (plates often come with one each), the top handle, 2 M3 x 20 socket heads, two 15 mm bull's-eye levels, epoxy.
+![2c](img/asm/2c_rotator_on.jpg)
 
-### 3a. Arca plates
+| | What | Qty | How |
+|---|---|---|---|
+| **H** | the rotator | 1 | into the round seat in the body's rear face, red dot at the top |
+| **V5** | velvet ring | 1 | on the floor of the step inside the rear frame |
+| **J** | the rear frame | 1 | over the rotator's flange, the big white dot at the top |
+| **K** | M3 x 10 socket head | 4 | through the frame's corners into the inserts A of 1a |
+
+1. **H.** Lay the body front face down. Wipe a thin film of dry PTFE on the ring of the rear face and on the rotator's front face. Put the rotator in with its red dot at the top: the groove on its front face drops over the ridge B, and it turns freely.
+2. **V5.** Cut the ring with `print/templates/V5_velvet_rotator_ring.svg` and stick it on the floor of the step inside the frame, velvet up.
+3. **J and K.** Lay the frame over the rotator, its white dots on the photographer's left and at the top, and screw it down with the four screws K, a little at a time in a cross, until the heads sit in their counterbores.
+
+**Check.** The rotator turns with an even, velvety drag and has no play front to back. If it binds, the velvet is too thick: peel V5 and use a thinner one.
+
+### 2d. Click and stop, from the front
+
+![2d](img/asm/2d_rotator_detent.jpg)
+
+| | What | Qty | How |
+|---|---|---|---|
+| **L** | M5 ball plunger (POM ball) | 1 | in the hole at the bottom on the photographer's left (right in the picture) |
+| **M** | M3 x 6 grub | 1 | in the hole at the bottom on the photographer's right (left in the picture) |
+
+Stand the body on its bottom, front toward you. Both holes go through to the rotator.
+
+1. **L.** Tap M5 through the hole. Screw the plunger in from the front, ball first, with the rotator at landscape (red dot at the top). When the ball touches the rotator, give it half a turn more. Turn the rotator: it clicks into place at landscape and at portrait. Firmer click: a quarter turn more; lighter: a quarter turn back.
+2. **M.** Tap M3 into the narrow end of the other hole, reaching through the wide bore in front of it. Drive the grub in from the front with the long hex key until it touches the bottom of the groove in the rotator, then back it half a turn.
+
+**Check.** Seen from behind, the back turns a quarter turn anticlockwise from landscape (red dot on the big white dot at the top) to portrait (red dot on the small white dot on the photographer's left), clicks at both, and stops hard just past each. The dark slide then comes out at the top.
+
+## 3. Arca plate, top handle and level
+
+**You need:** the Arca plate, one screw 1/4"-20 x 1/2" (plates often come with one), the top handle, 2 M3 x 20 socket heads, one 15 mm bull's-eye level, epoxy.
+
+### 3a. Arca plate
 
 ![3a](img/asm/3a_arca.jpg)
 
 | | What | Qty | How |
 |---|---|---|---|
-| **A** | Arca plate, bottom | 1 | one 1/4"-20 x 1/2" screw into the insert L |
-| **B** | Arca plate, side leg | 1 | one 1/4"-20 x 1/2" screw into the insert M |
+| **A** | Arca plate | 1 | one 1/4"-20 x 1/2" screw into the insert L |
 
-Remove any rubber pad from the plates. The pocket keeps each plate from turning, so one screw is enough.
+Remove any rubber pad from the plate. The pocket keeps it from turning, so one screw is enough. The camera always sits on this plate: for vertical pictures you turn the back (step 2), not the camera.
 
 ### 3b. Top handle
 
@@ -201,17 +222,15 @@ Remove any rubber pad from the plates. The pocket keeps each plate from turning,
 
 Tighten firmly: this handle carries the camera. A strap attaches to the bar between the posts (Peak Design Anchors, or any cord).
 
-### 3c. The two levels
+### 3c. The level
 
-![3c](img/asm/3c_levels.jpg)
+![3c](img/asm/3c_level.jpg)
 
 | | What | Qty | How |
 |---|---|---|---|
 | **F** | 15 mm bull's-eye level | 1 | glued in the pocket on top of the handle |
-| **J** | 15 mm bull's-eye level | 1 | glued in the pocket on the photographer's right side |
 
-1. **F, landscape.** Put the camera on a tripod on its bottom plate and level it with a phone level laid on top of the body, in both directions. Put a drop of epoxy in the pocket on top of the handle, press the bull's-eye in, and let the glue set without touching the camera.
-2. **J, portrait.** Move the camera to the side plate, level it again with the phone, and glue the second bull's-eye in the pocket J the same way.
+Put the camera on a tripod on its Arca plate and level it with a phone level laid on top of the body, in both directions. Put a drop of epoxy in the pocket on top of the handle, press the bull's-eye in, and let the glue set without touching the camera. The same level serves both orientations, since the camera no longer turns.
 
 ## 4. Vertical ways and body velvet
 
@@ -374,7 +393,7 @@ Press a stainless M6 nut into the knob's hex pocket with the vice and tap M3 int
 
 ## 6. Front standard into the body, rise screw and knob
 
-**You need:** the body from step 4, the front standard from step 5, the rise nut turret, 2 M3 inserts, 1 brass M6 nut, 2 M3 x 10 socket heads, the two 7 mm velvet discs, the Y gib strip, 3 M3 x 6 grubs, the 156 mm rod with a stainless M6 nut and an M6 washer (its end nut), O-ring, knob with its M6 nut and grub, Loctite 243, dry PTFE.
+**You need:** the body from step 4, the front standard from step 5, the rise nut turret, 2 M3 inserts, 1 brass M6 nut, 2 M3 x 10 socket heads, the two 7 mm velvet discs, the Y gib strip, 3 M3 x 6 grubs, the 178 mm rod with a stainless M6 nut and an M6 washer (its end nut), O-ring, knob with its M6 nut and grub, Loctite 243, dry PTFE.
 
 ### 6a. Rise nut turret
 
@@ -392,7 +411,7 @@ Press a stainless M6 nut into the knob's hex pocket with the vice and tap M3 int
 | | What | Qty | How |
 |---|---|---|---|
 | **C** | the turret | 1 | into the screw channel on the body front |
-| **D** | 156 mm rod with its washer and end nut | 1 | pushed up from below, through the bushings and the turret nut |
+| **D** | 178 mm rod with its washer and end nut | 1 | pushed up from below, through the bushings and the turret nut |
 | **N** | the end nut | | sits in its recess under the body, the washer against the top of the recess |
 
 On the bench, slip the washer onto one end of the rod and screw the nut on behind it with a drop of Loctite 243, about 1 mm of rod beyond the nut; let it set. Stand the body on its bottom plate, put the turret in the channel, and push the rod up from below through the bottom bushing, the turret nut (turn the rod to thread it through) and the top bushing, until the washer sits against the top of its recess. Turn the rod until the turret is in the middle of the channel.
@@ -557,7 +576,7 @@ Screw the lens onto the board with its retaining ring, from behind. Hook the boa
 2. **Hook the bottom.** Hook the back's bottom lip under the rail G.
 3. **Seat the back.** Swing the back onto the seat: its nose goes into the recess.
 4. **Lock.** Slide the blade up so its two tongues enter the slots in the top of the back, then tighten the wheel.
-5. **Dark slide.** It comes out toward the photographer's right, through the passage C of the body.
+5. **Dark slide.** It comes out toward the photographer's right in landscape and at the top in portrait.
 6. **Advance after each frame.** Press the back's own wind-stop release lever by hand: the camera has no automatic coupling (see [design notes](design.md#open-points)).
 
 The ground glass goes on the same way. Now go to [calibration](calibration.md), then [using the camera](using.md).
@@ -566,13 +585,13 @@ The ground glass goes on the same way. Now go to [calibration](calibration.md), 
 
 | Step | Inserts | Screws | Other |
 |---|---|---|---|
-| 1 | M3 x 15, 1/4" x 2 | | M5 plunger, 2 bushings, epoxy |
-| 2 | M3 x 3 | M3 x 6 socket x 4, M3 x 6 countersunk x 2, M3 x 8 countersunk x 1 | Loctite 222, epoxy |
-| 3 | | M3 x 20 socket x 2, 1/4"-20 x 1/2" x 2 | 2 bull's-eye levels, epoxy |
+| 1 | M3 x 15, 1/4" x 1 | | M5 plunger, 2 bushings, epoxy |
+| 2 | M3 x 3 | M3 x 10 socket x 4, M3 x 6 countersunk x 2, M3 x 8 countersunk x 1, M3 x 6 grub x 1 | M5 plunger, V5, Loctite 222, epoxy, dry PTFE |
+| 3 | | M3 x 20 socket x 2, 1/4"-20 x 1/2" x 1 | bull's-eye level, epoxy |
 | 4 | | M3 x 8 countersunk x 9 | V1 |
 | 5 | M3 x 1 | M3 x 6 countersunk x 4, M3 x 16 socket x 8, M3 x 6 grub x 4 | flange, brass nut, 2 bushings, M5 plunger, rod 127 + M6 washer + M6 nut, O-ring, knob + M6 nut, V2, epoxy, Loctite 243, paint |
-| 6 | M3 x 2 | M3 x 10 socket x 2, M3 x 6 grub x 4 | brass nut, rod 156 + M6 washer + M6 nut, O-ring, knob + M6 nut, 2 velvet discs, Loctite 243 |
+| 6 | M3 x 2 | M3 x 10 socket x 2, M3 x 6 grub x 4 | brass nut, rod 178 + M6 washer + M6 nut, O-ring, knob + M6 nut, 2 velvet discs, Loctite 243 |
 | 7 | | M3 x 6 grub x 5 | helicoid, Loctite 222 |
 | 8 | M3 x 8 | M3 x 8 countersunk x 4, M3 x 6 grub x 2 | spring, V3, V4 |
 
-All the small hardware is M3 stainless: socket heads in four lengths (6, 10, 16, 20), countersunk in two (6, 8), one grub (6) and one insert. One assortment of each covers the camera.
+All the small hardware is M3 stainless: socket heads in three lengths (10, 16, 20), countersunk in two (6, 8), one grub (6) and one insert. One assortment of each covers the camera.
