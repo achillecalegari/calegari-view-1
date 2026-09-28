@@ -106,7 +106,7 @@ The scales are recessed dots, 2 to 3.4 mm across and 0.6 mm deep: no text or fin
 
 ## Printability report
 
-`print/PRINTABILITY.txt` lists, for every part in its print orientation, the downward-facing area steeper than 45 degrees and the largest downward span. The large "spans" in the report are rings and slots whose overhang is short (the stepped light baffles, the felt grooves, the thread flanks, the flare lobes behind the lens panel bore); the longest true bridge is the board holder's latch hood, 30 mm between two rails.
+`print/PRINTABILITY.txt` lists, for every part in its print orientation, the downward-facing area steeper than 45 degrees and the largest downward span. The large "spans" in the report are rings and slots whose overhang is short (the stepped light baffles, the felt grooves, the thread flanks, the flare lobes behind the lens panel bore); the longest true bridge is the board holder's latch hood, 36 mm between two rails.
 
 ## After printing
 

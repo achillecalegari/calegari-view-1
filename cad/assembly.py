@@ -136,12 +136,13 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     for a in GIB_GRUBS["x"]:
         add(f"grub_gib_x_{a}", Pos(a, uwx - GIB_BACK + 6.0 + sy, YP_Z1 + WAY_FL + lip_x / 2) * orient(hw.grub(3, 6), "+y"), "black_steel", "x_rail", extra=(0, 0.6, 0))
     yx = X_SCREW_Y + sy
-    x_left, x_right = H + X_CAP_ROD_END, H + X_CAP_ROD_END - ROD_X_LEN
+    x_right = X_ROD_RIGHT
+    x_left = x_right + ROD_X_LEN
     add("rod_x", Pos(x_left, yx, X_SCREW_Z) * orient(hw.threaded_rod(6, x_left - x_right), "-x"), "steel", "x_drive")
     add("bush_x_right", Pos(P.X_CHAN[0], yx, X_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "-x"), "bronze", "x_drive")
     add("bush_x_left", Pos(P.X_CHAN[1] + BUSH_L, yx, X_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "-x"), "bronze", "x_drive")
-    add("washer_x_cap", Pos(H, yx, X_SCREW_Z) * orient(hw.washer(6, 12.0, 1.6), "+x"), "steel", "x_drive", extra=(0.5, 0, 0))
-    add("nut_x_cap", Pos(H + 1.6, yx, X_SCREW_Z) * orient(hw.cap_nut(6), "+x"), "steel", "x_drive", extra=(0.5, 0, 0))
+    add("washer_x_thrust", Pos(P.X_CHAN[0], yx, X_SCREW_Z) * orient(hw.washer(6, 12.0, 1.6), "+x"), "steel", "x_drive")
+    add("nut_x_thrust", Pos(P.X_CHAN[0] + 1.6, yx, X_SCREW_Z) * orient(hw.hex_nut(6, h=5.0), "+x"), "steel", "x_drive")
     add("nut_x_drive", Pos(sx - NUT_T / 2, yx, X_SCREW_Z) * orient(Rot(0, 0, 30) * hw.hex_nut(6, h=NUT_T), "+x"), "brass", "turret")
     add("oring_x", Pos(-H + ORING_SEAT - 0.75, yx, X_SCREW_Z) * Rot(0, 90, 0) * Torus(3.75, 0.75), "rubber", "x_knob")
     add("knob_x", Pos(-H - KNOB_GAP, yx, X_SCREW_Z) * orient(kn, "-x"), "body_black", "x_knob", True)
@@ -180,9 +181,8 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("felt_adapter", mv * (P.cyl_z(36.3, HOLDER_Z0, HOLDER_Z0 + 0.8) - P.cyl_z(30.2, HOLDER_Z0 - 1, HOLDER_Z0 + 2)), "felt", "holder")
     add("holder_latch", mv * P.holder_latch(latch_locked), "red", "latch", True)
     for x in (-9.0, 9.0):
-        add(f"washer_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 2.5) * hw.washer(2.5, 6.0, 0.5), "black_steel", "latch", extra=(0, 0, 0.3))
-        add(f"screw_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 3.0) * hw.button_head(2.5, 6),
-            "black_steel", "latch", extra=(0, 0, 0.3))
+        add(f"screw_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, HOLDER_Z0 + 1.6) * orient(hw.button_head(2.5, 6), "-z"),
+            "black_steel", "holder")
     y_sp0 = BOARD_H / 2 - P.LATCH_ENGAGE + P.LATCH_LEN + (0 if latch_locked else P.LATCH_ENGAGE + 1)
     y_sp1 = BOARD_H / 2 + 22.0
     add("spring_latch", mv * Pos(0, (y_sp0 + y_sp1) / 2, BOARD_Z1 + 1.3) * Rot(90, 0, 0) * Cylinder(1.8, y_sp1 - y_sp0 - 0.2), "steel", "latch")

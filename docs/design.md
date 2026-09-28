@@ -21,12 +21,12 @@ The light seal is the flatness of these faces. Each plate covers the opening of 
 | 6x7 with RB67 backs | backs are common and cheap; the Graflok-type interface is simple enough to print; the gate also clears 6x8 |
 | 65 mm lenses in Copal 0 | 33 mm equivalent on 6x7, cheap used, image circles of 153 to 170 mm for large shifts |
 | Technika 99 x 96 boards | the most common board: lenses often come mounted on one, and it swaps with 4x5 field cameras |
-| One board per lens, spring latch | a lens changes in ten seconds without tools; printed shims under the shutter (0.4 to 1.2 mm) let every lens reach infinity on the same stop |
+| One board per lens, spring latch | a lens changes in ten seconds without tools; the red latch slides in a printed dovetail, held by two screws from the back, so nothing shows on the front; printed shims under the shutter (0.4 to 1.2 mm) let every lens reach infinity on the same stop |
 | Metal M65 flange on the lens panel | a printed thread carrying the lens and the focusing torque was the weakest point of the first design |
 | Printed adapter ring as the calibration part | if infinity is out of reach, reprint a thinner 20-minute part instead of a plate |
 | Printed dovetail ways with a gib | the way view cameras have always done it: nothing to buy, nothing to align, play taken up by three grub screws. The rails print as separate parts, so the sliding flanks come from the printer's perimeters, not from stair-stepped layers; test coupons prove the fit on your printer before the big parts |
 | Front standard assembled on the bench, then slid in from the top | the Y plate's front overhangs the vertical rails (the shift screw passes over them), so it goes in like a drawer; the rise nut turret is screwed on afterwards through the plate |
-| M6 threaded rod and brass nut, 1 mm per turn | fine control, self-locking under gravity, parts from any hardware shop; the nut floats 0.5 mm so the rod never binds. Each rod has a domed cap nut at its far end, fixed on the bench, and the knob at the other: nothing to tighten inside the camera |
+| M6 threaded rod and brass nut, 1 mm per turn | fine control, self-locking under gravity, parts from any hardware shop; the nut floats 0.5 mm so the rod never binds. The rise rod has a domed cap nut at its bottom, fixed on the bench and hidden under the camera. The shift rod shows nothing on the left: it ends in a blind seat, and a washer and a nut locked inside the channel hold it against the knob side. No hardware in sight on the front or the sides |
 | Shift nut turret keyed into the lens panel | the hard stops push on the pocket walls, not on the glue |
 | O-ring drag instead of lock wheels | lock wheels moved the composition as you tightened them; constant drag holds the plate and never shifts it |
 | Ball-plunger zero detents | you feel zero without looking; the plungers sit in through holes, so they are set from behind and then sealed |
@@ -45,7 +45,7 @@ The design went through three rounds of independent review before the first prin
 |---|---|---|
 | RB67 interface | the dark slide could not come out; the latch bars had no tongues; nothing released the Pro-S interlock | Graflok module rebuilt on the scheme of a body tested with Pro-S and Pro-SD, dark-slide passage open to the right |
 | Mechanics | industrial linear guides were overkill and made the build long | printed dovetail ways with gibs, test coupons |
-| Assembly | the Y plate could not go on once the rails were fixed; the rod nuts could not be tightened inside the camera | the plate slides in from the top; cap nuts fixed on the bench |
+| Assembly | the Y plate could not go on once the rails were fixed; the rod nuts could not be tightened inside the camera | the plate slides in from the top; the rise cap nut is fixed on the bench, the shift thrust nut before the lens panel goes on |
 | Assembly | the board holder's screws were unreachable under the focus ring | they now go in from the front, under the board, into eight inserts in the adapter |
 | Mechanics | the Graflok wheel did not turn its screw; screws too long in six places; the detent balls never touched the plate | hex bolt keyed in the wheel; every screw length checked against its hole; balls 1.0 mm proud with a 0.3 mm seat |
 | Mechanics | the shift hard stop loaded a glued joint | the turret sits in a 2.5 mm pocket |

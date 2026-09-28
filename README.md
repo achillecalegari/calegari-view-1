@@ -42,7 +42,7 @@ The body, the Y plate and the lens panel are flat slabs that slide face to face 
 
 The design is complete and checked in software, not yet proven in the hand.
 
-- `cad/check.py`: no interference between any of the 153 components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
+- `cad/check.py`: no interference between any of the 151 components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
 - `cad/seal_check.py`: the velvet seal is at least 4.6 mm wide at both sliding interfaces, at every shift position in 5 mm steps.
 - `cad/optics_check.py`: a ray trace from the lens to the corners of the frame. Single movements up to 25 mm are clean at f/22 and f/8 from infinity to about 0.9 m; combined rise and shift up to 22 + 22 mm are clean at infinity.
 - `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation. No part needs supports.
@@ -61,7 +61,9 @@ cd cad
 ../.venv/bin/python seal_check.py     # velvet seal widths over the whole shift range
 ../.venv/bin/python optics_check.py   # ray trace: vignetting at shift, aperture and focus (about 6 minutes)
 ../.venv/bin/python export.py         # STEP, oriented STL, AMS inlays, P1S plates, test prints
-../render/gen_all.sh                  # every image in docs/img (needs Blender)
+../render/gen_all.sh                  # product and overview images in docs/img (needs Blender)
+../render/figures.sh                  # assembly and calibration figures, docs/img/asm and docs/img/cal (needs Blender)
+../.venv/bin/python ../render/diagrams.py   # the flat calibration diagrams
 ```
 
 The STEP files in `print/step` open in Fusion, FreeCAD or any CAD.

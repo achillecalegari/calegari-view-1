@@ -21,7 +21,7 @@ EXPECTED = [
     ("insert_", "board_holder"), ("insert_", "adapter_ring"), ("insert_", "way_"), ("insert_", "y_turret"),
     ("insert_", "screw_"), ("insert_", "stop_pin"),
     # threads cut or formed in the plastic: grubs in the gib rails, latch screws, ball plungers
-    ("grub_gib", "way_"), ("screw_latch", "board_holder"), ("washer_", "screw_"), ("washer_x_cap", "rod_"), ("washer_x_cap", "nut_x_cap"), ("plunger_y", "body"), ("plunger_x", "y_plate"),
+    ("grub_gib", "way_"), ("screw_latch", "board_holder"), ("washer_", "screw_"), ("washer_x_thrust", "rod_"), ("washer_x_thrust", "nut_x_thrust"), ("plunger_y", "body"), ("plunger_x", "y_plate"),
     # the detent balls stand 1.0 proud in the 0.8 gap: they press on the plate and click into a dimple at zero
     ("plunger_y", "y_plate"), ("plunger_x", "x_plate"),
     # rods: bushings, drive nuts, cap nuts, O-rings (stretched)

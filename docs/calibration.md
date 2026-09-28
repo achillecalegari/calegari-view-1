@@ -10,6 +10,10 @@ Take the sections in order. Section 1 happens before you print the big parts; th
 
 If you have used only digital or 35 mm cameras, these are the pieces that are new.
 
+![The camera from the front](img/cal/c_overview_front.jpg)
+
+![The camera from behind](img/cal/c_overview_rear.jpg)
+
 - **Lens and shutter.** Large-format lenses carry their own shutter, a little mechanism with the speeds and the aperture on it (*Copal 0* is its size). The camera body has no shutter and no electronics.
 - **Lens board.** A flat metal plate (99 x 96 mm, the *Technika* size) with the lens screwed into it. Each lens lives on its own board; changing lens means changing board, which takes ten seconds.
 - **Helicoid.** The focusing tube between the camera and the lens board. Turning it moves the lens forward and back. The printed **focus ring** with its lever sits on it.
@@ -24,6 +28,8 @@ If you have used only digital or 35 mm cameras, these are the pieces that are ne
 Software cannot check your own back, your ground glass, or how your printer makes a sliding fit. Print `plate_00a_shrink_gauge` and set the shrinkage (see [printing](printing.md#shrinkage-calibrate-it-before-anything-else)), then `plate_00b_test_1` and `plate_00c_test_thread_0.12mm_layers` in the ASA you will use. About four hours in all.
 
 ### Does my back fit?
+
+![The back on the test module](img/cal/c_back_fit.jpg)
 
 1. Assemble the test module as in [assembly step 2](assembly.md#2-graflok-module-clamp-blade-and-wheel), with its inserts: if it fits, it is the module you will use.
 2. Lay the module seat face down on a sheet of glass or a mirror. The glass plays the part of the camera body.
@@ -64,6 +70,8 @@ If something does not fit, measure the back and change the numbers in `cad/param
 
 The test plate has ten 40 mm slices of the real dovetail ways. They tell you in five minutes whether the movements will slide on your printer.
 
+![The dovetail coupons](img/cal/c_dovetails.jpg)
+
 1. **Fixed side.** Stand `coupon_way_y_fixed` on its base on the table and slide `coupon_lip_y_left` along it, its slanted edge under the rail's slanted edge and its back resting on the rail's thin flange. It must slide by hand with a light, even drag, and must not rock up or down.
 2. **Gib side.** Stand `coupon_way_y_gib` on its base, lay `coupon_gib_y` in its pocket (dimple outward), slide `coupon_lip_y_right` in, and turn one M3 x 6 grub screw into the middle hole until the play is gone. It must still slide.
 3. **Horizontal ways.** Repeat with the `x` coupons.
@@ -79,11 +87,15 @@ A light coat of dry PTFE on the flanks makes any fit smoother; file off a layer 
 
 ### Do the metal parts fit the printed ones?
 
+![Shrinkage, thread and flange](img/cal/c_metal_fit.jpg)
+
 - **M65 coupon** (printed at 0.12 mm, like the adapter). It must screw into the front of your helicoid by hand, with no wobble and no forcing. Tight: lower `M65` in `params.py` by 0.1. Loose: raise it by 0.1.
 - **Flange coupon.** The RafCamera metal flange must drop into the pocket and sit flush, with its four threaded holes over the four countersunk holes. If it does not go in, check the shrinkage setting before changing anything else.
 - **Shrinkage gauge.** It must measure 100.0 mm, plus or minus 0.1, on both sides.
 
 ### Measure your helicoid
+
+![How far the helicoid turns](img/cal/c_helicoid_turn.jpg)
 
 1. **How far does it turn?** Screw it fully in, put a piece of tape on the fixed part and a mark on the grip, and count the degrees (or turns) to fully out. Chinese M65 17-31 helicoids turn anywhere from about 170 to 310 degrees. Write the value in `HELI_ROT` in `params.py` and the turning direction in `FOCUS_DIR`, then export the focus ring again: the distance dots move with it.
 2. **Rear thread length.** Measure the male thread at the back: 5 mm or less, or it will not seat in the metal flange.
@@ -93,16 +105,22 @@ A light coat of dry PTFE on the flanks makes any fit smoother; file off a layer 
 
 A single pinhole of light ruins a roll. This test takes ten minutes and finds it before you waste film.
 
+![Light test](img/cal/c_light_test.jpg)
+
 1. **From inside.** In a dark room, remove the lens board. Wait two minutes for your eyes to adapt. Shine a strong torch into the camera through the lens opening, and look from behind through the window of the body (no back mounted). You should see the torch only through the window, never around the plates.
 2. **From outside.** Put a white sheet of paper behind the body window and move the torch around every edge and gap of the plates, the knobs and the Graflok module. The paper must stay black.
 3. **Repeat at the four corners of the movements:** both knobs at +25 and at -25 mm, in the four combinations.
 4. **Film test.** Load a roll, put the lens cap on, leave the camera in the sun for ten minutes at maximum shift, then develop. The film must come out clear.
 
-**If there is a leak:** it is almost always a velvet edge that lifts, a plug G that is not flush, or an insert standing proud. Press the velvet down, reseat the plug, or file the insert flush.
+**If there is a leak:** it is almost always a velvet edge that lifts, a velvet disc missing over a rise-turret screw, or an insert standing proud. Press the velvet down, put the disc back, or file the insert flush.
 
 ## 3. Infinity: teach the camera where infinity is
 
 **What you are doing.** You focus the lens on something very far away, looking at the ground glass, and then fix the focus ring on the helicoid at the angle where its hidden stop rests on the pin of the lens panel. After that, turning the ring to its stop always gives infinity, its red dot faces the red index, and the white distance dots are correct.
+
+![Focus ring and lens panel marks](img/cal/c_infinity_front.jpg)
+
+![The hidden stop](img/cal/c_infinity_stop.jpg)
 
 **You need:** the ground glass, a loupe, a dark cloth (or a dark jacket), a 1.5 mm hex key for the grub screws, and a day with something at least 200 m away (a church tower, a crane, a mountain).
 
@@ -129,6 +147,10 @@ With one lens, section 3 is all you need. A second lens will usually reach infin
 
 The shims are on `print/plates/plate_07_shims_0.2mm_layers.3mf`: 0.4, 0.6, 0.8, 1.0 and 1.2 mm. Print them with 0.2 mm layers (the plate says so). The notches on the rim tell the thickness: count them and multiply by 0.2 mm.
 
+![A shim under the shutter](img/cal/c_shim.jpg)
+
+![Measure h](img/cal/c_shim_measure.jpg)
+
 1. **Measure lens 1.** With the first lens at infinity (ring on its stop), measure with the depth rod of the caliper from the front face of the lens panel to the front face of the board holder, at the top left corner. Write it down: h1.
 2. **Measure lens 2.** Put the second board in. Loosen the ring's grub screws, so the stop does not hold you, and focus at infinity on the ground glass with the helicoid grip, as in section 3. Measure the same way: h2.
 3. **Compare.**
@@ -145,7 +167,11 @@ Write the shim on a strip of tape on the back of the board.
 
 The frosted surface of the ground glass must sit exactly where the film sits, or what is sharp on the glass is soft on film. The Graflok standard takes care of it, but glasses and backs vary.
 
+![The tape measure test](img/cal/c_tape_test.jpg)
+
 **Simple test (no tools).** Put a tape measure on a table at 45 degrees to the camera, 1 m away. Focus on the 100 cm mark at the widest aperture on the ground glass, then take a picture on film at the widest aperture: the depth of field is then smallest, so the test is sharpest. On the negative, the sharpest mark must be the 100 cm one. If it is clearly closer or further, the glass and the film disagree.
+
+![Film and ground glass at the same depth](img/cal/c_film_plane.jpg)
 
 **Measured test.** With the depth rod of the caliper, measure from the back's nose face to the frosted surface of the glass at five points (centre and four corners), then from the nose face of the film back to its inner film rails (where the emulsion lies, not the outer rails that carry the backing paper). The two must agree within 0.05 mm.
 
@@ -154,6 +180,8 @@ If they do not, shim the ground glass rather than the back: Mercury sells its gl
 ## 6. Lens panel parallel to the film
 
 If the lens is not parallel to the film, one side of the picture is sharper than the other.
+
+![Lens board parallel to the film](img/cal/c_parallel.jpg)
 
 1. With the caliper's depth rod, measure from the back face of the Graflok module to the front face of the lens board, at the four corners of the board.
 2. The four readings must agree within 0.1 mm.
@@ -187,8 +215,11 @@ If one corner is always off, check the plates for flatness with the straightedge
 
 The camera's own openings were checked with a ray trace (`cad/optics_check.py`) from the lens to the four corners of the 6x7 frame:
 
+![Shift limits](img/cal/c_limits.jpg)
+
 - **One movement at a time.** Rise, fall or shift up to the full 25 mm leave the corners clean at f/22 and at f/8, from infinity down to about 0.9 m.
 - **Rise and shift together.** Up to 22 + 22 mm are clean at infinity; at f/8, 20 + 20. Focusing closer moves the lens forward and the lens panel starts to cut the far corner, so large combined movements are an infinity setting. The ground glass shows it: look into each corner from a hand's width away, toward the lens. If you see the whole round aperture, the corner is covered.
-- **The lens's image circle.** The Super-Angulon 65/8 (153.5 mm) covers about 22 + 22 mm; the Nikkor-SW 65/4 and Grandagon-N 65/4.5 (170 mm) cover more than the camera allows. Measure a lens's rear cell before buying: a cell longer than about 33 mm behind the shutter flange, or wider than 54 mm, can touch the openings at big shifts.
+- **The lens's image circle.** The Super-Angulon 65/8 (153.5 mm) covers about 22 + 22 mm; the Nikkor-SW 65/4 and Grandagon-N 65/4.5 (170 mm) cover more than the camera allows. Measure a lens's rear cell before buying. The adapter and the board holder leave a 59 mm bore: the Nikkor-SW's 54 mm rear cell clears it by 2.5 mm all round. A cell wider than about 58 mm, or longer than about 33 mm behind the shutter flange, can touch the openings at big shifts.
+- **Flange focal distance.** The camera is drawn for 70.5 mm from the shutter flange to the film at infinity (the Super-Angulon 65/8). A lens that needs more, such as a Nikkor-SW quoted at 70.8 to 71 mm, simply runs the helicoid out a little further: 14 mm of travel, about 7 used to focus at 0.7 m. A lens that needs up to 1 mm less uses the helicoid's margin; beyond that, reprint the adapter ring thinner (section 3).
 - **Portrait on the side plate.** The model checks a 65 x 65 mm clamp; much larger clamps may touch the lens panel at full shift toward the clamp.
 - **Fall.** At full fall the Y plate clears a 65 mm clamp's jaws by about 4 mm.

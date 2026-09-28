@@ -338,7 +338,7 @@ def graflok_wheel():
 # --------------------------------------------------------------------------
 # Y PLATE (rise and fall), front face on the bed
 # --------------------------------------------------------------------------
-X_CHAN = (-(SHIFT_X + 9.3), SHIFT_X + 9.3)   # turret travel = hard stops
+X_CHAN = (-(SHIFT_X + 9.3) - X_THRUST, SHIFT_X + 9.3)   # turret travel = hard stops (the thrust nut on the right)
 X_FLOOR = X_SCREW_Z - NUT_AF / 2 - NUT_FLOAT - 0.8   # channel floor: 0.8 under the drive nut
 X_DETENT = (-50.0, -52.0)            # off to the side: its through hole stays outside both velvets
 Y_TURRET_SCREWS = ((Y_SCREW_X, -6.5), (Y_SCREW_X, 6.5))
@@ -485,12 +485,13 @@ def y_plate_part():
             p -= cyl_z(2.45, YP_Z0 - 1, YP_Z0 + 3.5, xx, s_ * X_WAY_SCREW_U)
 
     # horizontal screw channel (top): the floor clears the drive nut by 0.8 mm; bushings in the end walls;
-    # the rod runs through the plate to a cap nut on the photographer's left edge, knob on the right
+    # the rod enters from the knob side (photographer's right) and ends in a blind seat on the left:
+    # nothing shows on the left edge
     p -= box_at(X_CHAN[0], X_CHAN[1], X_SCREW_Y - CHAN_W / 2, X_SCREW_Y + CHAN_W / 2, X_FLOOR, YP_Z1 + 1)
     p -= cyl_x(BUSH_OD / 2 + 0.05, X_CHAN[0] - BUSH_L, X_CHAN[0] + 0.1, X_SCREW_Y, X_SCREW_Z)
     p -= cyl_x(BUSH_OD / 2 + 0.05, X_CHAN[1] - 0.1, X_CHAN[1] + BUSH_L, X_SCREW_Y, X_SCREW_Z)
+    p -= cyl_x(ROD_D / 2 + 0.4, X_CHAN[1] + BUSH_L - 0.1, X_CHAN[1] + BUSH_L + 1.5, X_SCREW_Y, X_SCREW_Z)   # room for the rod tip
     p -= cyl_x(ROD_D / 2 + 0.4, -H - 1, X_CHAN[0], X_SCREW_Y, X_SCREW_Z)
-    p -= cyl_x(ROD_D / 2 + 0.4, X_CHAN[1], H + 1, X_SCREW_Y, X_SCREW_Z)
     p -= cyl_x(4.6, -H - 1, -H + ORING_SEAT, X_SCREW_Y, X_SCREW_Z)
 
     # front: detent plunger for the lens panel, a through hole (set it from behind)
@@ -584,6 +585,8 @@ def x_plate_part():
     p -= box_at(-9.45, 9.45, X_SCREW_Y - CHAN_W / 2 + 0.55, X_SCREW_Y + CHAN_W / 2 - 0.55, z0 - 1, z0 + 0.3)   # lead-in
     for x, y in TURRET_SCREWS:
         p -= cyl_z(2.05, z0 + TURRET_KEY - 0.01, z0 + TURRET_KEY + 2.3, x, y)
+    # 0.5 mm relief over the shift rod: the thrust washer and nut turn under the panel's right half
+    p -= box_at(X_CHAN[0] - SHIFT_X - 0.8, -9.0, X_SCREW_Y - 3.0, X_SCREW_Y + 3.0, z0 - 1, z0 + 0.5)
     # rear detent dimple
     p -= Pos(*X_DETENT, z0 - 0.01) * Cone(0.9, 0.25, 0.37, align=Z_UP)
     # infinity stop pin (M3 x 4 socket screw standing on the front)
@@ -715,18 +718,21 @@ def holder_part():
         lip = schamfer(lip, [e for e in lip.edges().filter_by(Axis.X)
                              if e.center().Y > -BOARD_H / 2 + 1.9 and e.center().Z < z1 + 0.4], 1.4)
         h += lip
-    # spring latch: guide rails, two M2.5 screws (reached through the hood), spring channel, abutment
+    # spring latch, no hardware in sight: the latch slides in a 45 degree dovetail between two rails, the
+    # spring sits under a hood, and two M2.5 screws from the rear stand 1 mm proud of the front face as
+    # pins in two blind grooves under the latch (the groove ends are its stops, both ways)
     for s in (-1, 1):
-        h += box_at(s * 15.2, s * 18.0, BOARD_H / 2 - 0.2, BOARD_H / 2 + 26.0, z1 - 0.01, z1 + 4.0)
-    # the latch slides around two bosses; the screws clamp the bosses (tight, with a washer), not the latch
+        prof = [(s * 18.0, z1 - 0.01), (s * 15.6, z1 - 0.01), (s * 12.95, z1 + 2.65), (s * 12.95, z1 + 4.0), (s * 18.0, z1 + 4.0)]
+        face = make_face(Polyline(*[(x, BOARD_H / 2 - 0.2, z) for x, z in prof], close=True))
+        h += extrude(face, amount=26.2, dir=(0, 1, 0))
     for x in (-9.0, 9.0):
-        h += cyl_z(LATCH_BOSS_R, z1 - 0.01, z1 + 2.5, x, LATCH_SCREW_Y)
-        h -= cyl_z(1.05, z1 - 5.5, z1 + 2.6, x, LATCH_SCREW_Y)
+        h -= cyl_z(1.05, z0 - 1, z1 + 0.1, x, LATCH_SCREW_Y)                 # the screw forms its thread
+        h -= cyl_z(2.6, z0 - 0.1, z0 + 1.6, x, LATCH_SCREW_Y)                # head flush with the rear
     h -= cyl_y(2.2, BOARD_H / 2 + 9.0, BOARD_H / 2 + 22.5, 0.0, z1 + 1.3)                # spring channel
     h += box_at(-4.0, 4.0, BOARD_H / 2 + 22.0, BOARD_H / 2 + 26.0, z1 - 0.01, z1 + 4.0)   # spring abutment
-    # hood over the spring, bridging rail to rail
-    # hood over the spring, bridging rail to rail, behind the bosses (the latch goes on from the front)
-    hood = box_at(-18.0, 18.0, BOARD_H / 2 + 11.5, BOARD_H / 2 + 26.0, z1 + 4.0, z1 + 5.2)
+    # hood over the spring, rail to rail: it starts 1 mm over the top of the closed latch, so the spring
+    # never shows, and the latch slides under it when it is pulled up
+    hood = box_at(-18.0, 18.0, BOARD_H / 2 + 9.0, BOARD_H / 2 + 26.0, z1 + 4.0, z1 + 5.2)
     hood = sfillet(hood, hood.edges().filter_by(Axis.Y), 0.6)
     h += hood
     return h
@@ -744,8 +750,7 @@ def arc_slot(r, a, half, w, z0, z1):
 
 
 LATCH_LEN = 14.0
-LATCH_BOSS_R = 2.0
-LATCH_SCREW_Y = BOARD_H / 2 + 7.0        # inside the latch: the slot ends are its stops, both ways
+LATCH_SCREW_Y = BOARD_H / 2 + 7.0        # under the latch: the groove ends are its stops, both ways
 
 
 def holder_latch(locked=True):
@@ -754,11 +759,11 @@ def holder_latch(locked=True):
     z0 = BOARD_Z1 + 0.05
     oy = 0.0 if locked else LATCH_ENGAGE + 1.0
     y0, y1 = BOARD_H / 2 - LATCH_ENGAGE, BOARD_H / 2 - LATCH_ENGAGE + LATCH_LEN
-    l = box_at(-15, 15, y0, y1, z0, z0 + 2.4)
-    l = sfillet(l, l.edges().filter_by(Axis.Z), 1.0)
+    prof = [(-15.0, z0), (15.0, z0), (15.0, z0 + 0.2), (12.8, z0 + 2.4), (-12.8, z0 + 2.4), (-15.0, z0 + 0.2)]
+    l = extrude(make_face(Polyline(*[(x, y0, z) for x, z in prof], close=True)), amount=y1 - y0, dir=(0, 1, 0))
     travel = LATCH_ENGAGE + 1.0
-    for x in (-9.0, 9.0):
-        l -= Pos(x, LATCH_SCREW_Y - travel / 2, z0 - 1) * extrude(SlotCenterToCenter(travel, 2 * LATCH_BOSS_R + 0.3, rotation=90), amount=5)
+    for x in (-9.0, 9.0):                     # blind grooves in the rear face: the pins of the two screws
+        l -= Pos(x, LATCH_SCREW_Y - travel / 2, z0 - 1) * extrude(SlotCenterToCenter(travel, 2.9, rotation=90), amount=1 + 1.8)
     l = schamfer(l, [e for e in l.edges().filter_by(Axis.X)
                      if abs(e.center().Y - y0) < 0.01 and abs(e.center().Z - (z0 + 2.4)) < 0.01], 1.2)
     grip = box_at(-5.5, 5.5, y0 + 2.0, y0 + 6.0, z0 + 2.39, z0 + 4.4)

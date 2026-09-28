@@ -12,11 +12,11 @@ The two movements slide on printed dovetail ways: there are no linear guides to 
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| M6 threaded rod | stainless A2, DIN 976, 1 m | 1 | [Amazon.it](https://www.amazon.it/dp/B09MMFZBV2) | 7.61 EUR | select M6; cut 156 mm (rise) and 170 mm (shift), deburr the ends |
+| M6 threaded rod | stainless A2, DIN 976, 1 m | 1 | [Amazon.it](https://www.amazon.it/dp/B09MMFZBV2) | 7.61 EUR | select M6; cut 156 mm (rise) and 127 mm (shift), deburr the ends |
 | M6 hex nut, brass | 10 mm across flats | 2 | [Amazon.it](https://www.amazon.it/dp/B0F6V4BLQG) | 11.29 EUR / 15 | the two drive nuts |
-| M6 hex nut, stainless | DIN 934, A2 | 2 | [Amazon.it](https://www.amazon.it/dp/B0B6BYB1CN) | 10.19 EUR / 50 | pressed into the knobs |
-| M6 domed cap nut | DIN 1587, A2 | 2 | [Amazon.it](https://www.amazon.it/dp/B00AMB4JYA) | pack of 20 | one at the far end of each rod, fixed with Loctite 243 |
-| M6 washer | DIN 125, A2 | 1 | [Amazon.it](https://www.amazon.it/dp/B087QLYDLB) | pack of 50 | under the shift rod's cap nut |
+| M6 hex nut, stainless | DIN 934, A2 | 3 | [Amazon.it](https://www.amazon.it/dp/B0B6BYB1CN) | 10.19 EUR / 50 | two pressed into the knobs, one is the shift rod's thrust nut inside the channel |
+| M6 domed cap nut | DIN 1587, A2 | 1 | [Amazon.it](https://www.amazon.it/dp/B00AMB4JYA) | pack of 20 | at the bottom of the rise rod, fixed with Loctite 243 |
+| M6 washer | DIN 125, A2 | 1 | [Amazon.it](https://www.amazon.it/dp/B087QLYDLB) | pack of 50 | under the shift rod's thrust nut, inside the channel |
 | Self-lubricating bushing | 6 x 8 x 6 mm, sintered bronze or wrapped | 4 | [Amazon.it](https://www.amazon.it/dp/B0C3H8R1YG) | pick 6x8x6 | pressed into the ends of the two screw channels |
 | M5 ball spring plunger | M5 x 10 or 12, hex socket at the back | 2 | [Amazon.de](https://www.amazon.de/dp/B0CD1XP9H9) | 12.20 EUR / 30 | zero detents; set from behind through the hole |
 | O-ring | NBR 70, 6 x 1.5 mm | 2 | [Amazon.it](https://www.amazon.it/dp/B0F7DXPHTC) | pick 6 x 1.5 | knob drag |
@@ -38,7 +38,7 @@ The two movements slide on printed dovetail ways: there are no linear guides to 
 | M3 x 6 button head | ISO 7380, A2 | 4 | [Amazon.it](https://www.amazon.it/dp/B01LWJPZPE) | pack of 20 | board holder to adapter |
 | M3 x 6 hex-head bolt | DIN 933, A2 | 1 | [Amazon.it](https://www.amazon.it/dp/B07RWQ2N9J) | pack of 10 | Graflok clamp wheel |
 | M2.5 x 16 socket head | ISO 4762, A2 | 8 | [Amazon.it](https://www.amazon.it/dp/B0CP5LFF6V) | pick M2.5, 16 mm | horizontal rails, from the Y plate rear |
-| M2.5 x 6 button head, M2.5 washer | ISO 7380, DIN 125, A2 | 2 + 2 | [Amazon.de](https://www.amazon.de/dp/B0F3HNGTY5) | 8.59 EUR / 900 | board latch: they clamp the two bosses, the latch slides under them |
+| M2.5 x 6 button head | ISO 7380, A2 | 2 | [Amazon.de](https://www.amazon.de/dp/B0F3HNGTY5) | 8.59 EUR / 900 | board latch: from the back of the holder, their tips are the latch stops |
 | M4 x 45 socket head | ISO 4762, stainless | 2 | [Amazon.de](https://www.amazon.de/dp/B09SKJKNPM) | pick 45 mm | top handle |
 | M3 x 6 grub screw, cone point | ISO 7434 / DIN 914, A2 | 8 | [Amazon.it](https://www.amazon.it/dp/B09MQ2TGL9) | assortment | gib strips (6) and knobs (2) |
 | M3 x 4 grub screw, nylon tip | stainless | 4 | [Amazon.de](https://www.amazon.de/dp/B0DNMYPZZ3) | 8.29 EUR / 15 | focus ring; they do not mark the helicoid |
@@ -80,7 +80,7 @@ The ground glass is sold out at Mercury at the time of writing. Any Graflok 23 g
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
 | Filament | Bambu Lab ASA, 1 kg: black, plus red and white | 1 or 2 black, small amounts of red and white | [Bambu Lab EU](https://eu.store.bambulab.com/products/asa-filament) | 24.99 EUR each | about 750 g black plus 120 g of tests; a few grams of red and white |
-| Threadlocker | Loctite 243, medium, 10 ml | 1 | [Amazon.it](https://www.amazon.it/dp/B0D8L2RR6S) | 15.15 EUR | the two cap nuts on the rods; metal to metal only: anaerobic threadlockers can crack ASA |
+| Threadlocker | Loctite 243, medium, 10 ml | 1 | [Amazon.it](https://www.amazon.it/dp/B0D8L2RR6S) | 15.15 EUR | the rise cap nut and the shift thrust nut; metal to metal only: anaerobic threadlockers can crack ASA |
 | Epoxy | UHU Plus Endfest 300, 2 parts | 1 | [Amazon.it](https://www.amazon.it/dp/B000KJP0QK) | 10.90 EUR | bonds the shift nut turret and the two levels |
 | Threadlocker, low strength | Loctite 222 | 1 | [Amazon.it](https://www.amazon.it/dp/B00AGG6Y30) | 10 ml | helicoid into the flange, Graflok blade guide screws (into brass inserts) |
 

@@ -118,10 +118,14 @@ KNOB_D, KNOB_H = 24.0, 15.0
 KNOB_GAP = 0.3                       # the knob rides on its O-ring, 0.3 mm off the face (the builder sets the drag)
 ORING_T = 1.5                        # drag O-ring under each knob (constant friction, no lock wheels)
 ORING_SEAT = 1.1                     # seat depth: the 1.5 mm O-ring stands 0.4 proud and is squeezed by the knob
-CAP_NUT_H = 12.0                     # DIN 1587 M6 domed cap nut at the far end of each rod (Loctite on the bench)
+CAP_NUT_H = 12.0                     # DIN 1587 M6 domed cap nut at the bottom of the rise rod (Loctite on the bench)
 Y_CAP_ROD_END = -62.5 - 7.5          # the rise rod ends 7.5 mm inside its cap nut (DIN 1587: about 8 mm of thread)
-X_CAP_ROD_END = 7.5 + 1.6            # 7.5 mm inside its cap nut, which sits on a DIN 125 washer at the Y plate's left edge
-ROD_Y_LEN, ROD_X_LEN = 156.0, 170.0
+# The shift rod shows nothing on the photographer's left: it ends inside a blind bushing seat. Both thrusts
+# are on the knob side: the knob outside the right end wall, a DIN 125 washer and a DIN 934 nut (Loctite 243)
+# inside the channel against the right bushing.
+X_THRUST = 1.6 + 5.0                 # washer + nut, inside the channel
+X_ROD_RIGHT = -(74.0 + 12.9)         # the rod ends 12.9 mm beyond the right edge, inside the knob
+ROD_Y_LEN, ROD_X_LEN = 156.0, 127.0
 
 # --------------------------------------------------------------------------
 # Tripod plates and handles

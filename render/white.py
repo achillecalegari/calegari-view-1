@@ -131,10 +131,12 @@ def area(name, loc, energy, sx, sy_=None, color=(1, 1, 1)):
     return o
 
 S = size
-area("top", (ctr.x, ctr.y - 0.2 * S, ctr.z + 2.2 * S), 55, 2.2 * S)
-area("left", (ctr.x - 1.8 * S, ctr.y - 0.8 * S, ctr.z + 0.6 * S), 30, 1.6 * S)
-area("right", (ctr.x + 1.8 * S, ctr.y - 0.6 * S, ctr.z + 0.5 * S), 22, 1.6 * S)
-area("rim", (ctr.x + 0.6 * S, ctr.y + 1.6 * S, ctr.z + 0.9 * S), 30, 0.2 * S, 1.8 * S)
+# LIGHTSCALE=1 (figures): light energy follows the scene size, so a small part is lit like the whole camera
+LK = (S / 0.34) ** 2 if __import__("os").environ.get("LIGHTSCALE") else 1.0
+area("top", (ctr.x, ctr.y - 0.2 * S, ctr.z + 2.2 * S), 55 * LK, 2.2 * S)
+area("left", (ctr.x - 1.8 * S, ctr.y - 0.8 * S, ctr.z + 0.6 * S), 30 * LK, 1.6 * S)
+area("right", (ctr.x + 1.8 * S, ctr.y - 0.6 * S, ctr.z + 0.5 * S), 22 * LK, 1.6 * S)
+area("rim", (ctr.x + 0.6 * S, ctr.y + 1.6 * S, ctr.z + 0.9 * S), 30 * LK, 0.2 * S, 1.8 * S)
 
 w = sc.world = bpy.data.worlds.new("w")
 w.use_nodes = True
@@ -204,11 +206,12 @@ if pts_file:                                   # project callout points to pixel
     bpy.context.view_layer.update()
     data = json.load(open(pts_file))
     rx, ry = sc.render.resolution_x, sc.render.resolution_y
-    for lab in data["labels"]:
-        px = []
-        for p in lab["points"]:
-            v = world_to_camera_view(sc, co, root.matrix_world @ Vector(p))
-            px.append([v.x * rx, (1 - v.y) * ry])
-        lab["px"] = px
+    for key in ("labels", "guides", "lines"):
+        for lab in data.get(key, []):
+            px = []
+            for p in lab["points"]:
+                v = world_to_camera_view(sc, co, root.matrix_world @ Vector(p))
+                px.append([v.x * rx, (1 - v.y) * ry])
+            lab["px"] = px
     json.dump(data, open(out.rsplit(".", 1)[0] + ".json", "w"), indent=1)
 bpy.ops.render.render(write_still=True)
