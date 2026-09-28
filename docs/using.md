@@ -56,7 +56,7 @@ Each lens stays on its own board; you change the board, not the lens.
 2. **Hold the lens.** Put one hand around the lens first: with the latch up, only the two bottom lips hold the board, and the lens's weight tips it forward.
 3. **Unlatch.** Push the red latch above the board up with your thumb.
 4. **Lift out.** Tilt the top of the board toward you and lift it out of the two lips at the bottom. Put the rear cap on it.
-5. **Put the other one in.** Rear cap off, bottom edge under the two lips, press the top in: it pushes the latch up and the latch snaps down over it.
+5. **Put the other one in.** Rear cap off, bottom edge under the two lips, lift the latch with your thumb, press the top in and let the latch go: it drops over the board.
 6. **Check.** The board does not move when you push it.
 
 If every board has its shim (see [calibration, section 4](calibration.md#4-more-lenses-one-stop-for-all-of-them)), infinity is still on the stop and the distance dots still read right. Without shims, focus on the ground glass.

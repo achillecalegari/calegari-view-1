@@ -73,15 +73,15 @@ WAY_FL_IN = WAY_UI - 1.0             # flange inner edge (bearing under the lip)
 WAY_ANG = 60.0
 Y_LIP, X_LIP = 2.6, 4.0              # lip heights of the Y plate and of the lens panel
 Y_WAY_H = WAY_FL + Y_LIP + 1.8       # Y rails stay under the Y plate front (the X knob passes over them)
-GIB_T = {"y": 2.3, "x": 1.5}      # gib strip thickness per stage (same outer wall for the grubs)
+GIB_T = {"y": 1.8, "x": 1.5}      # gib strip thickness per stage (1.8 on Y: 0.95 mm of wall to the rail screws)
 GIB_BACK = 0.4                       # room behind the gib: an oversize print still goes together
 FLANK_C = 0.05                       # clearance on the flanks, as modelled (the gib takes it up)
 EDGE_C = 0.3
-WAY_SCREW_U = 70.5
+WAY_SCREW_U = 70.25                  # M3 countersunk into M3 inserts: 1.7 mm of body wall outside the insert
 Y_WAY_SCREWS = {1: (-58.0, -20.0, 20.0, 58.0), -1: (-58.0, -43.0, -20.0, 20.0, 43.0)}   # from the body rear (clear of the dark slide and the vial)
 X_WAY_SCREWS = (-54.0, -18.0, 18.0, 36.0)
 GIB_GRUBS = {"y": (-50.0, 0.0, 50.0), "x": (-40.0, 0.0, 50.0)}   # cone-point grubs into dimples in the gib
-X_WAY_SCREW_U = 71.0                 # M2.5 screws from the Y plate rear into inserts in the X rails
+X_WAY_SCREW_U = 71.0                 # M3 x 16 from the Y plate rear into tapped holes in the X rails
 
 # M6 drive screws
 ROD_D = 6.0
@@ -118,8 +118,7 @@ KNOB_D, KNOB_H = 24.0, 15.0
 KNOB_GAP = 0.3                       # the knob rides on its O-ring, 0.3 mm off the face (the builder sets the drag)
 ORING_T = 1.5                        # drag O-ring under each knob (constant friction, no lock wheels)
 ORING_SEAT = 1.1                     # seat depth: the 1.5 mm O-ring stands 0.4 proud and is squeezed by the knob
-CAP_NUT_H = 12.0                     # DIN 1587 M6 domed cap nut at the bottom of the rise rod (Loctite on the bench)
-Y_CAP_ROD_END = -62.5 - 7.5          # the rise rod ends 7.5 mm inside its cap nut (DIN 1587: about 8 mm of thread)
+Y_CAP_ROD_END = -62.5 - 7.5          # the rise rod ends about 1 mm past its end nut (washer 1.6 + DIN 934 nut 5 under the shoulder)
 # The shift rod shows nothing on the photographer's left: it ends inside a blind bushing seat. Both thrusts
 # are on the knob side: the knob outside the right end wall, a DIN 125 washer and a DIN 934 nut (Loctite 243)
 # inside the channel against the right bushing.

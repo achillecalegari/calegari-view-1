@@ -326,13 +326,12 @@ def graflok_blade(locked=True):
 def graflok_wheel():
     """Knurled thumbwheel that clamps the blade (M3 screw into the module insert)."""
     z1 = GF_Z0 - 2.2
-    w = cyl_z(7.0, z1 - 4.0, z1)
+    w = cyl_z(7.0, z1 - 3.0, z1)
     for i in range(24):
-        w -= Rot(0, 0, i * 15) * Pos(7.3, 0, z1 - 2.0) * Cylinder(0.7, 5)
-    w -= cyl_z(1.7, z1 - 5, z1 + 1)
-    # round pocket for the head of an M3 x 6 socket screw, glued in: turning the wheel turns the screw
-    w -= cyl_z(2.85, z1 - 4.1, z1 - 1.0)
-    w -= Pos(0, 0, z1 - 4.01) * Cone(3.25, 2.85, 0.4, align=Z_UP)                  # lead-in (bed face)
+        w -= Rot(0, 0, i * 15) * Pos(7.3, 0, z1 - 1.5) * Cylinder(0.7, 4)
+    w -= cyl_z(1.7, z1 - 4, z1 + 1)
+    # 90 degree seat for an M3 x 8 countersunk screw, glued in: turning the wheel turns the screw
+    w -= Pos(0, 0, z1 - 3.01) * Cone(3.2, 1.6, 1.61, align=Z_UP)
     return Pos(*WHEEL_XY, 0) * w
 
 
@@ -405,7 +404,7 @@ def way_rail(stage, side, gib):
     if stage == "y":                                  # M3 countersunk from the top into the body inserts
         for yy in Y_WAY_SCREWS[side]:
             r -= cyl_z(1.6, z0 - 1, z0 + h + 1, su, yy)
-            r -= Pos(su, yy, z0 + h - 1.8) * Cone(1.6, 3.2, 1.81, align=Z_UP)
+            r -= Pos(su, yy, z0 + h - 1.6) * Cone(1.6, 3.2, 1.61, align=Z_UP)            # 90 degrees, like the head
     else:                                             # tapped M3 in the solid rail, screws from the Y plate rear
         for xx in X_WAY_SCREWS:
             r -= cyl_z(1.25, z0 - 0.1, z0 + 6.2, xx, side * X_WAY_SCREW_U)
@@ -428,8 +427,8 @@ def way_rail(stage, side, gib):
                 ends.append(e)
     if ends:
         r = sfillet(r, ends, CORNER_R)
-    if stage == "y":                                  # clearance for the shift knob and the cap-nut washer
-        cham = [(WAY_UO - 1.2, h + 0.01), (WAY_UO + 0.01, h + 0.01), (WAY_UO + 0.01, h - 1.2)]
+    if stage == "y":                                  # small outer chamfer (the countersinks stay whole)
+        cham = [(WAY_UO - 0.6, h + 0.01), (WAY_UO + 0.01, h + 0.01), (WAY_UO + 0.01, h - 0.6)]
         r -= prism(cham, "y", side, z0, -H - 1, H + 1)
     if stage == "x" and not gib:                      # shift index, read against the dots of the lens panel
         r -= Pos(*X_INDEX, z0 + h) * dot(2.6, 0.6)
@@ -479,7 +478,7 @@ def y_plate_part():
         p -= extrude(lead, amount=2 * H + 2, dir=(1, 0, 0))
     # rear detent dimple
     p -= Pos(*Y_DETENT, YP_Z0 - 0.01) * Cone(0.9, 0.25, 0.37, align=Z_UP)   # 0.35 deep conical seat for the ball
-    # the horizontal rails are screwed from the rear (M2.5 x 16; 3.8 mm holes on the gib side: it floats)
+    # the horizontal rails are screwed from the rear (M3 x 16 into tapped holes; 4.2 mm holes on the gib side: it floats)
     for s_ in (-1, 1):
         for xx in X_WAY_SCREWS:
             p -= cyl_z(1.7 if s_ < 0 else 2.1, YP_Z0 - 1, YP_Z1 + 1, xx, s_ * X_WAY_SCREW_U)
@@ -590,7 +589,7 @@ def x_plate_part():
     p -= box_at(X_CHAN[0] - SHIFT_X - 0.8, -9.0, X_SCREW_Y - 3.0, X_SCREW_Y + 3.0, z0 - 1, z0 + 0.5)
     # rear detent dimple
     p -= Pos(*X_DETENT, z0 - 0.01) * Cone(0.9, 0.25, 0.37, align=Z_UP)
-    # infinity stop pin (M3 x 4 socket screw standing on the front)
+    # infinity stop pin (M3 x 6 grub in an insert, 3 mm standing on the front)
     p -= insert_hole(*STOP_PIN, z1, "+z", depth=5.5)
     # depth-of-field dots (f/11 small, f/22 large) and the focus index (red) above the ring
     r = INDEX_R
@@ -624,12 +623,12 @@ def x_turret():
     zb = X_FLOOR + 0.8
     t = box_at(-9, 9, X_SCREW_Y - CHAN_W / 2 + 1, X_SCREW_Y + CHAN_W / 2 - 1, zb, zt)
     t = sfillet(t, t.edges().filter_by(Axis.X), 1.0)
+    # open underneath along its whole length: it drops over the rod and the brass nut already on it
     t -= cyl_x(ROD_D / 2 + 0.8, -10, 10, X_SCREW_Y, X_SCREW_Z)
-    nut_r = (NUT_AF + 2 * NUT_FLOAT) / 2 / math.cos(math.pi / 6)
-    t -= Pos(-NUT_T / 2 - 0.15, X_SCREW_Y, X_SCREW_Z) * Rot(0, 90, 0) * Rot(0, 0, 90) * extrude(
-        RegularPolygon(nut_r, 6), amount=NUT_T + 0.3)
+    t -= box_at(-10, 10, X_SCREW_Y - ROD_D / 2 - 0.8, X_SCREW_Y + ROD_D / 2 + 0.8, zb - 1, X_SCREW_Z)
+    # straight nut slot, flats vertical: the walls stop the nut turning, the end faces carry the thrust
     t -= box_at(-NUT_T / 2 - 0.15, NUT_T / 2 + 0.15, X_SCREW_Y - NUT_AF / 2 - NUT_FLOAT,
-                X_SCREW_Y + NUT_AF / 2 + NUT_FLOAT, zb - 1, X_SCREW_Z)
+                X_SCREW_Y + NUT_AF / 2 + NUT_FLOAT, zb - 1, X_SCREW_Z + NUT_AF / 2 / math.cos(math.pi / 6) + 0.35)
     for x, y in TURRET_SCREWS:                        # two locating pegs for the bond
         t += cyl_z(1.9, zt - 0.01, zt + 2.0, x, y)
     return t
@@ -711,7 +710,12 @@ def holder_part():
     # turns +/-25 deg on the adapter, and with eight inserts in the adapter every slot always finds one
     for a in HOLDER_SLOTS:
         h -= arc_slot(ADAPTER_SCREW_R, a, 25.0, 1.7, z0 - 1, BOARD_Z0 + 1)
-        h -= arc_slot(ADAPTER_SCREW_R, a, 25.0, 3.1, BOARD_Z0 - 3.3, BOARD_Z0 + 1)
+        # countersunk M3 x 8, flush under the board: the cone bears on the full 4.5 mm wall (no thin ledge)
+        # (stepped cone: each 0.25 mm step as wide as the 90 degree head at the top of the step, head 0.1 under the seat)
+        for k in range(8):
+            d = max(0.25 * k, 0.1)
+            w = max(3.0 - (d - 0.1), 1.7) + 0.03
+            h -= arc_slot(ADAPTER_SCREW_R, a, 25.0, w, BOARD_Z0 - 0.25 * (k + 1), BOARD_Z0 + 1)
     # bottom lips, anchored on the frame, 0.3 mm over the board, chamfered underneath (print without sag)
     for sx_ in (-1, 1):
         h += box_at(sx_ * 30 - 9, sx_ * 30 + 9, -BOARD_H / 2 - 4, -BOARD_H / 2 - 0.2, z1 - 0.01, z1 + 1.8)
@@ -720,7 +724,7 @@ def holder_part():
                              if e.center().Y > -BOARD_H / 2 + 1.9 and e.center().Z < z1 + 0.4], 1.4)
         h += lip
     # spring latch, no hardware in sight: the latch slides in a 45 degree dovetail between two rails, the
-    # spring sits under a hood, and two M2.5 screws from the rear stand 1 mm proud of the front face as
+    # spring sits under a hood, and two M3 x 6 grubs from the rear stand 1 mm proud of the front face as
     # pins in two blind grooves under the latch (the groove ends are its stops, both ways)
     for s in (-1, 1):
         prof = [(s * 18.0, z1 - 0.01), (s * 15.6, z1 - 0.01), (s * 12.95, z1 + 2.65), (s * 12.95, z1 + 4.0), (s * 18.0, z1 + 4.0)]
@@ -754,8 +758,8 @@ LATCH_SCREW_Y = BOARD_H / 2 + 7.0        # under the latch: the groove ends are 
 
 
 def holder_latch(locked=True):
-    """Spring slider: pull up to release, a spring (4 x 15) pushes it back with 4 mm engagement. The lower
-    front edge is chamfered: a board pressed in pushes the latch up and it snaps back over it."""
+    """Spring slider: lift it with a thumb to change the board, a spring (4 x 15) pushes it back down with
+    4 mm of engagement over the board's top edge."""
     z0 = BOARD_Z1 + 0.05
     oy = 0.0 if locked else LATCH_ENGAGE + 1.0
     y0, y1 = BOARD_H / 2 - LATCH_ENGAGE, BOARD_H / 2 - LATCH_ENGAGE + LATCH_LEN
@@ -817,7 +821,7 @@ def knob_part():
 
 
 # --------------------------------------------------------------------------
-# HANDLES (printed on their side, bolted with M4 x 50 through the posts)
+# HANDLES (printed on their side, bolted with M3 x 20 down the posts)
 # --------------------------------------------------------------------------
 def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POST, flare=HANDLE_FLARE):
     """Loop handle, profile in XY (u = X, protrusion +Y), extruded along Z. The feet flare into the

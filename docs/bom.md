@@ -19,7 +19,7 @@ The two movements slide on printed dovetail ways: there are no linear guides to 
 | M6 hex nut, stainless | DIN 934, A2 | 4 | [Amazon.it](https://www.amazon.it/dp/B0B6BYB1CN) | [AliExpress](https://it.aliexpress.com/item/1005006277948812.html): M6 | 10.19 EUR / 50 | two pressed into the knobs, two end the rods (the shift rod's thrust nut, the rise rod's end nut) |
 | M6 washer | DIN 125, A2 | 2 | [Amazon.it](https://www.amazon.it/dp/B087QLYDLB) | [AliExpress](https://it.aliexpress.com/item/4000174460068.html): M6 | pack of 50 | one under each end nut |
 | Self-lubricating bushing | 6 x 8 x 6 mm, sintered bronze or wrapped | 4 | [Amazon.it](https://www.amazon.it/dp/B0C3H8R1YG) | [AliExpress](https://it.aliexpress.com/item/1833939865.html): 0606 (composite) | pick 6x8x6 | pressed into the ends of the two screw channels |
-| M5 ball spring plunger | M5 x 10 or 12, hex socket at the back | 2 | [Amazon.de](https://www.amazon.de/dp/B0CD1XP9H9) | [AliExpress](https://it.aliexpress.com/item/32993163855.html): M5 x 10 | 12.20 EUR / 30 | zero detents; set from behind through the hole |
+| M5 ball spring plunger | M5 x 10 or 12, hex socket at the back, POM (plastic) ball; a steel ball also works | 2 | [Amazon.de](https://www.amazon.de/dp/B0CD1XP9H9) | [AliExpress](https://it.aliexpress.com/item/32993163855.html): M5 x 10 | 12.20 EUR / 30 | zero detents, set from behind through the hole. A POM ball clicks softer and never marks the printed plate: search "POM ball plunger M5" |
 | O-ring | NBR 70, 6 x 1.5 mm | 2 | [Amazon.it](https://www.amazon.it/dp/B0F7DXPHTC) | [AliExpress](https://it.aliexpress.com/item/1005004891402236.html): OD 9 (= 6 x 1.5) | pick 6 x 1.5 | knob drag |
 | Compression spring | 4 mm OD x 15 mm, light | 1 | [Amazon.it](https://www.amazon.it/dp/B0CTJVH96W) | [AliExpress](https://it.aliexpress.com/item/1005009455656166.html): OD 4, L 15 | pick 4 mm x 15 mm | board latch |
 | Dry PTFE lubricant | spray, dries to a film | 1 | [Amazon.it](https://www.amazon.it/dp/B07C7H4PLS) | buy locally | 400 ml | a light coat on the dovetails; candle wax also works |
@@ -31,8 +31,8 @@ All the small hardware is M3 stainless, and one insert fits every hole that has 
 | Item | Spec | Qty | Link | AliExpress | Price seen | Notes |
 |---|---|---|---|---|---|---|
 | Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 29 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | [AliExpress](https://it.aliexpress.com/item/1005004856964661.html): M3 x 3, check OD 5 | 7.99 EUR / 50 | every insert in the camera; the holes are drawn for this size |
-| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | [AliExpress](https://it.aliexpress.com/item/32810872544.html): stainless | 8.39 EUR / 1160 | uses x 6 (9), x 10 (2), x 16 (8), x 20 (2) |
-| M3 countersunk kit | ISO 10642, stainless, 6 to 30 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0GFDNBLK2) | [AliExpress](https://www.aliexpress.us/item/2255799859561116.html): M3 x 6 and x 8 | 8.99 EUR / 1292 | uses x 6 (6: flange and Graflok blade), x 8 (9: vertical rails) |
+| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | [AliExpress](https://it.aliexpress.com/item/32810872544.html): stainless | 8.39 EUR / 1160 | uses x 6 (4), x 10 (2), x 16 (8), x 20 (2) |
+| M3 countersunk kit | ISO 10642, stainless, 6 to 30 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0GFDNBLK2) | [AliExpress](https://www.aliexpress.us/item/2255799859561116.html): M3 x 6 and x 8 | 8.99 EUR / 1292 | uses x 6 (6: flange and Graflok blade), x 8 (14: vertical rails, board holder, Graflok wheel) |
 | M3 x 6 grub screw | stainless, cup or cone point | 15 | [Amazon.it](https://www.amazon.it/dp/B09BMYYF9H) | [AliExpress](https://it.aliexpress.com/item/1005010543403767.html): M3 x 6 | assortment | gib strips (6), knobs (2), focus ring (4), stop pin (1), board latch (2) |
 
 ## Tripod and levels

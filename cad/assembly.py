@@ -61,7 +61,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     for x in P.BLADE_GUIDES_X:
         yb = P.BLADE_Y0 + 4.0 + (0 if blade_locked else 0)
         add(f"screw_blade_{x}", Pos(x, yb, GF_Z0 - 2.2) * orient(hw.countersunk(3, 6), "-z"), "black_steel", "blade", extra=(0, 0, -0.4))
-    add("screw_wheel", Pos(*P.WHEEL_XY, GF_Z0 - 2.2 - 1.0) * orient(hw.socket_cap(3, 6), "-z"), "black_steel", "blade", extra=(0, 0, -1.0))
+    add("screw_wheel", Pos(*P.WHEEL_XY, GF_Z0 - 2.2 - 3.0) * orient(hw.countersunk(3, 8), "-z"), "black_steel", "blade", extra=(0, 0, -1.0))
     for x in P.BLADE_GUIDES_X + (P.WHEEL_XY[0],):
         y = P.WHEEL_XY[1] if x == P.WHEEL_XY[0] else P.BLADE_Y0 + 4.0
         add(f"insert_blade_{x}", Pos(x, y, GF_Z0) * hw.heat_insert(3, 3.0), "brass", "graflok")
@@ -143,7 +143,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("bush_x_left", Pos(P.X_CHAN[1] + BUSH_L, yx, X_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "-x"), "bronze", "x_drive")
     add("washer_x_thrust", Pos(P.X_CHAN[0], yx, X_SCREW_Z) * orient(hw.washer(6, 12.0, 1.6), "+x"), "steel", "x_drive")
     add("nut_x_thrust", Pos(P.X_CHAN[0] + 1.6, yx, X_SCREW_Z) * orient(hw.hex_nut(6, h=5.0), "+x"), "steel", "x_drive")
-    add("nut_x_drive", Pos(sx - NUT_T / 2, yx, X_SCREW_Z) * orient(Rot(0, 0, 30) * hw.hex_nut(6, h=NUT_T), "+x"), "brass", "turret")
+    add("nut_x_drive", Pos(sx - NUT_T / 2, yx, X_SCREW_Z) * orient(hw.hex_nut(6, h=NUT_T), "+x"), "brass", "turret")
     add("oring_x", Pos(-H + ORING_SEAT - 0.75, yx, X_SCREW_Z) * Rot(0, 90, 0) * Torus(3.75, 0.75), "rubber", "x_knob")
     add("knob_x", Pos(-H - KNOB_GAP, yx, X_SCREW_Z) * orient(kn, "-x"), "body_black", "x_knob", True)
     add("inlay_knob_x", Pos(-H - KNOB_GAP, yx, X_SCREW_Z) * orient(kidx, "-x"), "red", "x_knob")
@@ -175,7 +175,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
         add(f"insert_adapter_{ang}", mv * Pos(x, y, HOLDER_Z0 - 3.0) * hw.heat_insert(3, 3.0), "brass", "adapter")
     for ang in P.HOLDER_SLOTS:
         x, y = P.ADAPTER_SCREW_R * math.cos(math.radians(ang)), P.ADAPTER_SCREW_R * math.sin(math.radians(ang))
-        add(f"screw_adapter_{ang}", mv * Pos(x, y, BOARD_Z0 - 3.3) * hw.socket_cap(3, 6), "black_steel", "holder", extra=(0, 0, 0.4))
+        add(f"screw_adapter_{ang}", mv * Pos(x, y, BOARD_Z0 - 0.1) * hw.countersunk(3, 8), "black_steel", "holder", extra=(0, 0, 0.4))
     add("board_holder", mv * P.holder_part(), "body_black", "holder", True)
     add("felt_board", mv * P.felt_board(), "felt", "holder")
     add("felt_adapter", mv * (P.cyl_z(36.3, HOLDER_Z0, HOLDER_Z0 + 0.8) - P.cyl_z(30.2, HOLDER_Z0 - 1, HOLDER_Z0 + 2)), "felt", "holder")

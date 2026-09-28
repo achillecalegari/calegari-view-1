@@ -103,7 +103,7 @@ Turn the body over and press the nine inserts E. They carry the vertical rails i
 
 | | What | Qty | How |
 |---|---|---|---|
-| **F** | M5 ball plunger | 1 | tap M5 through, screw in from the front, set from behind (D) |
+| **F** | M5 ball plunger (POM ball) | 1 | tap M5 through, screw in from the front, set from behind (D) |
 | **G** | bronze bushing 6 x 8 x 6 | 2 | one in each end wall of the screw channel |
 
 1. **F.** Tap M5 through the small hole beside the window. Screw the plunger in from the front, ball toward you, until its hex is inside. From behind (D), turn it with a hex key until the ball stands **1.0 mm** proud of the front face: lay the feeler gauge on the face next to it and a ruler across both, and stop when the ball touches the ruler. A small drop of epoxy on the thread at the back, scraped flush with the seat, locks the plunger and seals the hole.
@@ -135,7 +135,7 @@ The 1/4" inserts take 15 to 20 seconds each: go slowly and keep the iron vertica
 
 ## 2. Graflok module, clamp blade and wheel
 
-**You need:** the Graflok module, the blade, the wheel, 3 M3 inserts, 5 M3 x 6 socket heads, 2 M3 x 6 countersunk, Loctite 222, epoxy.
+**You need:** the Graflok module, the blade, the wheel, 3 M3 inserts, 4 M3 x 6 socket heads, 2 M3 x 6 countersunk, 1 M3 x 8 countersunk, Loctite 222, epoxy.
 
 If the module from the test plate fitted your back, use that one.
 
@@ -166,11 +166,11 @@ Drop the module into the rear recess, open side over the passage C, and fix it w
 |---|---|---|---|
 | **D** | the red blade | 1 | in the recess, tongues pointing up |
 | **E** | M3 x 6 countersunk | 2 | through the blade slots into the outer inserts, with Loctite 222 |
-| **F** | wheel with an M3 x 6 socket head | 1 | into the middle insert |
+| **F** | wheel with an M3 x 8 countersunk | 1 | into the middle insert |
 | **G** | nothing | | the fixed bottom rail: the back hooks under it |
 
 1. **D and E.** Lay the blade in the recess. Put a small drop of Loctite 222 on the two screws E, screw them through the blade slots until they just touch, then back them off a quarter turn: the blade must slide up and down under its own weight. Leave the threadlocker to set for an hour: the screws then stay where they are.
-2. **F.** Put a drop of epoxy in the round pocket at the back of the wheel and press the screw head into it, so the screw turns with the wheel. Once it has set, put the wheel over the U-slot of the blade and screw it in. Clockwise clamps the blade; anticlockwise frees it.
+2. **F.** Put a drop of epoxy in the cone at the back of the wheel and press the screw head into it, so the screw turns with the wheel. Once it has set, put the wheel over the U-slot of the blade and screw it in. Clockwise clamps the blade; anticlockwise frees it.
 
 **Check.** With the wheel loose, the blade slides the full length of its slots. With the wheel tight, it does not move.
 
@@ -255,7 +255,7 @@ The front standard is built as one unit on a clean flat table, then slides into 
 | | What | Qty | How |
 |---|---|---|---|
 | **A** | bronze bushing 6 x 8 x 6 | 2 | one in each end wall of the top screw channel |
-| **B** | M5 ball plunger | 1 | tap M5 through, screw in from the front, set from behind (C) |
+| **B** | M5 ball plunger (POM ball) | 1 | tap M5 through, screw in from the front, set from behind (C) |
 | **H** | nothing yet | | the shift rod goes in here, and the knob sits here (5k) |
 
 Ream and press the bushings as in 1c. The left seat is blind: nothing of the rod will show on that edge.
@@ -322,7 +322,7 @@ Put a thin layer of epoxy on the top of the turret J, press it into its pocket a
 | **W** | stainless M6 nut (thrust nut) | 1 | next, with Loctite 243 |
 | **X** | brass M6 nut (drive nut) | 1 | last |
 
-Lay the Y plate front up. Push the rod in from the right edge, through the edge hole and the right bushing, into the channel. In the channel, thread onto its tip, one after the other, the washer U, the thrust nut W and the brass nut X: hold each one and turn the rod to feed it through. Push on until the tip stops at the bottom of the left seat, then pull the rod back 1 mm. Put a drop of Loctite 243 on the rod just inside the right bushing, run the thrust nut back until it presses the washer against the bushing, and let it set for an hour.
+Lay the Y plate front up. Push the rod in from the right edge, through the edge hole and the right bushing, into the channel. In the channel, thread onto its tip, one after the other, the washer U, the thrust nut W and the brass nut X: hold each one and turn the rod to feed it through. Push on until the tip stops at the bottom of the left seat, then pull the rod back 1 mm. Run the thrust nut back until it presses the washer against the bushing, finger tight, then put one drop of Loctite 243 where the rod comes out of the nut on the channel side: it wicks into the thread. Keep it away from the washer and the bushing. Let it set for an hour.
 
 ### 5h. Lens panel onto the Y plate
 
@@ -333,7 +333,7 @@ Lay the Y plate front up. Push the rod in from the right edge, through the edge 
 | **J** | the turret under the lens panel | | drops into the channel, over the brass nut |
 | **X** | brass nut | | in the middle of the channel, flats parallel to the channel sides |
 
-Turn the brass nut to the middle of the channel. Lay the lens panel on the Y plate front, face up, its edges over the Y plate's edges: the turret drops into the channel and over the nut. Hold the two plates together and turn them over, Y plate rear up.
+Turn the brass nut to the middle of the channel, flats parallel to the channel sides. Lay the lens panel on the Y plate front, face up, its edges over the Y plate's edges: the turret is open underneath, so it drops into the channel over the rod and the nut. Hold the two plates together and turn them over, Y plate rear up.
 
 ### 5i. Horizontal rails, screwed from behind
 
@@ -480,7 +480,7 @@ Slide the ring over the helicoid's grip, groove side toward the camera, so the s
 
 ## 8. Adapter ring, board holder, lens board and lens
 
-**You need:** the adapter ring, the board holder, the latch, 8 M3 inserts, 4 M3 x 6 socket heads, 2 M3 x 6 grubs, the 4 x 15 mm spring, felt pieces V3 and V4, the lens board and the lens.
+**You need:** the adapter ring, the board holder, the latch, 8 M3 inserts, 4 M3 x 8 countersunk, 2 M3 x 6 grubs, the 4 x 15 mm spring, felt pieces V3 and V4, the lens board and the lens.
 
 ### 8a. Inserts in the adapter ring
 
@@ -516,7 +516,7 @@ Slide the ring over the helicoid's grip, groove side toward the camera, so the s
 | **C** | red latch | 1 | slid up into the dovetail between the rails, from below, flat face against the holder |
 | **D** | M3 x 6 grub | 2 | tap M3 from the back of the holder, then turn the grubs in: their tips stand 1 mm proud and run in two grooves under the latch |
 
-Slide the latch up until it presses the spring. Hold it there, turn the holder over and turn the two grubs D in from the back until they sit about 1.5 mm below the rear face: their tips now stand 1 mm proud in the grooves under the latch, and the groove ends stop it both ways. Pull the latch up with a thumbnail and let go: it snaps back down by itself. No screw shows on the front.
+Slide the latch up into the dovetail from below and push it against the spring until its lower edge is level with the top edge of the board opening. Hold it there, turn the holder over and turn the two grubs D in from the back until they sit about 1.5 mm below the rear face: their tips now stand 1 mm proud in the grooves under the latch, and the groove ends stop it both ways. Pull the latch up with a thumbnail and let go: it snaps back down by itself. No screw shows on the front.
 
 ### 8e. Adapter and board holder onto the helicoid
 
@@ -526,7 +526,7 @@ Slide the latch up until it presses the spring. Hold it there, turn the holder o
 |---|---|---|---|
 | **G** | adapter ring | 1 | its male thread into the front of the helicoid, by hand, until its flange seats |
 | **H** | board holder | 1 | laid on the adapter |
-| **E** | M3 x 6 socket head | 4 | through the holder's arc slots into whichever adapter inserts are under them |
+| **E** | M3 x 8 countersunk | 4 | through the holder's arc slots into whichever adapter inserts are under them; the heads sit flush under the board (use heads no wider than 6 mm) |
 
 Leave the screws E loose, turn the holder until its edges are square with the lens panel, then tighten. They are under the board: you can reach them whenever the board is out.
 
@@ -537,9 +537,9 @@ Leave the screws E loose, turn the holder until its edges are square with the le
 | | What | Qty | How |
 |---|---|---|---|
 | **J** | the two bottom lips | | the board's bottom edge goes under them |
-| **C** | the latch | | the board pushes it up, and it snaps down over the board |
+| **C** | the latch | | lift it with your thumb, press the board in, let it go: it drops over the board |
 
-Screw the lens onto the board with its retaining ring, from behind. Hook the board's bottom edge under the lips J and press the top in.
+Screw the lens onto the board with its retaining ring, from behind. Hook the board's bottom edge under the lips J, lift the latch, press the top in and let the latch go.
 
 **Check.** The board sits flat and does not rattle; the latch covers its top edge by 4 mm.
 
@@ -567,12 +567,12 @@ The ground glass goes on the same way. Now go to [calibration](calibration.md), 
 | Step | Inserts | Screws | Other |
 |---|---|---|---|
 | 1 | M3 x 15, 1/4" x 2 | | M5 plunger, 2 bushings, epoxy |
-| 2 | M3 x 3 | M3 x 6 socket x 5, M3 x 6 countersunk x 2 | Loctite 222, epoxy |
+| 2 | M3 x 3 | M3 x 6 socket x 4, M3 x 6 countersunk x 2, M3 x 8 countersunk x 1 | Loctite 222, epoxy |
 | 3 | | M3 x 20 socket x 2, 1/4"-20 x 1/2" x 2 | 2 bull's-eye levels, epoxy |
 | 4 | | M3 x 8 countersunk x 9 | V1 |
 | 5 | M3 x 1 | M3 x 6 countersunk x 4, M3 x 16 socket x 8, M3 x 6 grub x 4 | flange, brass nut, 2 bushings, M5 plunger, rod 127 + M6 washer + M6 nut, O-ring, knob + M6 nut, V2, epoxy, Loctite 243, paint |
 | 6 | M3 x 2 | M3 x 10 socket x 2, M3 x 6 grub x 4 | brass nut, rod 156 + M6 washer + M6 nut, O-ring, knob + M6 nut, 2 velvet discs, Loctite 243 |
 | 7 | | M3 x 6 grub x 5 | helicoid, Loctite 222 |
-| 8 | M3 x 8 | M3 x 6 socket x 4, M3 x 6 grub x 2 | spring, V3, V4 |
+| 8 | M3 x 8 | M3 x 8 countersunk x 4, M3 x 6 grub x 2 | spring, V3, V4 |
 
 All the small hardware is M3 stainless: socket heads in four lengths (6, 10, 16, 20), countersunk in two (6, 8), one grub (6) and one insert. One assortment of each covers the camera.
