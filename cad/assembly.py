@@ -60,7 +60,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("graflok_wheel", P.graflok_wheel(), "body_black", "blade", True, extra=(0, 0, -0.6))
     for x in P.BLADE_GUIDES_X:
         yb = P.BLADE_Y0 + 4.0 + (0 if blade_locked else 0)
-        add(f"screw_blade_{x}", Pos(x, yb, GF_Z0 - 2.2) * orient(hw.countersunk(3, 6), "-z"), "black_steel", "blade", extra=(0, 0, -0.4))
+        add(f"screw_blade_{x}", Pos(x, yb, GF_Z0 - 2.2) * orient(hw.countersunk(3, 5), "-z"), "black_steel", "blade", extra=(0, 0, -0.4))
     add("screw_wheel", Pos(*P.WHEEL_XY, GF_Z0 - 2.2 - 1.0) * orient(hw.hex_bolt(3, 6), "-z"), "black_steel", "blade", extra=(0, 0, -1.0))
     for x in P.BLADE_GUIDES_X + (P.WHEEL_XY[0],):
         y = P.WHEEL_XY[1] if x == P.WHEEL_XY[0] else P.BLADE_Y0 + 4.0
@@ -84,7 +84,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("vial_top", P.top_vial(), "vial", "top_handle")
     add("inlay_handle_dot", P.brand_dot(lift=0), "red", "top_handle")
     for x in P.TOP_POSTS_X:
-        add(f"screw_top_{x}", Pos(x, H + HANDLE_H - 4.5, P.HANDLE_INSERT_Z_TOP) * orient(hw.socket_cap(4, 45), "+y"),
+        add(f"screw_top_{x}", Pos(x, H + HANDLE_H - 6.0, P.HANDLE_INSERT_Z_TOP) * orient(hw.socket_cap(4, 45), "+y"),
             "black_steel", "top_handle", extra=(0, 0.5, 0))
 
     # ---------------- vertical stage: dovetail ways on the body ----------------
@@ -92,14 +92,14 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     for s_, gib in ((1, False), (-1, True)):
         add(f"way_y_{'gib' if gib else 'fixed'}", P.way_rail("y", s_, gib), "body_black", "y_rail", True, extra=(s_ * 0.3, 0, 0))
         for yy in Y_WAY_SCREWS[s_]:
-            add(f"insert_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1 - 3.0) * hw.heat_insert(3, 3.0), "brass", "body")
-            add(f"screw_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1 + hy) * hw.countersunk(3, 10), "black_steel", "y_rail", extra=(s_ * 0.3, 0, 0.3))
+            add(f"insert_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1 - 4.0) * hw.heat_insert(2.5, 4.0), "brass", "body")
+            add(f"screw_yway_{s_}_{yy}", Pos(s_ * WAY_SCREW_U, yy, BODY_Z1 + hy) * hw.countersunk(2.5, 10), "black_steel", "y_rail", extra=(s_ * 0.3, 0, 0.3))
     add("gib_y", P.gib_strip("y", -1), "body_black", "y_rail", True, extra=(-0.4, 0, 0))
     uw = P.gib_wall("y")
     for a in GIB_GRUBS["y"]:
         add(f"grub_gib_y_{a}", Pos(-(uw - GIB_BACK + 6.0), a, BODY_Z1 + WAY_FL + lip_y / 2) * orient(hw.grub(3, 6), "-x"), "black_steel", "y_rail", extra=(-0.6, 0, 0))
     # drive: rod (cap nut at the bottom, set on the bench), bushings, drive nut, O-ring, knob on top
-    y_bot, y_top = Y_CAP_ROD_END, Y_CAP_ROD_END + 158.0
+    y_bot, y_top = Y_CAP_ROD_END, Y_CAP_ROD_END + ROD_Y_LEN
     add("rod_y", Pos(Y_SCREW_X, y_bot, Y_SCREW_Z) * orient(hw.threaded_rod(6, y_top - y_bot), "+y"), "steel", "y_drive")
     add("bush_y_top", Pos(Y_SCREW_X, P.Y_CHAN[1], Y_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "+y"), "bronze", "y_drive")
     add("bush_y_bot", Pos(Y_SCREW_X, P.Y_CHAN[0] - BUSH_L, Y_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "+y"), "bronze", "y_drive")
@@ -120,6 +120,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("velvet_body", P.velvet_body(), "velvet", "y_rail")
     add("y_plate", Pos(0, sy, 0) * P.y_plate_part(), "body_black", "y_plate", True)
     add("velvet_yplate", Pos(0, sy, 0) * P.velvet_yplate(), "velvet", "x_rail")
+    add("velvet_discs", Pos(0, sy, 0) * P.velvet_discs(), "velvet", "x_rail")
     red, white = P.y_plate_inlays()
     add("inlay_yplate_red", Pos(0, sy, 0) * red, "red", "y_plate")
     add("inlay_yplate_white", Pos(0, sy, 0) * white, "white_ink", "y_plate")
@@ -135,7 +136,7 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     for a in GIB_GRUBS["x"]:
         add(f"grub_gib_x_{a}", Pos(a, uwx - GIB_BACK + 6.0 + sy, YP_Z1 + WAY_FL + lip_x / 2) * orient(hw.grub(3, 6), "+y"), "black_steel", "x_rail", extra=(0, 0.6, 0))
     yx = X_SCREW_Y + sy
-    x_left, x_right = H + X_CAP_ROD_END, H + X_CAP_ROD_END - 170.0
+    x_left, x_right = H + X_CAP_ROD_END, H + X_CAP_ROD_END - ROD_X_LEN
     add("rod_x", Pos(x_left, yx, X_SCREW_Z) * orient(hw.threaded_rod(6, x_left - x_right), "-x"), "steel", "x_drive")
     add("bush_x_right", Pos(P.X_CHAN[0], yx, X_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "-x"), "bronze", "x_drive")
     add("bush_x_left", Pos(P.X_CHAN[1] + BUSH_L, yx, X_SCREW_Z) * orient(hw.bushing(6, BUSH_OD, BUSH_L), "-x"), "bronze", "x_drive")
@@ -178,7 +179,8 @@ def assemble(sx=0.0, sy=0.0, E=0.0, thread=False, blade_locked=True, latch_locke
     add("felt_adapter", mv * (P.cyl_z(36.3, HOLDER_Z0, HOLDER_Z0 + 0.8) - P.cyl_z(30.2, HOLDER_Z0 - 1, HOLDER_Z0 + 2)), "felt", "holder")
     add("holder_latch", mv * P.holder_latch(latch_locked), "red", "latch", True)
     for x in (-9.0, 9.0):
-        add(f"screw_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 2.45) * hw.button_head(2.5, 6),
+        add(f"washer_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 2.5) * hw.washer(2.5, 6.0, 0.5), "black_steel", "latch", extra=(0, 0, 0.3))
+        add(f"screw_latch_{x}", mv * Pos(x, P.LATCH_SCREW_Y, BOARD_Z1 + 3.0) * hw.button_head(2.5, 8),
             "black_steel", "latch", extra=(0, 0, 0.3))
     y_sp0 = BOARD_H / 2 - P.LATCH_ENGAGE + P.LATCH_LEN + (0 if latch_locked else P.LATCH_ENGAGE + 1)
     y_sp1 = BOARD_H / 2 + 22.0

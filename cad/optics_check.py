@@ -21,11 +21,14 @@ PUPIL = 65.0
 CORNERS = [(sx * FILM_W / 2, sy * FILM_H / 2) for sx in (-1, 1) for sy in (-1, 1)]
 SKIP = ("lens", "rb_", "velvet", "felt", "inlay", "oring", "knob", "rod", "grub", "screw", "insert", "nut", "vial",
         "bush", "plunger", "spring", "top_handle", "arca_", "way_", "gib_", "focus_ring")   # all outside the light path
-# (sx, sy, f-number, minimum share of the pupil at the worst corner)
-REQUIRED = [(25, 0, 22, 0.99), (-25, 0, 22, 0.99), (0, 25, 22, 0.99), (0, -25, 22, 0.99),
-            (22, 22, 22, 0.99), (-22, -22, 22, 0.99), (22, -22, 22, 0.99), (-22, 22, 22, 0.99),
-            (25, 0, 8, 0.95), (0, 25, 8, 0.95), (18, 18, 8, 0.95)]
-INFO = [(25, 25, 22), (25, 25, 8), (20, 20, 8)]
+# (sx, sy, f-number, pupil z, minimum share of the pupil at the worst corner)
+# pupil 65 = infinity; 70 = about 5 mm of helicoid extension (about 0.9 m), and a lens whose pupil sits
+# 5 mm further forward. Combined shifts are an infinity figure: check the corners on the ground glass.
+REQUIRED = [(25, 0, 22, 65, 0.99), (-25, 0, 22, 65, 0.99), (0, 25, 22, 65, 0.99), (0, -25, 22, 65, 0.99),
+            (25, 0, 22, 70, 0.99), (0, 25, 22, 70, 0.99), (-25, 0, 22, 62, 0.99), (0, -25, 22, 62, 0.99),
+            (22, 22, 22, 65, 0.99), (-22, -22, 22, 65, 0.99), (22, -22, 22, 65, 0.99), (-22, 22, 22, 65, 0.99),
+            (25, 0, 8, 65, 0.95), (0, 25, 8, 65, 0.95), (20, 20, 8, 65, 0.95)]
+INFO = [(25, 25, 22, 65), (22, 22, 22, 70), (25, 0, 22, 75)]
 
 
 def mesh(shape):
@@ -77,11 +80,12 @@ def pupil_points(radius, n=9):
     return pts
 
 
-def share(sx, sy, fnum, cache):
+def share(sx, sy, fnum, cache, pupil=PUPIL):
     key = (sx, sy)
     if key not in cache:
         items = [i for i in assemble(sx, sy, back=False) if not i.name.startswith(SKIP)]
-        zs = np.concatenate([np.arange(1.0, 34.0, 1.0), np.arange(34.0, 47.0, 0.25), np.arange(47.0, PUPIL, 1.0)])
+        zs = np.concatenate([np.arange(1.01, 34.0, 1.0), np.arange(34.01, 36.1, 0.25), np.arange(36.11, 39.0, 0.1),
+                             np.arange(39.01, 47.0, 0.25), np.arange(47.01, 62.0, 1.0)])   # off the flat faces
         cache[key] = (slices([mesh(i.shape) for i in items], zs), zs)
     sl, zs = cache[key]
     pts = pupil_points(F_LENS / fnum / 2)
@@ -92,10 +96,12 @@ def share(sx, sy, fnum, cache):
             x0, y0 = sx + px, sy + py
             clear = True
             for z in zs:
+                if z >= pupil:
+                    break
                 g = sl[z]
                 if g is None:
                     continue
-                t = z / PUPIL
+                t = z / pupil
                 x, y = cx + (x0 - cx) * t, cy + (y0 - cy) * t
                 if g.contains(Point(x, y)):
                     clear = False
@@ -107,12 +113,12 @@ def share(sx, sy, fnum, cache):
 
 if __name__ == "__main__":
     cache, fails = {}, 0
-    for sx, sy, fnum, need in REQUIRED:
-        w = share(sx, sy, fnum, cache)
+    for sx, sy, fnum, pz, need in REQUIRED:
+        w = share(sx, sy, fnum, cache, pz)
         flag = "ok" if w >= need else "CLIPPED"
         fails += w < need
-        print(f"shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d}: worst corner gets {w * 100:5.1f} % of the pupil  {flag}")
-    for sx, sy, fnum in INFO:
-        w = share(sx, sy, fnum, cache)
-        print(f"(info) shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d}: worst corner {w * 100:5.1f} %")
+        print(f"shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz}: worst corner gets {w * 100:5.1f} % of the pupil  {flag}")
+    for sx, sy, fnum, pz in INFO:
+        w = share(sx, sy, fnum, cache, pz)
+        print(f"(info) shift x={sx:+3d} y={sy:+3d} f/{fnum:<2d} pupil z {pz}: worst corner {w * 100:5.1f} %")
     sys.exit(1 if fails else 0)

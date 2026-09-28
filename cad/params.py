@@ -78,7 +78,7 @@ GIB_BACK = 0.4                       # room behind the gib: an oversize print st
 FLANK_C = 0.05                       # clearance on the flanks, as modelled (the gib takes it up)
 EDGE_C = 0.3
 WAY_SCREW_U = 70.5
-Y_WAY_SCREWS = {1: (-58.0, -20.0, 20.0, 58.0), -1: (-58.0, -43.0, 43.0)}   # from the body rear (clear of the dark slide and the vial)
+Y_WAY_SCREWS = {1: (-58.0, -20.0, 20.0, 58.0), -1: (-58.0, -43.0, -20.0, 20.0, 43.0)}   # from the body rear (clear of the dark slide and the vial)
 X_WAY_SCREWS = (-54.0, -18.0, 18.0, 36.0)
 GIB_GRUBS = {"y": (-50.0, 0.0, 50.0), "x": (-40.0, 0.0, 50.0)}   # cone-point grubs into dimples in the gib
 X_WAY_SCREW_U = 71.0                 # M2.5 screws from the Y plate rear into inserts in the X rails
@@ -115,12 +115,13 @@ Y_SCREW_Z = 12.6                     # nut and bushings live in the body channel
 X_SCREW_Z = YP_Z1 - 5.0              # nut in the lens-panel turret, bushings in the Y plate
 CHAN_FLOOR_Y = SEAT_Z + 1.5          # body screw channel floor
 KNOB_D, KNOB_H = 24.0, 15.0
-KNOB_GAP = 0.4                       # the knob rides on its O-ring, 0.4 mm off the face
+KNOB_GAP = 0.3                       # the knob rides on its O-ring, 0.3 mm off the face (the builder sets the drag)
 ORING_T = 1.5                        # drag O-ring under each knob (constant friction, no lock wheels)
 ORING_SEAT = 1.1                     # seat depth: the 1.5 mm O-ring stands 0.4 proud and is squeezed by the knob
 CAP_NUT_H = 12.0                     # DIN 1587 M6 domed cap nut at the far end of each rod (Loctite on the bench)
-Y_CAP_ROD_END = -62.5 - 9.0          # the rise rod ends 9 mm inside its cap nut
-X_CAP_ROD_END = 9.0                  # the shift rod ends 9 mm inside its cap nut (outside the Y plate's left edge)
+Y_CAP_ROD_END = -62.5 - 7.5          # the rise rod ends 7.5 mm inside its cap nut (DIN 1587: about 8 mm of thread)
+X_CAP_ROD_END = 7.5                  # the shift rod ends 7.5 mm inside its cap nut (outside the Y plate's left edge)
+ROD_Y_LEN, ROD_X_LEN = 156.0, 168.0
 
 # --------------------------------------------------------------------------
 # Tripod plates and handles

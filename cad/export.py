@@ -44,7 +44,7 @@ def catalogue():
     xred, xwhite = P.x_plate_inlays()
     fm = P.focus_ring_marks(0.6, lift=0)
     return [
-        ("body", P.body_part(), FLIP, 1, "black", []),
+        ("body", P.body_part(), FLIP, 1, "blackbody", []),
         ("graflok_module", P.graflok_module(), FLIP, 1, "black", []),
         ("graflok_blade", P.graflok_blade(), FLIP, 1, "red", []),
         ("graflok_wheel", P.graflok_wheel(), EYE, 1, "black", []),
@@ -62,7 +62,7 @@ def catalogue():
         ("adapter_ring", P.adapter_part(with_thread=thread), FLIP, 1, "black012", []),
         ("board_holder", P.holder_part(), EYE, 1, "black", []),
         ("holder_latch", P.holder_latch(), EYE, 1, "red", []),
-        ("knob", kn, EYE, 2, "black", [("red", kidx)]),
+        ("knob", kn, FLIP, 2, "black", [("red", kidx)]),
         ("top_handle", P.top_handle(), FLIP, 1, "black", [("red", P.brand_dot(lift=0))]),
     ]
 
@@ -104,7 +104,7 @@ def pack(items):
     """Shelf packing on the P1S bed. items: [(label, [meshes])]. Returns plates of placed groups."""
     items = sorted(items, key=lambda it: -max(it[1][0].extents[:2]))
     plates = []
-    margin, gap = 8.0, 6.0
+    margin, gap = 8.0, 12.0          # room for a brim between parts
     for label, group in items:
         w, d = group[0].extents[0], group[0].extents[1]
         if w > BED - 2 * margin or d > BED - 2 * margin:
@@ -202,7 +202,7 @@ if __name__ == "__main__":
             if f.is_file():
                 f.unlink()
     report = ["part                 copies  material  overhang_area_mm2  largest_downward_span_mm"]
-    plate_items = {"black": [], "black012": [], "red": []}
+    plate_items = {"blackbody": [], "black": [], "black012": [], "red": []}
     for name, shape, T, copies, mat, inlays in catalogue():
         export_step(shape, str(ROOT / "step" / f"{name}.step"))
         group = drop([oriented(mesh(shape, 0.01 if name in ("x_plate", "adapter_ring") else 0.02), T)]
@@ -220,9 +220,9 @@ if __name__ == "__main__":
     n_black = 0
     for mat, items in plate_items.items():
         for i, pl in enumerate(pack(items), 1):
-            if mat == "black":
-                n_black = i
-                path = ROOT / "plates" / f"plate_{i:02d}_black.3mf"
+            if mat in ("blackbody", "black"):
+                n_black += 1
+                path = ROOT / "plates" / f"plate_{n_black:02d}_black.3mf"
             elif mat == "black012":
                 path = ROOT / "plates" / f"plate_{n_black + i:02d}_black_0.12mm_layers.3mf"
             else:
@@ -230,8 +230,8 @@ if __name__ == "__main__":
             write_plate(path, pl["groups"])
             summary.append(f"{path.name}: " + ", ".join(g[0] for g in pl["groups"]))
     # test prints: Graflok module with blade and wheel; M65 thread coupons
-    test = [("shrink_gauge_100mm", [drop([oriented(mesh(P.shrink_gauge()), EYE)])[0]]),
-            ("graflok_module", [drop([oriented(mesh(P.graflok_module()), FLIP)])[0]]),
+    gauge = [("shrink_gauge_100mm", [drop([oriented(mesh(P.shrink_gauge()), EYE)])[0]])]
+    test = [("graflok_module", [drop([oriented(mesh(P.graflok_module()), FLIP)])[0]]),
             ("graflok_blade", [drop([oriented(mesh(P.graflok_blade()), FLIP)])[0]]),
             ("graflok_wheel", [drop([oriented(mesh(P.graflok_wheel()), EYE)])[0]])]
     # dovetail coupons: 40 mm slices of the real rails, gib strips and plate edges (slide them by hand)
@@ -256,14 +256,22 @@ if __name__ == "__main__":
         xp = P.x_plate_part()  # no threads in the plate any more: coupon = flange pocket fit
         ad = P.adapter_part(with_thread=True)
         coupon = ad & P.cyl_z(45, ADAPTER_Z0 - 10, ADAPTER_Z0 + 3)
-        test.append(("m65_male_coupon", [drop([oriented(mesh(coupon, 0.01), FLIP)])[0]]))
+        coupon012 = [("m65_male_coupon_0.12mm_layers", [drop([oriented(mesh(coupon, 0.01), FLIP)])[0]])]
         fl = xp & P.cyl_z(46, XP_Z0 - 1, XP_Z1 + 1)
         test.append(("flange_pocket_coupon", [drop([oriented(mesh(fl, 0.02), EYE)])[0]]))
     for label, g in test:
         g[0].export(str(ROOT / "test" / f"{label}.stl"))
+    gauge[0][1][0].export(str(ROOT / "test" / "shrink_gauge_100mm.stl"))
+    write_plate(ROOT / "plates" / "plate_00a_shrink_gauge.3mf", pack(gauge)[0]["groups"])
+    summary.insert(0, "plate_00a_shrink_gauge.3mf: shrink_gauge_100mm  (print this first)")
     for i, pl in enumerate(pack(test), 1):
-        write_plate(ROOT / "plates" / f"plate_00_test_{i}.3mf", pl["groups"])
-        summary.append(f"plate_00_test_{i}.3mf: " + ", ".join(g[0] for g in pl["groups"]))
+        write_plate(ROOT / "plates" / f"plate_00b_test_{i}.3mf", pl["groups"])
+        summary.append(f"plate_00b_test_{i}.3mf: " + ", ".join(g[0] for g in pl["groups"]))
+    if not FAST:                        # the thread coupon prints like the real adapter: 0.12 mm layers
+        for label, g in coupon012:
+            g[0].export(str(ROOT / "test" / f"{label}.stl"))
+        write_plate(ROOT / "plates" / "plate_00c_test_thread_0.12mm_layers.3mf", pack(coupon012)[0]["groups"])
+        summary.append("plate_00c_test_thread_0.12mm_layers.3mf: m65_male_coupon")
     # lens shims: their own plate, printed at 0.2 mm layers
     shims = [(f"copal0_shim_{t:.1f}mm", [drop([oriented(mesh(P.copal0_shim(t)), EYE)])[0]]) for t in P.SHIM_STEPS]
     for label, g in shims:

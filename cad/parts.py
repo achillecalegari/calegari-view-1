@@ -119,7 +119,7 @@ def body_part():
     # from the front into inserts (the rails go on first, the Y plate slides in from the top like a drawer)
     for s in (-1, 1):
         for yy in Y_WAY_SCREWS[s]:
-            b -= insert_hole(s * WAY_SCREW_U, yy, BODY_Z1, "+z", depth=6.5)
+            b -= insert_hole(s * WAY_SCREW_U, yy, BODY_Z1, "+z", depth=6.0, d=3.3)     # M2.5
 
     # vertical screw channel (photographer's left); its ends are the hard stops
     b -= box_at(Y_SCREW_X - CHAN_W / 2, Y_SCREW_X + CHAN_W / 2, Y_CHAN[0], Y_CHAN[1], CHAN_FLOOR_Y, BODY_Z1 + 1)
@@ -128,18 +128,18 @@ def body_part():
     b -= cyl_y(ROD_D / 2 + 0.4, Y_CHAN[1], H + 1, Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(ROD_D / 2 + 0.4, -H - 1, Y_CHAN[0], Y_SCREW_X, Y_SCREW_Z)
     b -= cyl_y(4.6, H - ORING_SEAT, H + 1, Y_SCREW_X, Y_SCREW_Z)         # O-ring seat, top
-    b -= cyl_y(7.0, -H - PLINTH - 1, Y_CAP_TOP, Y_SCREW_X, Y_SCREW_Z)    # cap nut recess, open at the bottom
+    b -= cyl_y(6.3, -H - PLINTH - 1, Y_CAP_TOP, Y_SCREW_X, Y_SCREW_Z)    # cap nut recess (11.05 over corners)
 
     # zero detent (M5 ball plunger): a through hole, so the plunger can be set from behind
     b -= Pos(*Y_DETENT, BODY_Z1) * dot(4.2, BODY_Z1 - SEAT_Z + 1.0, "+z")
 
     # Graflok module screws (short inserts in the seat plane)
     for x, y in GF_SCREWS:
-        b -= insert_hole(x, y, SEAT_Z, "-z")
+        b -= insert_hole(x, y, SEAT_Z, "-z", depth=6.5)
 
     # handle inserts (M4)
     for x in TOP_POSTS_X:
-        b -= Pos(x, H, HANDLE_INSERT_Z_TOP) * dot(5.0, 8.5, "+y", lift=0.2)
+        b -= Pos(x, H, HANDLE_INSERT_Z_TOP) * dot(5.6, 9.1, "+y", lift=0.2)       # ruthex M4 x 8.1
 
     # Arca pockets in the L bracket: bottom (landscape) and side leg (portrait)
     b -= box_at(-ARCA_L / 2 - FIT, ARCA_L / 2 + FIT, -H - PLINTH - 1, -H - PLINTH + ARCA_POCKET,
@@ -153,7 +153,7 @@ def body_part():
         b -= Pos(xf - ARCA_POCKET, SIDE_ARCA_YC + y, ARCA_ZC) * dot(8.2, 10.0, "+x", lift=0.2)
 
     # portrait level: bull's-eye vial in the photographer's right side face (reads both axes)
-    b -= level_pocket((-H, SIDE_LEVEL[0], SIDE_LEVEL[1]), "-x")
+    b -= level_pocket((-H, SIDE_LEVEL[0], SIDE_LEVEL[1]), "-x", depth=LEVEL_H - 0.4)
     # Y scale index (red dot) on the right side face
     b -= Pos(-H, 0.0, BODY_Z1 - 2.5) * dot(2.6, 0.6, "-x")
     # grip texture on the side leg, above and below the Arca plate: fine flutes along the depth.
@@ -179,10 +179,10 @@ Y_CAP_TOP = -62.5                      # the rise rod's cap nut sits under this 
 SIDE_LEVEL = (55.0, 10.0)              # (y, z) of the portrait level on the -X face
 
 
-def level_pocket(c, axis):
+def level_pocket(c, axis, depth=None):
     """Pocket for a 15 x 8 mm bull's-eye vial, entering a face. Its roof is a teardrop pointing to the
     camera's rear, which is up when the part prints face down, so the round hole prints without sag."""
-    r, d = LEVEL_D / 2, LEVEL_H
+    r, d = LEVEL_D / 2, (depth or LEVEL_H)
     if axis == "-x":            # face at -X, pocket goes +X; local +X ends up at camera -Z
         dv, rot = (1.0, 0.0), Rot(0, 90, 0)
     else:                       # "+y": top face, pocket goes -Y; local -Y ends up at camera -Z
@@ -284,13 +284,13 @@ def graflok_module():
     rail = sfillet(rail, rail.edges().filter_by(Axis.X).group_by(Axis.Z)[0], 0.8)
     g += rail
     # top blade: guide screws and the clamp wheel stud (M3 inserts, 3 mm)
-    for x in BLADE_GUIDES_X:
-        g -= insert_hole(x, BLADE_Y0 + 4.0, z0, "-z", depth=4.2)
+    for x in BLADE_GUIDES_X:                         # M3 x 5 countersunk, Loctite 222 into the brass
+        g -= insert_hole(x, BLADE_Y0 + 4.0, z0, "-z", depth=3.6)
     g -= insert_hole(*WHEEL_XY, z0, "-z", depth=3.6)
     # module screws (countersunk from the rear face)
     for x, y in GF_SCREWS:
         g -= cyl_z(1.7, z0 - 1, z1 + 1, x, y)
-        g -= Pos(x, y, z0 - 0.01) * Cone(3.2, 1.7, 1.6, align=Z_UP)
+        g -= Pos(x, y, z0 - 0.01) * Cone(3.45, 1.7, 1.75, align=Z_UP)
     # 0.3 mm chamfer on the seat-face edges (they print on the bed: no elephant foot where the back seats)
     g = schamfer(g, [e for e in g.edges() if abs(e.center().Z - z1) < 0.01], 0.3)
     return g
@@ -315,7 +315,7 @@ def graflok_blade(locked=True):
     for x in BLADE_GUIDES_X:
         c = (x, BLADE_Y0 + 4.0 + BLADE_TRAVEL / 2)
         blade -= Pos(*c, z0 - 1) * extrude(SlotCenterToCenter(BLADE_TRAVEL, 3.4, rotation=90), amount=5)
-        blade -= Pos(*c, z0 - 0.01) * extrude(SlotCenterToCenter(BLADE_TRAVEL, 6.0, rotation=90), amount=1.2)
+        blade -= Pos(*c, z0 - 0.01) * extrude(SlotCenterToCenter(BLADE_TRAVEL, 6.9, rotation=90), amount=1.2)
     blade = sfillet(blade, blade.edges().filter_by(Axis.Z), 0.6)
     return Pos(0, oy, 0) * blade
 
@@ -329,6 +329,7 @@ def graflok_wheel():
     w -= cyl_z(1.7, z1 - 4, z1 + 1)
     # hex pocket for an M3 x 6 hex-head bolt (DIN 933): turning the wheel turns the bolt and clamps the blade
     w -= Pos(0, 0, z1 - 3.1) * extrude(hexagon(5.5 + 0.2), amount=2.1)
+    w -= Pos(0, 0, z1 - 3.01) * Cone(3.65, 3.3, 0.35, align=Z_UP)                  # lead-in (bed face)
     return Pos(*WHEEL_XY, 0) * w
 
 
@@ -337,7 +338,7 @@ def graflok_wheel():
 # --------------------------------------------------------------------------
 X_CHAN = (-(SHIFT_X + 9.3), SHIFT_X + 9.3)   # turret travel = hard stops
 X_FLOOR = X_SCREW_Z - NUT_AF / 2 - NUT_FLOAT - 0.8   # channel floor: 0.8 under the drive nut
-X_DETENT = (0.0, -52.0)
+X_DETENT = (-50.0, -52.0)            # off to the side: its through hole stays outside both velvets
 Y_TURRET_SCREWS = ((Y_SCREW_X, -6.5), (Y_SCREW_X, 6.5))
 
 
@@ -365,7 +366,9 @@ def way_profile(lip, h, gib, stage="y"):
 
 def gib_profile(lip, stage):
     r, ui, fl, g = way_run(lip), WAY_UI, WAY_FL, GIB_T[stage]
-    return [(ui + r, fl), (ui + r + g, fl), (ui + r + g, fl + lip), (ui, fl + lip)]
+    # the acute edge at the top of the flank is cut back 0.3 mm (it prints on the bed: no bead on the flank)
+    return [(ui + r, fl), (ui + r + g, fl), (ui + r + g, fl + lip), (ui + 0.35, fl + lip),
+            (ui + 0.3 / math.tan(math.radians(WAY_ANG)), fl + lip - 0.3)]
 
 
 def lip_cut_profile(lip, top):
@@ -396,10 +399,10 @@ def way_rail(stage, side, gib):
     lip, h, z0 = way_stage(stage)
     r = prism(way_profile(lip, h, gib, stage), stage, side, z0, -H, H)
     su = side * WAY_SCREW_U
-    if stage == "y":                                  # countersunk from the top into the body inserts
+    if stage == "y":                                  # M2.5 countersunk from the top into the body inserts
         for yy in Y_WAY_SCREWS[side]:
-            r -= cyl_z(1.7, z0 - 1, z0 + h + 1, su, yy)
-            r -= Pos(su, yy, z0 + h - 1.45) * Cone(1.65, 3.1, 1.46, align=Z_UP)
+            r -= cyl_z(1.45, z0 - 1, z0 + h + 1, su, yy)
+            r -= Pos(su, yy, z0 + h - 1.25) * Cone(1.4, 2.65, 1.26, align=Z_UP)
     else:                                             # M2.5 inserts in the base, screws from the Y plate rear
         for xx in X_WAY_SCREWS:
             r -= insert_hole(xx, side * X_WAY_SCREW_U, z0, "-z", depth=4.8, d=3.3)
@@ -461,10 +464,15 @@ def y_plate_part():
     for x, y in Y_TURRET_SCREWS:
         p -= cyl_z(1.7, YP_Z0 - 1, YP_Z1 + 1, x, y)
         p -= cyl_z(3.0, YP_Z1 - 3.3, YP_Z1 + 1, x, y)
-    # rear relief for the rise knob (top-left corner) at full rise: the knob's own cylinder, no more
-    p -= cyl_y(KNOB_D / 2 + 0.3, H - RISE - 2, H + 1, Y_SCREW_X, Y_SCREW_Z)
+    # rear relief for the rise knob (top-left corner) at full rise: the knob's own cylinder + 0.8
+    p -= cyl_y(KNOB_D / 2 + 0.8, H - RISE - 2, H + 1, Y_SCREW_X, Y_SCREW_Z)
+    # lead-in on the rear top and bottom edges: the plate slides over the body velvet without lifting it
+    for sy_ in (-1, 1):
+        lead = make_face(Polyline((-H - 1, sy_ * (H + 0.01), YP_Z0 - 0.01), (-H - 1, sy_ * (H - 2.0), YP_Z0 - 0.01),
+                                  (-H - 1, sy_ * (H + 0.01), YP_Z0 + 1.15), close=True))
+        p -= extrude(lead, amount=2 * H + 2, dir=(1, 0, 0))
     # rear detent dimple
-    p -= Pos(*Y_DETENT, YP_Z0 - 0.8) * Sphere(1.6)          # 0.8 deep: the ball (1.0 proud) clicks in
+    p -= Pos(*Y_DETENT, YP_Z0 - 0.95) * Sphere(1.25)        # 0.3 deep seat for the ball (1.0 proud): no dead band
     # the horizontal rails are screwed from the rear (M2.5 x 16; 3.8 mm holes on the gib side: it floats)
     for s_ in (-1, 1):
         for xx in X_WAY_SCREWS:
@@ -499,7 +507,8 @@ def y_turret():
     t -= Pos(Y_SCREW_X, -NUT_T / 2 - 0.15, Y_SCREW_Z) * Rot(-90, 0, 0) * Rot(0, 0, 90) * extrude(
         RegularPolygon(nut_r, 6), amount=NUT_T + 0.3)
     t -= box_at(Y_SCREW_X, Y_SCREW_X + CHAN_W, -NUT_T / 2 - 0.15, NUT_T / 2 + 0.15,
-                Y_SCREW_Z - NUT_AF / 2 - NUT_FLOAT, Y_SCREW_Z + NUT_AF / 2 + NUT_FLOAT)
+                CHAN_FLOOR_Y - 1.0, Y_SCREW_Z + NUT_AF / 2 + NUT_FLOAT)      # open through the bottom: no film
+    t -= box_at(Y_SCREW_X - 6.5, Y_SCREW_X + 6.5, -NUT_T / 2 - 0.15, NUT_T / 2 + 0.15, CHAN_FLOOR_Y - 1.0, Y_SCREW_Z - 4.0)
     for x, y in Y_TURRET_SCREWS:
         t -= insert_hole(x, y, YP_Z0, "+z")
     return t
@@ -516,6 +525,7 @@ def y_plate_inlays():
 # --------------------------------------------------------------------------
 # LENS PANEL (X plate): back face on the bed; metal M65 flange flush with the front
 # --------------------------------------------------------------------------
+TURRET_KEY = 2.5                      # depth of the shift-turret pocket in the lens panel rear
 STOP_R = 52.0                         # the stop pin runs in a groove under the focus ring: nothing shows
 STOP_PIN = (-STOP_R * math.sqrt(0.5), -STOP_R * math.sqrt(0.5))   # at 225 deg
 INDEX_R = FOCUS_OD / 2 + 2.2          # focus index and depth-of-field dots
@@ -545,27 +555,33 @@ def x_plate_part():
     # flare lobes on the diagonals, between the flange screws: the corner rays at large combined shifts
     # (and the bore reads as a knife-edge baffle instead of a flat wall)
     zf = z1 - FLANGE_T
-    lobe_cone = Pos(0, 0, z0 - 0.01) * Cone(37.5, 31.5, zf - z0 + 0.02, align=Z_UP)
+    # cone from r37.5 at the rear face, stopped 0.6 mm under the flange seat and finished with a short
+    # cylinder, so the seat keeps a real edge (no feather that curls up under the flange)
+    zc_ = zf - 0.6
+    r_c = 32.3 + 0.6 * (37.5 - 32.3) / (zf - z0)
+    lobe = Pos(0, 0, z0 - 0.01) * Cone(37.5, r_c, zc_ - z0 + 0.01, align=Z_UP) + cyl_z(r_c, zc_ - 0.01, zf + 0.01)
     for a in (45, 135, 225, 315):
-        wedge = Rot(0, 0, a) * extrude(make_face(Polyline((0, 0), (60 * math.cos(math.radians(-20)), 60 * math.sin(math.radians(-20))),
-                                                            (60 * math.cos(math.radians(20)), 60 * math.sin(math.radians(20))), close=True)),
+        wedge = Rot(0, 0, a) * extrude(make_face(Polyline((0, 0), (60 * math.cos(math.radians(-30)), 60 * math.sin(math.radians(-30))),
+                                                            (60 * math.cos(math.radians(30)), 60 * math.sin(math.radians(30))), close=True)),
                                        amount=40)
-        p -= lobe_cone & (Pos(0, 0, z0 - 5) * wedge)
+        p -= lobe & (Pos(0, 0, z0 - 5) * wedge)
     # flange screws: 4 x M3 countersunk from the rear, into the flange's M3 holes
     for a in (0, 90, 180, 270):
         x, y = FLANGE_PCD / 2 * math.cos(math.radians(a)), FLANGE_PCD / 2 * math.sin(math.radians(a))
         p -= cyl_z(1.7, z0 - 1, z1, x, y)
-        p -= Pos(x, y, z0 - 0.01) * Cone(3.2, 1.7, 1.6, align=Z_UP)
+        p -= Pos(x, y, z0 - 0.01) * Cone(3.45, 1.7, 1.75, align=Z_UP)
     # dovetail lips top and bottom, between the two horizontal rails
     for s_ in (-1, 1):
         p -= prism(lip_cut_profile(X_LIP, XP_Z1 - YP_Z1 + 2), "x", s_, YP_Z1, -H - 1, H + 1)
-    # the nut turret is bonded on (epoxy), located by two pegs in these holes
+    # the nut turret sits 2.5 mm deep in a pocket (the hard stops bear on its walls, not on the glue),
+    # bonded with epoxy and located by two pegs
+    p -= box_at(-9.15, 9.15, X_SCREW_Y - CHAN_W / 2 + 0.85, X_SCREW_Y + CHAN_W / 2 - 0.85, z0 - 1, z0 + TURRET_KEY)
     for x, y in TURRET_SCREWS:
-        p -= cyl_z(2.05, z0 - 1, z0 + 2.3, x, y)
+        p -= cyl_z(2.05, z0 + TURRET_KEY - 0.01, z0 + TURRET_KEY + 2.3, x, y)
     # rear detent dimple
-    p -= Pos(*X_DETENT, z0 - 0.8) * Sphere(1.6)
+    p -= Pos(*X_DETENT, z0 - 0.95) * Sphere(1.25)
     # infinity stop pin (M3 x 4 socket screw standing on the front)
-    p -= insert_hole(*STOP_PIN, z1, "+z", depth=4.0)
+    p -= insert_hole(*STOP_PIN, z1, "+z", depth=5.5)
     # depth-of-field dots (f/11 small, f/22 large) and the focus index (red) above the ring
     r = INDEX_R
     p -= Pos(0, r, z1) * dot(3.4, 0.6)
@@ -594,7 +610,7 @@ def x_plate_inlays():
 def x_turret():
     """Nut turret of the shift screw, bonded to the lens panel rear; runs in the Y plate channel.
     The nut goes in from below (the panel lies face down on the bench when it is fitted)."""
-    zt = XP_Z0
+    zt = XP_Z0 + TURRET_KEY
     zb = X_FLOOR + 0.8
     t = box_at(-9, 9, X_SCREW_Y - CHAN_W / 2 + 1, X_SCREW_Y + CHAN_W / 2 - 1, zb, zt)
     t = sfillet(t, t.edges().filter_by(Axis.X), 1.0)
@@ -678,9 +694,9 @@ def holder_part():
     h -= box_at(-BOARD_W / 2 - FIT, BOARD_W / 2 + FIT, -BOARD_H / 2 - FIT, BOARD_H / 2 + FIT, BOARD_Z0, z1 + 1)
     h -= cyl_z(REAR_CLEAR_D / 2, z0 - 1, z1 + 1)
     h -= cyl_z(REAR_CLEAR_D / 2 + 3.5, BOARD_Z0 - 1.6, BOARD_Z0 + 0.1)        # board light-trap ring
-    h -= cyl_z(45.0, BOARD_Z0 - 0.8, BOARD_Z0 + 0.1)                          # seat of a 1 mm felt ring (V4)
+    h -= cyl_z(45.6, BOARD_Z0 - 0.9, BOARD_Z0 + 0.1)                          # seat of a 1 mm felt ring (V4)
     # groove for a 1 mm felt ring against the adapter flange (V3)
-    h -= cyl_z(36.5, z0 - 0.1, z0 + 0.8) - cyl_z(30.0, z0 - 1, z0 + 2)
+    h -= cyl_z(37.0, z0 - 0.1, z0 + 0.8) - cyl_z(31.0, z0 - 1, z0 + 2)
     # four arc slots through the board seat (screws from the front, heads under the board): the holder
     # turns +/-25 deg on the adapter, and with eight inserts in the adapter every slot always finds one
     for a in HOLDER_SLOTS:
@@ -691,19 +707,22 @@ def holder_part():
         h += box_at(sx_ * 30 - 9, sx_ * 30 + 9, -BOARD_H / 2 - 4, -BOARD_H / 2 - 0.2, z1 - 0.01, z1 + 1.8)
         lip = box_at(sx_ * 30 - 9, sx_ * 30 + 9, -BOARD_H / 2 - 0.5, -BOARD_H / 2 + 2.0, z1 + 0.3, z1 + 1.8)
         lip = schamfer(lip, [e for e in lip.edges().filter_by(Axis.X)
-                             if e.center().Y > -BOARD_H / 2 + 1.9 and e.center().Z < z1 + 0.4], 1.0)
+                             if e.center().Y > -BOARD_H / 2 + 1.9 and e.center().Z < z1 + 0.4], 1.4)
         h += lip
     # spring latch: guide rails, two M2.5 screws (reached through the hood), spring channel, abutment
     for s in (-1, 1):
         h += box_at(s * 15.2, s * 18.0, BOARD_H / 2 - 0.2, BOARD_H / 2 + 26.0, z1 - 0.01, z1 + 4.0)
+    # the latch slides around two bosses; the screws clamp the bosses (tight, with a washer), not the latch
     for x in (-9.0, 9.0):
-        h -= cyl_z(1.05, z1 - 4.5, z1 + 0.1, x, LATCH_SCREW_Y)
+        h += cyl_z(LATCH_BOSS_R, z1 - 0.01, z1 + 2.5, x, LATCH_SCREW_Y)
+        h -= cyl_z(1.05, z1 - 5.5, z1 + 2.6, x, LATCH_SCREW_Y)
     h -= cyl_y(2.2, BOARD_H / 2 + 9.0, BOARD_H / 2 + 22.5, 0.0, z1 + 1.3)                # spring channel
     h += box_at(-4.0, 4.0, BOARD_H / 2 + 22.0, BOARD_H / 2 + 26.0, z1 - 0.01, z1 + 4.0)   # spring abutment
-    hood = box_at(-15.2, 15.2, BOARD_H / 2 + 8.5, BOARD_H / 2 + 26.0, z1 + 4.0, z1 + 5.0)   # hides the spring
+    # hood over the spring, bridging rail to rail
+    hood = box_at(-18.0, 18.0, BOARD_H / 2 + 8.5, BOARD_H / 2 + 26.0, z1 + 4.0, z1 + 5.2)
     hood = sfillet(hood, hood.edges().filter_by(Axis.Y), 0.6)
     for x in (-9.0, 9.0):
-        hood -= cyl_z(2.75, z1, z1 + 6, x, LATCH_SCREW_Y)                                  # key access
+        hood -= cyl_z(3.25, z1, z1 + 6, x, LATCH_SCREW_Y)                                  # key and washer access
     h += hood
     return h
 
@@ -720,6 +739,7 @@ def arc_slot(r, a, half, w, z0, z1):
 
 
 LATCH_LEN = 14.0
+LATCH_BOSS_R = 2.0
 LATCH_SCREW_Y = BOARD_H / 2 + 11.0
 
 
@@ -733,7 +753,7 @@ def holder_latch(locked=True):
     l = sfillet(l, l.edges().filter_by(Axis.Z), 1.0)
     travel = LATCH_ENGAGE + 1.0
     for x in (-9.0, 9.0):
-        l -= Pos(x, LATCH_SCREW_Y - travel / 2, z0 - 1) * extrude(SlotCenterToCenter(travel, 2.8, rotation=90), amount=5)
+        l -= Pos(x, LATCH_SCREW_Y - travel / 2, z0 - 1) * extrude(SlotCenterToCenter(travel, 2 * LATCH_BOSS_R + 0.3, rotation=90), amount=5)
     l = schamfer(l, [e for e in l.edges().filter_by(Axis.X)
                      if abs(e.center().Y - y0) < 0.01 and abs(e.center().Z - (z0 + 2.4)) < 0.01], 1.2)
     grip = box_at(-8, 8, y0 + 2.0, y0 + 6.0, z0 + 2.39, z0 + 4.4)
@@ -752,7 +772,7 @@ def adapter_part(with_thread=True, flange_t=ADAPTER_T):
     for a in ADAPTER_BOSSES:
         x, y = ADAPTER_SCREW_R * math.cos(math.radians(a)), ADAPTER_SCREW_R * math.sin(math.radians(a))
         f += cyl_z(3.6, z1 - ADAPTER_BOSS, z0 + 0.01, x, y)
-        f -= insert_hole(x, y, z1, "+z", depth=3.8)
+        f -= insert_hole(x, y, z1, "+z", depth=4.8)
     stub = cyl_z(M65 / 2 - (0.6 if with_thread else 0.0), z0 - STUB_L, z0 + 0.1) - cyl_z(REAR_CLEAR_D / 2, z0 - STUB_L - 1, z0 + 1)
     if with_thread and IsoThread is not None:
         th = IsoThread(major_diameter=M65 - 0.25, pitch=1.0, length=STUB_L - 0.8, external=True,
@@ -779,7 +799,8 @@ def knob_part():
     k -= Pos(0, 0, -0.01) * Cone(NUT_AF / 2 / math.cos(math.pi / 6) + 0.6, NUT_AF / 2 / math.cos(math.pi / 6) + 0.15,
                                  0.45, align=Z_UP)     # lead-in chamfer on the nut pocket (it is the bed face)
     k -= cyl_z(ROD_D / 2 + 0.25, -1, h - 1.5)
-    k -= Pos(0, 0, NUT_T + 3.0) * Rot(0, 90, 0) * Cylinder(1.25, d)          # M3 cup-point grub (steel)
+    k -= Pos(0, 0, NUT_T + 3.0) * Rot(0, 90, 0) * Cylinder(1.25, d)          # M3 x 6 cone-point grub (steel)
+    k -= cyl_z(d / 2 + 1, -0.1, 0.8) - cyl_z(7.0, -1, 2)                     # only the centre bears on the O-ring
     k -= Pos(0, -(d / 2 - 4.2), h) * dot(2.4, 0.6)
     index = Pos(0, -(d / 2 - 4.2), h) * dot(2.4, 0.6, lift=0)
     return k, index
@@ -805,7 +826,7 @@ def handle_loop(length, z0, z1, height=HANDLE_H, bar=HANDLE_BAR, post=HANDLE_POS
     h = Pos(0, 0, z0) * extrude(prof, amount=z1 - z0)
     h = sfillet(h, h.edges().filter_by(Axis.Z).group_by(Axis.Y)[-1], CORNER_R)
     h = sfillet(h, [e for e in h.edges().filter_by(Axis.Z) if abs(e.center().Y - (height - bar)) < 0.2], 4.0)
-    h = sfillet(h, [e for e in h.edges().filter_by(Plane.XY) if e.center().Y > 0.5], EDGE)
+    h = sfillet(h, [e for e in h.edges().filter_by(Plane.XY) if e.center().Y > 1.5], EDGE)
     return h
 
 
@@ -814,7 +835,7 @@ def handle_screw_holes(length, zc, height=HANDLE_H, post=HANDLE_POST):
     for sx_ in (-1, 1):
         x = sx_ * (length / 2 - post / 2)
         out.append(Pos(x, -1, zc) * Rot(-90, 0, 0) * Cylinder(2.2, height + 2, align=Z_UP))
-        out.append(Pos(x, height - 4.5, zc) * Rot(-90, 0, 0) * Cylinder(3.8, 6, align=Z_UP))
+        out.append(Pos(x, height - 6.0, zc) * Rot(-90, 0, 0) * Cylinder(3.8, 8, align=Z_UP))
     return out
 
 
@@ -839,7 +860,7 @@ def top_handle():
 
 
 SHOE_OPEN, SHOE_W, SHOE_D, SHOE_LIP, SHOE_L = 12.6, 18.9, 2.2, 1.6, 18.5
-LEVEL_Z = 11.5
+LEVEL_Z = 10.8
 
 
 def bullseye(c, axis):
@@ -897,11 +918,16 @@ def velvet_yplate_outline():
     op = opening_yplate(YP_Z1)
     hy = max(op[1], 33.0)
     outer = Pos(0, (V2_Y[0] + V2_Y[1]) / 2) * Rectangle(144.0, V2_Y[1] - V2_Y[0])
-    hole = RectangleRounded(2 * (op[0] + 1.0), 2 * (hy + 1.0), 3.0)
+    hole = RectangleRounded(2 * (op[0] + 0.3), 2 * (hy + 0.3), 3.0)
     face = outer - hole
-    for x, y in Y_TURRET_SCREWS:                  # the turret screws go in after the velvet
+    for x, y in Y_TURRET_SCREWS:                  # the turret screws go in through these; a disc then closes each
         face -= Pos(x, y) * Circle(3.5)
     return face
+
+
+def velvet_discs():
+    """Two 7 mm velvet discs laid on the rise-turret screw heads after tightening (they close the holes in V2)."""
+    return Compound([Pos(x, y, YP_Z1) * Cylinder(3.45, VELVET_T, align=Z_UP) for x, y in Y_TURRET_SCREWS])
 
 
 def velvet_body():
@@ -917,7 +943,7 @@ def felt_board_outline():
 
 
 def felt_adapter_outline():
-    return Circle(36.3) - Circle(30.2)
+    return Circle(36.8) - Circle(31.2)
 
 
 def felt_board():

@@ -2,7 +2,7 @@
 
 [Back to the project](../README.md)
 
-Everything to buy for one camera, with links. Every link was opened and checked against the spec on 2026-09-27; prices are what the page showed that day, VAT included on EU shops, shipping extra. Shops come and go: the **Spec** column is what matters, the link is one place that had it.
+Everything to buy for one camera, with links (checked on 2026-09-27 and 28; prices are what the page showed, VAT included, shipping extra). Several listings sell a family of sizes: pick the size in the **Spec** column. Shops come and go: the spec is what matters, the link is one place that had it.
 
 Most items come in packs: the quantities below are what the camera uses.
 
@@ -12,35 +12,40 @@ The two movements slide on printed dovetail ways: there are no linear guides to 
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| M6 threaded rod | stainless A2, DIN 976, 1 m | 1 | [Amazon.it](https://www.amazon.it/dp/B09MMFZBV2) | 7.61 EUR | select M6; cut 160 mm and 140 mm |
-| M6 hex nut, brass | 10 mm across flats | 2 | [Amazon.it](https://www.amazon.it/dp/B0F6V4BLQG) | 11.29 EUR / 15 | the drive nuts |
-| M6 hex nut, stainless | DIN 934, A2 | 6 | [Amazon.it](https://www.amazon.it/dp/B0B6BYB1CN) | 10.19 EUR / 50 | end nuts and knob nuts |
-| Sintered bronze bushing | 6 x 10 x 6 mm | 4 | [Amazon.it](https://www.amazon.it/dp/B0G5PZG1VN) | 16.23 EUR / 30 | |
-| M5 ball spring plunger | stainless, M5 x 10 or 12 | 2 | [Amazon.de](https://www.amazon.de/dp/B0CD1XP9H9) | 12.20 EUR / 30 | pick M5 x 10; zero detents |
+| M6 threaded rod | stainless A2, DIN 976, 1 m | 1 | [Amazon.it](https://www.amazon.it/dp/B09MMFZBV2) | 7.61 EUR | select M6; cut 158 mm (rise) and 170 mm (shift) |
+| M6 hex nut, brass | 10 mm across flats | 2 | [Amazon.it](https://www.amazon.it/dp/B0F6V4BLQG) | 11.29 EUR / 15 | the two drive nuts |
+| M6 hex nut, stainless | DIN 934, A2 | 2 | [Amazon.it](https://www.amazon.it/dp/B0B6BYB1CN) | 10.19 EUR / 50 | pressed into the knobs |
+| M6 domed cap nut | DIN 1587, A2 | 2 | [Amazon.it](https://www.amazon.it/dp/B00AMB4JYA) | pack of 20 | one at the far end of each rod, fixed with Loctite 243 |
+| Self-lubricating bushing | 6 x 8 x 6 mm, sintered bronze or wrapped | 4 | [Amazon.it](https://www.amazon.it/dp/B0C3H8R1YG) | pick 6x8x6 | pressed into the ends of the two screw channels |
+| M5 ball spring plunger | M5 x 10 or 12, hex socket at the back | 2 | [Amazon.de](https://www.amazon.de/dp/B0CD1XP9H9) | 12.20 EUR / 30 | zero detents; set from behind through the hole |
 | O-ring | NBR 70, 5 x 1.5 mm | 2 | [Amazon.de](https://www.amazon.de/dp/B01KHW71FM) | pack of 10 | knob drag; stretched over the M6 rod |
-| Compression spring | 4 mm OD x 10 mm, light | 1 | [Amazon.de](https://www.amazon.de/dp/B0CTCQW4JY) | 7.59 EUR / 20 | board latch |
+| Compression spring | 4 mm OD x 15 mm, light | 1 | [Amazon.it](https://www.amazon.it/dp/B0CTJVH96W) | pick 4 mm x 15 mm | board latch |
 | Dry PTFE lubricant | spray, dries to a film | 1 | [Amazon.it](https://www.amazon.it/dp/B07C7H4PLS) | 400 ml | a light coat on the dovetails; candle wax also works |
 
 ## Fasteners and inserts
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
-| Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 31 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | 7.99 EUR / 50 | the holes are designed for this size; 4 mm-long inserts are too long for the Graflok module |
-| Heat-set insert M4 | Ruthex RX-M4x8.1 | 2 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen) | 9.49 EUR / 50 | handles |
-| Heat-set insert 1/4"-20 | short, 6.4 mm | 4 | [ruthex.de](https://www.ruthex.de/en/products/ruthex-1-4-short-gewindeeinsatz-zoll-unc-20-stuck-ge-1_4x64-001) | 8.99 EUR / 20 | Arca plates, two per plate |
-| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | 8.39 EUR / 1160 | M3 x 5 (1, the infinity stop pin), x 8 (1), x 10 (2), x 16 (10) |
+| Heat-set insert M3 | 3 mm long, 5 mm OD ("M3 x 3 x 5") | 25 | [Amazon.it](https://www.amazon.it/dp/B0FQTNZ6TP) | 7.99 EUR / 50 | the holes are designed for this size |
+| Heat-set insert M2.5 | about 4 mm long, 3.5 mm OD | 8 | [ruthex (Amazon.it store)](https://www.amazon.it/stores/ruthex/InsertiFilettati/page/4745B67A-ADA8-4A8E-9334-A9866C6B194B) | pack | in the horizontal rails |
+| Heat-set insert M4 | Ruthex RX-M4x8.1 | 2 | [Amazon.it](https://www.amazon.it/dp/B07YSV66Y5) | pack of 50 | top handle |
+| Heat-set insert 1/4"-20 | short, 6.4 mm | 4 | [Amazon.it](https://www.amazon.it/dp/B07YZSFMMD) | pack of 20 | Arca plates, two per plate |
+| M3 socket head kit | ISO 4762, stainless, 4 to 20 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0DPWZ53X4) | 8.39 EUR / 1160 | M3 x 4 (1, the infinity stop pin), x 14 (2, rise turret) |
 | M3 countersunk kit | ISO 10642, stainless, 6 to 30 mm | 1 | [Amazon.de](https://www.amazon.de/dp/B0GFDNBLK2) | 8.99 EUR / 1292 | M3 x 6 (6), x 8 (4), x 10 (7) |
-| M3 x 6 button head | ISO 7380, A2 | 4 | [Amazon.de](https://www.amazon.de/dp/B07ZPTX8B2) | 7.21 EUR / 100 | adapter ring |
-| M2.5 x 6 button head | in a stainless button-head kit | 2 | [Amazon.de](https://www.amazon.de/dp/B0F3HNGTY5) | 8.59 EUR / 900 | board latch; pick the "Linsenkopf-Innensechskant-304" variant |
-| M4 x 50 socket head | ISO 4762, stainless | 2 | [Amazon.de](https://www.amazon.de/dp/B09SKJKNPM) | 5.40 EUR / 10 | top handle; pick the 50 mm variant |
-| M3 x 4 grub screw | nylon tip, stainless | 12 | [Amazon.de](https://www.amazon.de/dp/B0DNMYPZZ3) | 8.29 EUR / 15 | gib strips (6), focus ring (4), knobs (2); pick M3 x 4 |
+| M3 x 6 button head | ISO 7380, A2 | 4 | [Amazon.it](https://www.amazon.it/dp/B01LWJPZPE) | pack of 20 | board holder to adapter |
+| M3 x 6 hex-head bolt | DIN 933, A2 | 1 | [Amazon.it](https://www.amazon.it/dp/B07RWQ2N9J) | pack of 10 | Graflok clamp wheel |
+| M2.5 x 16 socket head | ISO 4762, A2 | 8 | search "M2.5 x 16 DIN 912 A2" | | horizontal rails, from the Y plate rear |
+| M2.5 x 6 button head | ISO 7380, A2 | 2 | [Amazon.de](https://www.amazon.de/dp/B0F3HNGTY5) | 8.59 EUR / 900 | board latch |
+| M4 x 45 socket head | ISO 4762, stainless | 2 | [Amazon.de](https://www.amazon.de/dp/B09SKJKNPM) | pick 45 mm | top handle |
+| M3 x 6 grub screw, cone point | ISO 7434 / DIN 914, A2 | 8 | [Amazon.it](https://www.amazon.it/dp/B09MQ2TGL9) | assortment | gib strips (6) and knobs (2) |
+| M3 x 4 grub screw, nylon tip | stainless | 4 | [Amazon.de](https://www.amazon.de/dp/B0DNMYPZZ3) | 8.29 EUR / 15 | focus ring; they do not mark the helicoid |
 
 ## Tripod and levels
 
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
 | Arca-Swiss plate | 60 x 38 x 10 mm, aluminium, 1/4" screw | 2 | [Amazon.it](https://www.amazon.it/dp/B0C6F573TH) | 14.99 EUR / 2 | remove the rubber pad; any 60 mm Arca plate with a 1/4" slot fits the pocket |
-| Tubular spirit vial | about 6.5 x 25 mm | 2 | [Amazon.de](https://www.amazon.de/dp/B0DMSL2QQS) | 4.69 EUR / 10 | pick 6.5 x 25.5 |
+| Bull's-eye level | 15 mm diameter, 8 mm high | 2 | [Amazon.it](https://www.amazon.it/dp/B07TSWKTZ1) | 5 pieces | top of the handle (landscape) and the right side (portrait) |
 
 ## Light seal
 
@@ -71,9 +76,9 @@ The ground glass is sold out at Mercury at the time of writing. Any Graflok 23 g
 | Item | Spec | Qty | Link | Price seen | Notes |
 |---|---|---|---|---|---|
 | Filament | Bambu Lab ASA, 1 kg: black, plus red and white | 1 + small amounts | [Bambu Lab EU](https://eu.store.bambulab.com/products/asa-filament) | 24.99 EUR each | about 600 g black; a few grams of red and white |
-| Threadlocker | Loctite 243, medium, 10 ml | 1 | [Amazon.it](https://www.amazon.it/dp/B0D8L2RR6S) | 15.15 EUR | metal to metal only: anaerobic threadlockers can crack ASA |
-| Epoxy | UHU Plus Endfest 300, 2 parts | 1 | [Amazon.it](https://www.amazon.it/dp/B000KJP0QK) | 10.90 EUR | glues the two spirit vials |
-| Threadlocker, low strength | Loctite 222 | 1 | search: "Loctite 222" | | helicoid into the flange |
+| Threadlocker | Loctite 243, medium, 10 ml | 1 | [Amazon.it](https://www.amazon.it/dp/B0D8L2RR6S) | 15.15 EUR | the two cap nuts on the rods; metal to metal only: anaerobic threadlockers can crack ASA |
+| Epoxy | UHU Plus Endfest 300, 2 parts | 1 | [Amazon.it](https://www.amazon.it/dp/B000KJP0QK) | 10.90 EUR | bonds the shift nut turret and the two levels |
+| Threadlocker, low strength | Loctite 222 | 1 | search: "Loctite 222" | | helicoid into the flange, Graflok blade guide screws (into brass inserts) |
 
 ## Cost
 
