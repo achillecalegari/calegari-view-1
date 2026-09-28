@@ -12,15 +12,15 @@ STEPS = [
      ["way_y", "screw_yway", "velvet_body"]),
     (5, "Front standard on the bench: Y plate, lens panel, horizontal ways, shift screw", "w_34",
      ["y_plate", "inlay_yplate", "bush_x", "plunger_x", "velvet_yplate", "x_plate", "inlay_xplate", "x_turret",
-      "flange", "screw_flange", "stop_pin", "insert_stop", "nut_x", "insert_xway", "way_x", "screw_xway", "gib_x",
+      "flange", "screw_flange", "stop_pin", "insert_stop", "nut_x", "way_x", "screw_xway", "gib_x",
       "grub_gib_x", "inlay_xway", "rod_x", "washer_x_thrust", "oring_x", "knob_x", "inlay_knob_x"]),
     (6, "Front standard into the body, rise screw and knob", "w_34",
-     ["y_turret", "nut_y_drive", "insert_yturret", "screw_yturret", "velvet_discs", "gib_y", "grub_gib_y", "rod_y", "nut_y_cap",
+     ["y_turret", "nut_y_drive", "insert_yturret", "screw_yturret", "velvet_discs", "gib_y", "grub_gib_y", "rod_y", "nut_y_end", "washer_y_end",
       "oring_y", "knob_y", "inlay_knob_y"]),
     (7, "Helicoid and focus ring", "w_34", ["helicoid", "focus_ring", "inlay_focus"]),
     (8, "Adapter ring, board holder, lens board and lens", "w_34",
      ["adapter_ring", "insert_adapter", "screw_adapter", "board_holder", "felt_adapter", "felt_board", "holder_latch",
-      "screw_latch", "spring_latch", "lensboard", "lens"]),
+      "grub_latch", "spring_latch", "lensboard", "lens"]),
     (9, "Film back", "w_rear", ["rb_"]),
 ]
 

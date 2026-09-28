@@ -28,14 +28,14 @@ G = {
     "vial_side": ["vial_side"], "ways_y": ["way_y", "screw_yway"], "velvet_body": ["velvet_body"],
     "yplate": ["y_plate", "inlay_yplate"], "bush_x": ["bush_x"], "plunger_x": ["plunger_x"],
     "velvet_y": ["velvet_yplate"], "xplate": ["x_plate", "inlay_xplate"], "flange": ["flange", "screw_flange"],
-    "ins_stop": ["insert_stop"], "x_turret": ["x_turret"], "ways_x": ["way_x", "insert_xway", "inlay_xway"],
+    "ins_stop": ["insert_stop"], "x_turret": ["x_turret"], "ways_x": ["way_x", "inlay_xway"],
     "screw_xway": ["screw_xway"], "gib_x": ["gib_x", "grub_gib_x"],
     "rod_x": ["rod_x", "washer_x_thrust", "nut_x_thrust", "nut_x_drive"], "knob_x": ["oring_x", "knob_x", "inlay_knob_x"],
-    "y_turret": ["y_turret", "nut_y_drive", "insert_yturret"], "rod_y": ["rod_y", "nut_y_cap"],
+    "y_turret": ["y_turret", "nut_y_drive", "insert_yturret"], "rod_y": ["rod_y", "nut_y_end", "washer_y_end"],
     "screw_yturret": ["screw_yturret"], "discs": ["velvet_discs"], "gib_y": ["gib_y", "grub_gib_y"],
     "knob_y": ["oring_y", "knob_y", "inlay_knob_y"], "stop_pin": ["stop_pin"], "helicoid": ["helicoid"],
     "focus": ["focus_ring", "inlay_focus"], "adapter": ["adapter_ring", "insert_adapter"],
-    "holder": ["board_holder"], "felts": ["felt_"], "latch": ["holder_latch", "spring_latch", "screw_latch"],
+    "holder": ["board_holder"], "felts": ["felt_"], "latch": ["holder_latch", "spring_latch", "grub_latch"],
     "screw_adapter": ["screw_adapter"], "board": ["lensboard", "lens"], "back": ["rb_"],
 }
 
@@ -147,8 +147,9 @@ fig("5d_flange", "5d  Lens panel: flange and stop insert", V_OB_F, g("xplate"),
 fig("5e_panel_rear", "5e  Lens panel from behind: screws and turret", V_OB_R, g("xplate", "ins_stop") + ["flange"],
     new=[(["screw_flange"], (0, 0, -30)), (g("x_turret"), (0, 0, -35))],
     labels=[("G", "screw_flange"), ("J", "x_turret"), ("L", [(P.X_DETENT[0], P.X_DETENT[1], XP_Z0)])])
-fig("5f_rail_inserts", "5f  Inserts in the horizontal rails", V_OB_R, ["way_x", "inlay_xway"],
-    new=[(["insert_xway"], (0, 0, -22))], labels=[("M", "insert_xway"), ("P", "way_x_fixed"), ("Q", "way_x_gib")])
+fig("5f_rail_taps", "5f  Tap the horizontal rails", V_OB_R, ["way_x", "inlay_xway"],
+    labels=[("M", [(xx, s_ * X_WAY_SCREW_U, YP_Z1) for s_ in (-1, 1) for xx in X_WAY_SCREWS]),
+            ("P", "way_x_fixed"), ("Q", "way_x_gib")])
 fig("5g_rod", "5g  Shift rod, thrust nut and drive nut", (-0.25, -1.0, 0.75),
     g("yplate", "bush_x", "plunger_x", "velvet_y"),
     new=[(["rod_x"], (-60, 0, 0)), (["washer_x_thrust"], (18, 0, 26)), (["nut_x_thrust"], (18, 0, 40)),
@@ -160,8 +161,8 @@ fig("5h_stack", "5h  Lens panel onto the Y plate", V_OB_F, g("yplate", "bush_x",
     labels=[("J", "x_turret"), ("X", "nut_x_drive")])
 fig("5i_rails", "5i  Horizontal rails, screwed from behind", V_OB_R,
     g("yplate", "bush_x", "plunger_x", "velvet_y", "rod_x", "xplate", "flange", "ins_stop", "x_turret"),
-    new=[(["way_x_fixed", "insert_xway_-1", "inlay_xway"], (0, -40, 0), ["way_x_fixed"]),
-         (["way_x_gib", "insert_xway_1"], (0, 40, 0), ["way_x_gib"]), (["screw_xway"], (0, 0, -40))],
+    new=[(["way_x_fixed", "inlay_xway"], (0, -40, 0), ["way_x_fixed"]),
+         (["way_x_gib"], (0, 40, 0), ["way_x_gib"]), (["screw_xway"], (0, 0, -40))],
     labels=[("P", "way_x_fixed"), ("Q", "way_x_gib"), ("N", "screw_xway")], dist=5.2)
 fig("5j_gib_x", "5j  Gib strip and grub screws", (-0.3, -1.0, 0.7),
     g("yplate", "bush_x", "plunger_x", "velvet_y", "rod_x", "xplate", "flange", "ins_stop", "x_turret", "ways_x", "screw_xway"),
@@ -178,7 +179,7 @@ fig("6a_y_turret", "6a  Rise nut turret", (0.6, -0.8, 0.6), ["y_turret"],
     labels=[("A", "nut_y_drive"), ("B", "insert_yturret")], dist=5.0)
 fig("6b_rise_rod", "6b  Turret and rise rod into the body", V_OB_FL, C4,
     new=[(g("y_turret"), (0, 0, 40), ["y_turret"]), (g("rod_y"), (0, -100, 0), ["rod_y"])],
-    labels=[("C", "y_turret"), ("D", "rod_y"), ("N", "nut_y_cap")], dist=5.4)
+    labels=[("C", "y_turret"), ("D", "rod_y"), ("N", "nut_y_end")], dist=5.4)
 fig("6c_slide_in", "6c  The front standard slides in from the top", (-0.62, -1.0, 0.35), C4 + g("y_turret", "rod_y"),
     new=[(FRONT, (0, 115, 0), [])],
     labels=[("V1", [(-20.0, -58.0, BODY_Z1 + GAP)])],
@@ -214,9 +215,9 @@ fig("8b_holder_rear", "8b  Felt V3 behind the board holder", V_OB_R, ["board_hol
 fig("8c_holder_front", "8c  Felt V4 and the spring", V_OB_F, ["board_holder", "felt_adapter"],
     new=[(["felt_board"], (0, 0, 22)), (["spring_latch"], (0, -22, 14))],
     labels=[("V4", "felt_board"), ("B", "spring_latch")])
-fig("8d_latch", "8d  Latch, held by two screws from behind", (0.35, -1.0, 0.6), ["board_holder", "felt_", "spring_latch"],
-    new=[(["holder_latch"], (0, -30, 0)), (["screw_latch"], (0, 0, -30))],
-    labels=[("C", "holder_latch"), ("D", "screw_latch")],
+fig("8d_latch", "8d  Latch, held by two grubs from behind", (0.35, -1.0, 0.6), ["board_holder", "felt_", "spring_latch"],
+    new=[(["holder_latch"], (0, -30, 0)), (["grub_latch"], (0, 0, -30))],
+    labels=[("C", "holder_latch"), ("D", "grub_latch")],
     lines=[dict(points=[(26, 5, BOARD_Z1 + 3), (26, 40, BOARD_Z1 + 3)], style="arrow")])
 fig("8e_holder_on", "8e  Adapter and board holder onto the helicoid", V_OB_F, C7,
     new=[(g("adapter"), (0, 0, 35), ["adapter_ring"]), (g("holder", "felts", "latch"), (0, 0, 75), ["board_holder"]),

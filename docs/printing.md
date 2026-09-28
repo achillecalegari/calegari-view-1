@@ -112,6 +112,6 @@ The scales are recessed dots, 2 to 3.4 mm across and 0.6 mm deep: no text or fin
 
 - **Flatness.** Put a steel straightedge on the body front, both faces of the Y plate and the lens panel rear. The gap under it must stay below 0.1 mm: these faces carry the light seal. Reprint a warped plate rather than shimming it.
 - **Heat-set inserts.** Soldering iron with the right tip at about 230 C. See [assembly](assembly.md#five-techniques-you-will-use).
-- **Threads to tap by hand.** M3 in the four radial holes of the focus ring and in the two knobs (2.5 mm holes), M3 in the six grub holes of the two gib rails, M5 in the two ball plunger holes (4.2 mm).
+- **Threads to tap by hand.** M3 (2.5 mm holes) in the four radial holes of the focus ring, the two knobs, the six grub holes of the two gib rails, the eight holes in the base of the horizontal rails and the two latch holes of the board holder; M5 in the two ball plunger holes (4.2 mm).
 - **Bushing seats.** 8.1 mm horizontal holes for 8 mm bushings: horizontal holes print slightly small, so ream them with an 8 mm drill turned by hand.
 - **Deburr** the dovetail flanks with a fine file if a layer sticks out, then give them a light coat of dry PTFE.

@@ -12,7 +12,7 @@ I have wanted a view camera for years. The rigid kind, compact, built for archit
 
 The problem is the price. A new Arca-Swiss or Silvestri costs thousands before you add a lens, and the used market is not much kinder. So I designed my own, around what I already had: a Bambu Lab P1S, the Mamiya RB67 backs you can find everywhere for little money, and a used large-format wide angle.
 
-This repository is the whole camera: the files to print, the parametric model they come from, the shopping list with links, and step-by-step instructions written for someone who has never held a view camera. Every hole of every printed part is shown in a picture with a letter, and a table says what goes into it. Without back and lens, the parts cost about 385 EUR, much of it in packs of screws and inserts that will outlast the camera.
+This repository is the whole camera: the files to print, the parametric model they come from, the shopping list with links, and step-by-step instructions written for someone who has never held a view camera. Every hole of every printed part is shown in a picture with a letter, and a table says what goes into it. Without back and lens, the parts cost about 350 EUR, much of it in packs of screws and inserts that will outlast the camera.
 
 ## What it is
 
@@ -42,7 +42,7 @@ The body, the Y plate and the lens panel are flat slabs that slide face to face 
 
 The design is complete and checked in software, not yet proven in the hand.
 
-- `cad/check.py`: no interference between any of the 151 components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
+- `cad/check.py`: no interference between any of the 142 components, screws against the bottom of their holes included, at home and at the four shift extremes, with the Graflok blade and the board latch both closed and open, and against the envelope of a 65 mm Arca clamp in landscape and portrait. Every printed part is a single solid.
 - `cad/seal_check.py`: the velvet seal is at least 4.6 mm wide at both sliding interfaces, at every shift position in 5 mm steps.
 - `cad/optics_check.py`: a ray trace from the lens to the corners of the frame. Single movements up to 25 mm are clean at f/22 and f/8 from infinity to about 0.9 m; combined rise and shift up to 22 + 22 mm are clean at infinity.
 - `print/PRINTABILITY.txt`: overhangs and bridges of every part in its print orientation. No part needs supports.
